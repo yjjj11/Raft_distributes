@@ -1,4 +1,3 @@
-#pragma once
 #include "raftnode.hpp"
 #include <iostream>
 #include <vector>

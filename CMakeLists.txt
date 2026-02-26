@@ -36,21 +36,7 @@ include_directories(
 )
 
 # 创建可执行文件
-add_executable(client client.cpp)
-add_executable(server server.cpp)
 add_executable(main main.cpp)
-# 链接依赖库
-target_link_libraries(server 
-    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-    Threads::Threads    # 现在能找到这个目标了
-)
-
-target_link_libraries(client 
-    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-    Threads::Threads    # 现在能找到这个目标了
-)
 
 target_link_libraries(main 
     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
