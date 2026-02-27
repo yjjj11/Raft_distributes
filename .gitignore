@@ -1,6 +1,6 @@
 # 可执行文件输出目录（对应 CMAKE 的 EXECUTABLE_OUTPUT_PATH）
 bin/
-
+logs/
 # 编译缓存/构建目录
 build/
 .cache/          # 若为隐藏目录则保留，否则改为 cache/
