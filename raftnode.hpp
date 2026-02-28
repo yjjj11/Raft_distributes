@@ -31,12 +31,20 @@ public:
     AppendReply handle_append_request(const AppendRequest& request);
     void handle_heartbeat_request(const AppendRequest& request,AppendReply& reply);
 
+
+    using StateMachineCallback = std::function<bool(int32_t log_index, const LogEntry& entry)>;
+
+    // 设置回调函数的接口
+    void set_state_machine_callback(StateMachineCallback callback) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        state_machine_callback_ = std::move(callback);
+    }
 private:
     // 节点基本信息
     int node_id_;
     std::string ip_;
     int port_;
-    
+    StateMachineCallback state_machine_callback_;
     
     // 集群配置
     int election_elapsed_time_;
@@ -94,7 +102,7 @@ private:
     bool send_append_entries(const AppendRequest& request, size_t peer_idx, AppendReply& reply);
     
     // 日志管理
-    void append_log(const LogEntry& entry);
+    bool submit(const LogEntry& entry);
     int32_t get_last_log_index() const;
     int32_t get_last_log_term() const;
     

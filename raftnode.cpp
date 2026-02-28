@@ -394,22 +394,40 @@ bool RaftNode::check_if_log_is_ok(const AppendRequest& request){
 }
 
 void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index) {
-    // 这个函数模拟将已提交的日志应用到状态机
+    std::lock_guard<std::mutex> lock(mutex_); // 保护状态机执行的线程安全
+    
+    // 遍历所有待应用的日志条目
     for (int32_t i = from_index; i <= to_index; ++i) {
-        if (i < 0 || i >= static_cast<int32_t>(log_.size())) continue; // 安全检查
+        if (i < 0 || i >= static_cast<int32_t>(log_.size())) {
+            spdlog::warn("Node {}: Invalid log index {} when applying to state machine.", node_id_, i);
+            continue;
+        }
         const auto& entry = log_[i];
         
-        //执行实际的业务逻辑
-        // 例如，如果日志条目包含一个命令，这里会解析并执行它
-        spdlog::info("Node {}: Applying log entry at index {} (term {}): Command=\"Set {}={}\"", 
-                     node_id_, i , entry.term, entry.key, entry.value); // 假设 LogEntry 有 command 字段
+        // 核心：调用业务回调函数执行业务逻辑
+        bool callback_ok = true;
+        if (state_machine_callback_) {
+            try {
+                callback_ok = state_machine_callback_(i, entry);
+            } catch (const std::exception& e) {
+                spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, i, e.what());
+                callback_ok = false;
+            }
+        } else {
+            spdlog::warn("Node {}: No state machine callback set for log index {}", node_id_, i);
+            // 无回调时的默认行为（可选）：打印日志
+            spdlog::info("Node {}: Apply log entry {} (term {}): {}={}", 
+                         node_id_, i, entry.term, entry.key, entry.value);
+        }
 
-
-
-
-
-
-        last_applied_.store(i); // 更新已应用的索引
+        // 只有回调执行成功，才更新 last_applied_（保证业务逻辑和日志应用的一致性）
+        if (callback_ok) {
+            last_applied_.store(i);
+            spdlog::debug("Node {}: Applied log index {} to state machine.", node_id_, i);
+        } else {
+            spdlog::error("Node {}: Failed to apply log index {} to state machine.", node_id_, i);
+            break; // 业务执行失败，暂停应用（可根据需求调整策略）
+        }
     }
 }
 
@@ -619,7 +637,22 @@ void RaftNode::run_election_timeout() {
 // 在 raftnode.cpp 中实现 handle_append_request (仅心跳版本)
 
 
-void RaftNode::append_log(const LogEntry& entry) {
-    std::lock_guard<std::mutex> lock(mutex_);
-    log_.push_back(entry);
+bool RaftNode::submit(const LogEntry& entry) {
+    // 1. 检查当前节点是否为 Leader
+    if (state_.load() != LEADER) {
+        spdlog::warn("Node {}: Not leader, cannot submit log entry.", node_id_);
+        return false;
+    }
+
+    // 2. 加锁写入日志（保证日志的原子性）
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        log_.push_back(entry);
+        spdlog::info("Node {}: Submitted log entry (index {}, term {})", 
+                     node_id_, log_.size()-1, current_term_.load());
+    }
+
+    // 3. 触发心跳/日志同步（可选：立即同步，而非等待下一次心跳）
+    // 注：如果你的心跳线程是定时同步，这里可以主动唤醒或直接调用同步逻辑
+    return true;
 }
