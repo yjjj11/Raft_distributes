@@ -1,76 +1,25 @@
-[2026-02-27 16:29:35.895] [debug] Election timeout: 10000ms
-[2026-02-27 16:29:35.895] [info] Cluster peers:
-[2026-02-27 16:29:35.895] [info] 127.0.0.1:8001
-[2026-02-27 16:29:35.895] [info] 127.0.0.1:8000
+[2026-02-28 13:11:16.039] [debug] Election timeout: 6000ms
+[2026-02-28 13:11:16.039] [info] Cluster peers:
+[2026-02-28 13:11:16.039] [info] 127.0.0.1:8001
+[2026-02-28 13:11:16.040] [info] 127.0.0.1:8000
 [ERROR] ZK handle is null, call start first!
 [ERROR] ZK handle is null, call start first!
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] ZK node already exists, skip create: [{}]
-[2026-02-27 16:29:35.902] [info] ------------------------------------Raft node 2 started on 127.0.0.1:8002------------------------------------
-[2026-02-27 16:29:35.902] [debug] Raft node 2 initialized on 127.0.0.1:8002
-[2026-02-27 16:29:35.904] [info] ------------------------------client runing ----------------------------
+[2026-02-28 13:11:16.044] [info] ------------------------------------Raft node 2 started on 127.0.0.1:8002------------------------------------
+[2026-02-28 13:11:16.045] [debug] Raft node 2 initialized on 127.0.0.1:8002
+[2026-02-28 13:11:16.046] [info] ------------------------------client runing ----------------------------
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] Refresh service cache for path: {}, node count: {}
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8001
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8000
-[2026-02-27 16:29:35.908] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-27 16:29:38.910] [debug] Node 2 received vote request: term=1, candidateId=0, lastLogIndex=-1, lastLogTerm=0
-[2026-02-27 16:29:38.911] [debug] Node 2 discovered higher term 1 in vote request, becoming follower.
-[2026-02-27 16:29:38.911] [debug] Node 2 became follower at term 1
-[2026-02-27 16:29:38.911] [debug] Node 2 granted vote to node 0 for term 1.
-[2026-02-27 16:29:51.329] [info] Node 2 became candidate at term 2
-[2026-02-27 16:29:51.329] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:29:51.329] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:51.329] [debug] Success! Result: reply.term=2, voteGranted=false
-[2026-02-27 16:29:51.329] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:54.730] [debug] Node 2 received vote request: term=2, candidateId=1, lastLogIndex=-1, lastLogTerm=0
-[2026-02-27 16:29:54.730] [debug] Node 2 rejecting vote request from node 1: already voted for node 2 in term 2.
-[2026-02-27 16:29:54.737] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:29:54.737] [info] Node 2 became candidate at term 3
-[2026-02-27 16:29:54.737] [debug] ------------------------------------Election_begin_end_timeout: 5000ms------------------------------------
-[2026-02-27 16:29:57.738] [info] Node 2 became candidate at term 4
-[2026-02-27 16:29:57.738] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:29:57.738] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:02.751] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8001
-[2026-02-27 16:30:02.751] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:07.751] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:30:07.751] [info] Node 2 became candidate at term 5
-[2026-02-27 16:30:07.751] [debug] ------------------------------------Election_begin_end_timeout: 10013ms------------------------------------
-[2026-02-27 16:30:10.753] [info] Node 2 became candidate at term 6
-[2026-02-27 16:30:10.753] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:30:10.753] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:15.754] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8001
-[2026-02-27 16:30:15.755] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:20.755] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:30:20.755] [info] Node 2 became candidate at term 7
-[2026-02-27 16:30:20.755] [debug] ------------------------------------Election_begin_end_timeout: 10002ms------------------------------------
-[2026-02-27 16:30:22.179] [info] Node 2 became candidate at term 8
-[2026-02-27 16:30:22.179] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:30:22.179] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:27.180] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8001
-[2026-02-27 16:30:27.180] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:32.192] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:30:32.192] [info] Node 2 became candidate at term 9
-[2026-02-27 16:30:32.192] [debug] ------------------------------------Election_begin_end_timeout: 10013ms------------------------------------
-[2026-02-27 16:30:35.212] [info] Node 2 became candidate at term 10
-[2026-02-27 16:30:35.212] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:30:35.213] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:40.217] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8001
-[2026-02-27 16:30:40.218] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:30:45.222] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:30:45.222] [info] Node 2 became candidate at term 11
-[2026-02-27 16:30:45.222] [debug] ------------------------------------Election_begin_end_timeout: 10009ms------------------------------------
-[2026-02-27 16:30:48.222] [info] Node 2 became candidate at term 12
-[2026-02-27 16:30:48.222] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:30:48.222] [debug] 调用服务 vote_request 方法 9VoteReply
+[2026-02-28 13:11:16.050] [info] 连接成功: 127.0.0.1:8001
+[2026-02-28 13:11:16.050] [debug] Connected to peer: 127.0.0.1:8001
+[2026-02-28 13:11:16.050] [info] 连接成功: 127.0.0.1:8000
+[2026-02-28 13:11:16.050] [debug] Connected to peer: 127.0.0.1:8000
+[2026-02-28 13:11:16.050] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-02-28 13:11:16.940] [debug] Node 2 discovered higher term 3 in heartbeat, becoming follower.
+[2026-02-28 13:11:16.940] [error] Node 2 became follower at term 3
+[2026-02-28 13:11:16.940] [info] Node 2: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:18.551] [info] Node 2: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:20.163] [info] Node 2: Received and accepted heartbeat from leader 1.

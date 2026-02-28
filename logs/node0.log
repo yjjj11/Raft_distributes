@@ -1,29 +1,29 @@
-[2026-02-27 16:29:35.894] [debug] Election timeout: 2000ms
-[2026-02-27 16:29:35.894] [info] Cluster peers:
-[2026-02-27 16:29:35.894] [info] 127.0.0.1:8001
-[2026-02-27 16:29:35.894] [info] 127.0.0.1:8002
+[2026-02-28 13:11:08.066] [debug] Election timeout: 2000ms
+[2026-02-28 13:11:08.066] [info] Cluster peers:
+[2026-02-28 13:11:08.066] [info] 127.0.0.1:8001
+[2026-02-28 13:11:08.066] [info] 127.0.0.1:8002
 [ERROR] ZK handle is null, call start first!
 [ERROR] ZK handle is null, call start first!
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] ZK node already exists, skip create: [{}]
-[2026-02-27 16:29:35.902] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-02-27 16:29:35.903] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-02-27 16:29:35.904] [info] ------------------------------client runing ----------------------------
+[2026-02-28 13:11:08.075] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-02-28 13:11:08.075] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-02-28 13:11:08.077] [info] ------------------------------client runing ----------------------------
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] Refresh service cache for path: {}, node count: {}
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8001
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8002
-[2026-02-27 16:29:35.908] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-27 16:29:38.910] [info] Node 0 became candidate at term 1
-[2026-02-27 16:29:38.910] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:29:38.910] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:38.910] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-02-27 16:29:38.910] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:38.911] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-02-27 16:29:38.911] [info] ------------------------------------Vote count: 2------------------------------------
-[2026-02-27 16:29:38.911] [debug] Node 0 became leader at term 1.
-[2026-02-27 16:29:38.911] [debug] ------------------------------------Stop election------------------------------------
-terminate called after throwing an instance of 'std::system_error'
-  what():  Operation not permitted
+[2026-02-28 13:11:08.079] [info] 连接成功: 127.0.0.1:8001
+[2026-02-28 13:11:08.079] [debug] Connected to peer: 127.0.0.1:8001
+[2026-02-28 13:11:08.877] [debug] Node 0 discovered higher term 3 in heartbeat, becoming follower.
+[2026-02-28 13:11:08.877] [error] Node 0 became follower at term 3
+[2026-02-28 13:11:08.877] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:10.488] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:12.101] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:13.080] [error] Failed to connect to peer: 127.0.0.1:8002
+[2026-02-28 13:11:13.080] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-02-28 13:11:13.715] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:15.326] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:16.939] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:18.550] [info] Node 0: Received and accepted heartbeat from leader 1.
+[2026-02-28 13:11:20.162] [info] Node 0: Received and accepted heartbeat from leader 1.

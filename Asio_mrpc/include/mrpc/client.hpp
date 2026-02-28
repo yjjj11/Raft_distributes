@@ -181,7 +181,7 @@ class client final : private asio::noncopyable {
             LOG_ERROR("连接服务 {} 失败", rpc_name);
             return req_result<RET>(status::not_found, "连接服务 " + rpc_name + " 失败");
         }
-        LOG_DEBUG("调用服务 {} 方法 {}", rpc_name, typeid(RET).name());
+        // LOG_DEBUG("调用服务 {} 方法 {}", rpc_name, typeid(RET).name());
         return conn->call<RET>(rpc_name, std::forward<Args>(args)...);
     }
 

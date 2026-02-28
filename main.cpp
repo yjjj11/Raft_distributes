@@ -94,9 +94,6 @@ int main(int argc, char* argv[]) {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
         
-        // 调用节点的stop函数进行优雅退出
-        node.stop();
-        
         spdlog::debug("Raft node shutdown complete.");
         
     } catch (const std::exception& e) {

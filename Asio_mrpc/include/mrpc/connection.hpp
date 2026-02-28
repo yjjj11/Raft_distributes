@@ -154,7 +154,7 @@ class callback_t : public std::enable_shared_from_this<callback_t> {
  */
 class connection : public std::enable_shared_from_this<connection> {
   public:
-    static const constexpr time_t DEFAULT_TIMEOUT = 5000; //milliseconds
+    static const constexpr time_t DEFAULT_TIMEOUT = 1000; //milliseconds
 
 #ifdef _MSG_FORMAT
 	static const constexpr msg_type_fmt DEFAULT_MSG_FORMAT = _MSG_FORMAT;
@@ -269,7 +269,7 @@ class connection : public std::enable_shared_from_this<connection> {
     template<size_t TIMEOUT, typename RET = void, msg_type_fmt FMT = DEFAULT_MSG_FORMAT, typename... Args>
     req_result<RET> call(const std::string& rpc_name, Args&&...args) {
         auto [req_id, future] = async_call<FMT>(rpc_name, std::forward<Args>(args)...);
-        LOG_DEBUG("调用服务 {} 方法 {}", rpc_name, typeid(RET).name());
+        // LOG_DEBUG("调用服务 {} 方法 {}", rpc_name, typeid(RET).name());
         auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
         if (status == std::future_status::timeout || status == std::future_status::deferred) {
             {
@@ -378,25 +378,54 @@ task_awaitable<RET> coro_call(const std::string& rpc_name, Args&&...args) {
 
   private:
     // connect
-    void async_connect() {//已经从外部接收ip和port并且设置到自己的成员变量上，然后异步连接到对端服务器
-        auto addr = asio::ip::address::from_string(host_);
-        socket_.async_connect(tcp::endpoint(addr, port_), [this](std::error_code ec) {
-            if (has_connected_ == true) {
+    void async_connect() {
+        // 1. 获取自身shared_ptr并捕获，确保回调执行时对象不被销毁
+        auto self = shared_from_this();
+        asio::ip::address addr;
+        try {
+            addr = asio::ip::address::from_string(host_);
+        } catch (const std::exception& e) {
+            LOG_ERROR("解析IP地址失败: {} (host: {})", e.what(), host_);
+            std::lock_guard<std::mutex> lock(conn_mtx_);
+            conn_cond_.notify_one();
+            return;
+        }
+
+        socket_.async_connect(tcp::endpoint(addr, port_), [this, self](std::error_code ec) {
+            // 2. 先检查连接状态（加锁保证线程安全）
+            std::lock_guard<std::mutex> lock(conn_mtx_);
+            if (has_connected_.load(std::memory_order_acquire)) {
                 return;
             }
-             socket_.set_option(asio::ip::tcp::no_delay(true));  // 禁用 Nagle 算法
-                socket_.set_option(asio::socket_base::send_buffer_size(64 * 1024));  // 增大发送缓冲区
-                socket_.set_option(asio::socket_base::receive_buffer_size(64 * 1024));  // 增大接收缓冲区
+
+            // 3. 操作socket选项时捕获异常，避免崩溃
+            try {
+                socket_.set_option(asio::ip::tcp::no_delay(true));
+                socket_.set_option(asio::socket_base::send_buffer_size(64 * 1024));
+                socket_.set_option(asio::socket_base::receive_buffer_size(64 * 1024));
+            } catch (const std::system_error& e) {
+                LOG_ERROR("设置socket选项失败: {} (error code: {})", e.what(), e.code().value());
+                // 选项设置失败不影响连接，仅打日志继续
+            }
+
+            // 4. 处理连接结果
             if (ec) {
+                // LOG_WARN("连接失败: {} (host: {}:{}, 剩余重连次数: {})", ec.message(), host_, port_, reconnect_cnt_);
+                
                 if (reconnect_cnt_ <= 0) {
                     conn_cond_.notify_one();
                     return;
                 } else {
                     reconnect_cnt_--;
                 }
-                async_reconnect(); //在可用重连次数内重连
+                
+                // 5. 异步重连（避免在回调中阻塞）
+                asio::post(socket_.get_executor(), [this, self]() {
+                    async_reconnect();
+                });
             } else {
-                has_connected_ = true;
+                LOG_INFO("连接成功: {}:{}", host_, port_);
+                has_connected_.store(true, std::memory_order_release);
                 conn_cond_.notify_one();
                 start();
             }

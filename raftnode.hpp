@@ -28,7 +28,8 @@ public:
 
     // RPC处理函数
     VoteReply handle_vote_request(const VoteRequest& request);
-    AppendReply handle_append_request(const AppendRequest& request){}
+    AppendReply handle_append_request(const AppendRequest& request);
+    void handle_heartbeat_request(const AppendRequest& request,AppendReply& reply);
 
 private:
     // 节点基本信息
@@ -65,7 +66,7 @@ private:
     
     // 互斥锁
     mutable std::mutex mutex_;
-    
+    mutable std::mutex conns_mutex_;
     // RPC服务器和客户端
     mrpc::server& server_;
     mrpc::client& client_;
@@ -81,6 +82,7 @@ private:
 
     // 状态转换
     void become_follower(int32_t new_term);
+    void become_follower_withlock(int32_t new_term);
     void become_candidate();
     void become_leader();
     

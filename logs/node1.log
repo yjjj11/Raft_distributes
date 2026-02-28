@@ -1,35 +1,67 @@
-[2026-02-27 16:29:35.895] [debug] Election timeout: 10000ms
-[2026-02-27 16:29:35.895] [info] Cluster peers:
-[2026-02-27 16:29:35.895] [info] 127.0.0.1:8000
-[2026-02-27 16:29:35.895] [info] 127.0.0.1:8002
+[2026-02-28 13:10:17.514] [debug] Election timeout: 6000ms
+[2026-02-28 13:10:17.514] [info] Cluster peers:
+[2026-02-28 13:10:17.514] [info] 127.0.0.1:8000
+[2026-02-28 13:10:17.514] [info] 127.0.0.1:8002
 [ERROR] ZK handle is null, call start first!
 [ERROR] ZK handle is null, call start first!
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] ZK node already exists, skip create: [{}]
-[2026-02-27 16:29:35.903] [info] ------------------------------------Raft node 1 started on 127.0.0.1:8001------------------------------------
-[2026-02-27 16:29:35.903] [debug] Raft node 1 initialized on 127.0.0.1:8001
-[2026-02-27 16:29:35.904] [info] ------------------------------client runing ----------------------------
+[2026-02-28 13:10:17.524] [info] ------------------------------------Raft node 1 started on 127.0.0.1:8001------------------------------------
+[2026-02-28 13:10:17.524] [debug] Raft node 1 initialized on 127.0.0.1:8001
+[2026-02-28 13:10:17.526] [info] ------------------------------client runing ----------------------------
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] Refresh service cache for path: {}, node count: {}
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8000
-[2026-02-27 16:29:35.908] [debug] Connected to peer: 127.0.0.1:8002
-[2026-02-27 16:29:35.908] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-27 16:29:38.910] [debug] Node 1 received vote request: term=1, candidateId=0, lastLogIndex=-1, lastLogTerm=0
-[2026-02-27 16:29:38.910] [debug] Node 1 discovered higher term 1 in vote request, becoming follower.
-[2026-02-27 16:29:38.910] [debug] Node 1 became follower at term 1
-[2026-02-27 16:29:38.910] [debug] Node 1 granted vote to node 0 for term 1.
-[2026-02-27 16:29:51.321] [info] Node 1 became candidate at term 2
-[2026-02-27 16:29:51.321] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-27 16:29:51.321] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:51.329] [debug] Node 1 received vote request: term=2, candidateId=2, lastLogIndex=-1, lastLogTerm=0
-[2026-02-27 16:29:51.329] [debug] Node 1 rejecting vote request from node 2: already voted for node 1 in term 2.
-[2026-02-27 16:29:54.730] [error] Failed: Request Timeout 
-When vote_request on 127.0.0.1:8000
-[2026-02-27 16:29:54.730] [debug] 调用服务 vote_request 方法 9VoteReply
-[2026-02-27 16:29:54.730] [debug] Success! Result: reply.term=2, voteGranted=false
-[2026-02-27 16:29:54.730] [info] ------------------------------------Vote count: 0------------------------------------
-[2026-02-27 16:29:54.730] [debug] Node 1 became follower at term 2
-terminate called after throwing an instance of 'std::system_error'
-  what():  Operation not permitted
+[2026-02-28 13:10:17.530] [info] 连接成功: 127.0.0.1:8000
+[2026-02-28 13:10:17.531] [debug] Connected to peer: 127.0.0.1:8000
+[2026-02-28 13:10:22.531] [error] Failed to connect to peer: 127.0.0.1:8002
+[2026-02-28 13:10:22.531] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-02-28 13:10:24.026] [debug] Node 1 received vote request: term=1, candidateId=0, lastLogIndex=-1, lastLogTerm=0
+[2026-02-28 13:10:24.027] [debug] Node 1 discovered higher term 1 in vote request, becoming follower.
+[2026-02-28 13:10:24.027] [error] Node 1 became follower at term 1
+[2026-02-28 13:10:24.027] [debug] Node 1 granted vote to node 0 for term 1.
+[2026-02-28 13:10:24.027] [info] Node 1: Received and accepted heartbeat from leader 0.
+[2026-02-28 13:10:25.178] [info] Node 1: Received and accepted heartbeat from leader 0.
+[2026-02-28 13:10:26.328] [info] Node 1: Received and accepted heartbeat from leader 0.
+[2026-02-28 13:10:27.478] [info] Node 1: Received and accepted heartbeat from leader 0.
+[2026-02-28 13:10:28.629] [info] Node 1: Received and accepted heartbeat from leader 0.
+[2026-02-28 13:10:33.878] [error] Node 1 became candidate at term 2
+[2026-02-28 13:10:33.878] [info] ------------------------------------Vote begain--------------------------------------
+[2026-02-28 13:10:33.888] [debug] Node 1 received vote request: term=2, candidateId=2, lastLogIndex=-1, lastLogTerm=0
+[2026-02-28 13:10:33.888] [debug] Node 1 rejecting vote request from node 2: already voted for node 1 in term 2.
+[2026-02-28 13:10:34.879] [error] Failed: Request Timeout 
+When vote_request on node1 : 127.0.0.1:8000
+[2026-02-28 13:10:34.879] [info] 连接成功: 127.0.0.1:8002
+[2026-02-28 13:10:34.879] [debug] Success! Result: reply.term=2, voteGranted=false
+[2026-02-28 13:10:34.879] [info] ------------------------------------Vote count: 1------------------------------------
+[2026-02-28 13:10:34.879] [error] Node 1 became follower at term 2
+[2026-02-28 13:10:41.521] [error] Node 1 became candidate at term 3
+[2026-02-28 13:10:41.521] [info] ------------------------------------Vote begain--------------------------------------
+[2026-02-28 13:10:41.522] [debug] Success! Result: reply.term=3, voteGranted=true
+[2026-02-28 13:10:41.522] [info] ------------------------------------Vote count: 2------------------------------------
+[2026-02-28 13:10:41.522] [error] Node 1 became leader at term 3.
+[2026-02-28 13:10:41.522] [info] Node 1 starting heartbeat thread for term 3.
+[2026-02-28 13:10:41.523] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:43.138] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:44.750] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:46.361] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:47.972] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:49.582] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:51.194] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:52.804] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:10:55.424] [error] Failed: Request Timeout 
+When append_entries on node1 : 127.0.0.1:8002
+[2026-02-28 13:11:08.877] [info] 连接成功: 127.0.0.1:8000
+[2026-02-28 13:11:08.877] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:10.488] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:12.102] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:13.715] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:15.326] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:16.939] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:16.939] [info] 连接成功: 127.0.0.1:8002
+[2026-02-28 13:11:16.940] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:11:18.551] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:18.551] [debug] Heartbeat to node 2 Reply term: 3 Success: true
+[2026-02-28 13:11:20.162] [debug] Heartbeat to node 1 Reply term: 3 Success: true
+[2026-02-28 13:11:20.163] [debug] Heartbeat to node 2 Reply term: 3 Success: true
