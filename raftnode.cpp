@@ -332,9 +332,6 @@ AppendReply RaftNode::handle_append_request(const AppendRequest& request) {
     // 3. 重置选举超时计时器（因为收到了 Leader 的有效消息）
     std::lock_guard<std::mutex> lock(mutex_); // 获取锁保护所有状态
     last_heartbeat_time_ = std::chrono::steady_clock::now();
-    leader_id_ = request.leaderId; // 更新 Leader ID
-
-
 
     //检查消息一致性部分----------------------------------------
     reply.success = check_if_log_is_ok(request);
@@ -410,9 +407,9 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         
         // 核心：调用业务回调函数执行业务逻辑
         bool callback_ok = true;
-        if (state_machine_callback_) {
+        if (apply_callback_) {
             try {
-                callback_ok = state_machine_callback_(i, entry);
+                callback_ok = apply_callback_(i, entry);
             } catch (const std::exception& e) {
                 spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, i, e.what());
                 callback_ok = false;
