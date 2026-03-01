@@ -30,25 +30,22 @@ public:
     VoteReply handle_vote_request(const VoteRequest& request);
     AppendReply handle_append_request(const AppendRequest& request);
     void handle_heartbeat_request(const AppendRequest& request,AppendReply& reply);
-    int get_leader_id(){
-        std::lock_guard<std::mutex> lock(mutex_);
-        return leader_id_;
-    }
 
+    bool submit(const LogEntry& entry);
     using StateMachineCallback = std::function<bool(int32_t log_index, const LogEntry& entry)>;
 
     // 设置回调函数的接口
-    void set_state_machine_callback(StateMachineCallback callback) {
+    void set_apply_callback(StateMachineCallback callback) {
         std::lock_guard<std::mutex> lock(mutex_);
-        state_machine_callback_ = std::move(callback);
+        apply_callback_ = std::move(callback);
     }
 private:
     // 节点基本信息
     int node_id_;
     std::string ip_;
     int port_;
-    StateMachineCallback state_machine_callback_;
-    int leader_id_;
+    StateMachineCallback apply_callback_;
+
     // 集群配置
     int election_elapsed_time_;
     std::vector<std::pair<std::string, int>> peers_;  // 存储其他节点的地址信息
@@ -105,7 +102,6 @@ private:
     bool send_append_entries(const AppendRequest& request, size_t peer_idx, AppendReply& reply);
     
     // 日志管理
-    bool submit(const LogEntry& entry);
     int32_t get_last_log_index() const;
     int32_t get_last_log_term() const;
     
@@ -117,6 +113,8 @@ private:
     bool is_log_up_to_date(int32_t last_log_term, int32_t last_log_index) const;
     
     void apply_logs_to_state_machine(int32_t from_index, int32_t to_index);
+
+    int find_leader();
 };
 
 
