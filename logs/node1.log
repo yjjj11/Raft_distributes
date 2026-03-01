@@ -1,115 +1,39 @@
-[2026-02-28 20:12:05.333] [debug] Election timeout: 6000ms
-[2026-02-28 20:12:05.334] [info] Cluster peers:
-[2026-02-28 20:12:05.334] [info] 127.0.0.1:8000
-[2026-02-28 20:12:05.334] [info] 127.0.0.1:8002
-[2026-02-28 20:12:05.334] [warning] --------------------------------total_nodes_count_: 3
+[2026-03-01 10:02:39.267] [debug] Election timeout: 6000ms
+[2026-03-01 10:02:39.267] [info] Cluster peers:
+[2026-03-01 10:02:39.267] [info] 127.0.0.1:8000
+[2026-03-01 10:02:39.267] [info] 127.0.0.1:8002
+[2026-03-01 10:02:39.267] [warning] --------------------------------total_nodes_count_: 1
 [ERROR] ZK handle is null, call start first!
 [ERROR] ZK handle is null, call start first!
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] ZK node already exists, skip create: [{}]
-[2026-02-28 20:12:05.345] [info] ------------------------------------Raft node 1 started on 127.0.0.1:8001------------------------------------
-[2026-02-28 20:12:05.345] [debug] Raft node 1 initialized on 127.0.0.1:8001
-[2026-02-28 20:12:05.346] [info] ------------------------------client runing ----------------------------
+[2026-03-01 10:02:39.273] [info] ------------------------------------Raft node 1 started on 127.0.0.1:8001------------------------------------
+[2026-03-01 10:02:39.273] [debug] Raft node 1 initialized on 127.0.0.1:8001
+[2026-03-01 10:02:39.275] [info] ------------------------------client runing ----------------------------
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] Refresh service cache for path: {}, node count: {}
-[2026-02-28 20:12:05.349] [info] 连接成功: 127.0.0.1:8000
-[2026-02-28 20:12:05.350] [debug] Connected to peer: 127.0.0.1:8000
-[2026-02-28 20:12:10.350] [error] Failed to connect to peer: 127.0.0.1:8002
-[2026-02-28 20:12:10.350] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-28 20:12:11.871] [debug] Node 1 received vote request: term=1, candidateId=2, lastLogIndex=-1, lastLogTerm=0
-[2026-02-28 20:12:11.871] [debug] Node 1 discovered higher term 1 in vote request, becoming follower.
-[2026-02-28 20:12:11.871] [error] Node 1 became follower at term 1
-[2026-02-28 20:12:11.871] [debug] Node 1 granted vote to node 2 for term 1.
-[2026-02-28 20:12:11.872] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:12.846] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:13.821] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:14.795] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:15.770] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:16.744] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:17.718] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:18.692] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:19.670] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:18.782] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:19.757] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:20.732] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:21.706] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:22.680] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:23.654] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:24.629] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:25.603] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:26.581] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:27.556] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:28.530] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:29.504] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:30.479] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:31.455] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:32.429] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:33.407] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:34.382] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:35.357] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:36.331] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:37.305] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:38.280] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:39.255] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:40.229] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:41.204] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:42.179] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:43.153] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:44.127] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:45.102] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:46.076] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:47.051] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:48.027] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:49.001] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:49.978] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:48.598] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:49.572] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:50.546] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:51.521] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:52.495] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:53.469] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:54.448] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:55.422] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:56.396] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:57.371] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:58.345] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:12:59.324] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:00.300] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:01.275] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:02.249] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:03.224] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:04.198] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:05.173] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:06.147] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:07.122] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:08.097] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:09.071] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:10.047] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:11.021] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:11.996] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:12.977] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:13.953] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:14.927] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:15.902] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:16.876] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:17.851] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:18.825] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:19.800] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:18.749] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:19.723] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:20.700] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:21.675] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:22.650] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:23.624] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:24.601] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:25.575] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:26.551] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:27.527] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:28.503] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:29.483] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:30.458] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:31.432] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:32.406] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:33.380] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
+[2026-03-01 10:02:40.625] [debug] Node 1 discovered higher term 1 in heartbeat, becoming follower.
+[2026-03-01 10:02:40.625] [error] Node 1 became follower at term 1
+[2026-03-01 10:02:40.625] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
+[2026-03-01 10:02:42.121] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
+[2026-03-01 10:02:41.147] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
+[2026-03-01 10:02:41.806] [error] Failed to connect to peer: 127.0.0.1:8000
+[2026-03-01 10:02:41.806] [info] 连接成功: 127.0.0.1:8002
+[2026-03-01 10:02:41.807] [debug] Connected to peer: 127.0.0.1:8002
+[2026-03-01 10:02:41.807] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-01 10:02:42.646] [debug] Node 1: AppendEntries successful, added 0 entries.  from node 2
+[2026-03-01 10:02:48.662] [error] Node 1 became candidate at term 2
+[2026-03-01 10:02:48.662] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-01 10:02:49.663] [error] Failed: Request Timeout 
+When vote_request on node1 : 127.0.0.1:8002
+[2026-03-01 10:02:49.663] [info] ----------------------total_nodes_count_: 1, vote_count: 1-------------------
+[2026-03-01 10:02:49.663] [error] Node 1 became leader at term 2.
+[2026-03-01 10:02:49.663] [info] Node 1 starting heartbeat thread for term 2.
+[2026-03-01 10:03:03.244] [info] 连接成功: 127.0.0.1:8000
+[2026-03-01 10:03:03.245] [debug] Heartbeat to node 1 Reply term: 2 Success: true
+[2026-03-01 10:03:03.959] [debug] Heartbeat to node 1 Reply term: 2 Success: true
+[2026-03-01 10:03:04.676] [debug] Heartbeat to node 1 Reply term: 2 Success: true
+[2026-03-01 10:03:05.389] [debug] Heartbeat to node 1 Reply term: 2 Success: true
+[2026-03-01 10:03:06.103] [debug] Heartbeat to node 1 Reply term: 2 Success: true

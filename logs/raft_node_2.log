@@ -1,222 +1,52 @@
-[2026-02-28 20:12:05.843] [debug] Election timeout: 6000ms
-[2026-02-28 20:12:05.844] [info] Cluster peers:
-[2026-02-28 20:12:05.844] [info] 127.0.0.1:8001
-[2026-02-28 20:12:05.844] [info] 127.0.0.1:8000
-[2026-02-28 20:12:05.844] [warning] --------------------------------total_nodes_count_: 3
-[2026-02-28 20:12:05.850] [info] ------------------------------------Raft node 2 started on 127.0.0.1:8002------------------------------------
-[2026-02-28 20:12:05.850] [debug] Raft node 2 initialized on 127.0.0.1:8002
-[2026-02-28 20:12:05.852] [info] ------------------------------client runing ----------------------------
-[2026-02-28 20:12:05.855] [info] 连接成功: 127.0.0.1:8001
-[2026-02-28 20:12:05.855] [debug] Connected to peer: 127.0.0.1:8001
-[2026-02-28 20:12:05.855] [info] 连接成功: 127.0.0.1:8000
-[2026-02-28 20:12:05.855] [debug] Connected to peer: 127.0.0.1:8000
-[2026-02-28 20:12:05.855] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-28 20:12:11.871] [error] Node 2 became candidate at term 1
-[2026-02-28 20:12:11.871] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-28 20:12:11.871] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-02-28 20:12:11.872] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-02-28 20:12:11.872] [info] ----------------------total_nodes_count_: 3, vote_count: 3-------------------
-[2026-02-28 20:12:11.872] [error] Node 2 became leader at term 1.
-[2026-02-28 20:12:11.872] [info] Node 2 starting heartbeat thread for term 1.
-[2026-02-28 20:12:11.873] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:11.873] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:12.847] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:12.847] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:13.821] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:13.822] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:14.796] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:14.796] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:15.770] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:15.770] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:16.744] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:16.744] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:17.718] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:17.719] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:18.692] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:18.693] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:19.670] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:19.671] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:18.782] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:18.783] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:19.757] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:19.758] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:20.732] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:20.733] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:21.706] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:21.707] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:22.681] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:22.681] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:23.655] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:23.655] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:24.629] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:24.630] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:25.603] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:25.604] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:26.582] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:26.582] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:27.556] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:27.557] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:28.530] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:28.531] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:29.505] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:29.505] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:30.480] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:30.480] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:31.455] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:31.455] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:32.429] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:32.430] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:33.407] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:33.408] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:34.383] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:34.383] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:35.357] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:35.358] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:36.331] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:36.332] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:37.305] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:37.306] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:38.280] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:38.280] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:39.255] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:39.255] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:40.230] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:40.230] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:41.205] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:41.205] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:42.179] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:42.180] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:43.153] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:43.154] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:44.128] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:44.128] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:45.102] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:45.102] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:46.077] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:46.077] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:47.051] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:47.052] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:48.027] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:48.028] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:49.001] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:49.002] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:49.978] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:49.978] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:48.598] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:48.598] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:49.572] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:49.573] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:50.546] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:50.547] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:51.521] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:51.521] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:52.495] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:52.496] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:53.469] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:53.470] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:54.448] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:54.449] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:55.422] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:55.423] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:56.397] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:56.397] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:57.371] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:57.371] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:58.346] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:58.346] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:12:59.324] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:12:59.325] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:00.301] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:00.301] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:01.275] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:01.276] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:02.250] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:02.250] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:03.224] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:03.225] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:04.198] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:04.199] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:05.173] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:05.174] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:06.147] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:06.148] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:07.122] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:07.123] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:08.097] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:08.098] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:09.071] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:09.072] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:10.047] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:10.048] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:11.022] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:11.022] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:11.996] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:11.996] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:12.978] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:12.978] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:13.953] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:13.954] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:14.928] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:14.928] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:15.902] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:15.903] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:16.876] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:16.877] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:17.851] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:17.851] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:18.825] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:18.826] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:19.800] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:19.801] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:18.749] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:18.750] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:19.723] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:19.724] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:20.700] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:20.701] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:21.675] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:21.676] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:22.650] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:22.650] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:23.625] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:23.625] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:24.601] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:24.602] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:25.575] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:25.576] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:26.552] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:26.552] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:27.527] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:27.527] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:28.503] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:28.504] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:29.483] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:29.484] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:30.458] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:30.458] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:31.432] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:31.433] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:32.407] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:32.407] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:33.381] [debug] Heartbeat to node 1 Reply term: 1 Success: true
-[2026-02-28 20:13:33.381] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:35.355] [error] Failed: Request Timeout 
-When append_entries on node2 : 127.0.0.1:8001
-[2026-02-28 20:13:35.355] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:36.329] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:37.305] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:38.279] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:39.253] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:40.229] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:41.204] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:42.179] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:43.154] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:45.128] [error] Failed: Request Timeout 
+[2026-03-01 10:02:11.107] [debug] Election timeout: 6000ms
+[2026-03-01 10:02:11.107] [info] Cluster peers:
+[2026-03-01 10:02:11.107] [info] 127.0.0.1:8001
+[2026-03-01 10:02:11.107] [info] 127.0.0.1:8000
+[2026-03-01 10:02:11.107] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-01 10:02:11.121] [info] ------------------------------------Raft node 2 started on 127.0.0.1:8002------------------------------------
+[2026-03-01 10:02:11.121] [debug] Raft node 2 initialized on 127.0.0.1:8002
+[2026-03-01 10:02:11.123] [info] ------------------------------client runing ----------------------------
+[2026-03-01 10:02:11.128] [info] 连接成功: 127.0.0.1:8001
+[2026-03-01 10:02:11.128] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-01 10:02:11.128] [info] 连接成功: 127.0.0.1:8000
+[2026-03-01 10:02:11.129] [debug] Connected to peer: 127.0.0.1:8000
+[2026-03-01 10:02:11.129] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-01 10:02:14.662] [error] Node 2 became candidate at term 1
+[2026-03-01 10:02:14.662] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-01 10:02:14.663] [debug] Success! Result: reply.term=1, voteGranted=true
+[2026-03-01 10:02:14.663] [debug] Success! Result: reply.term=1, voteGranted=true
+[2026-03-01 10:02:14.663] [info] ----------------------total_nodes_count_: 3, vote_count: 3-------------------
+[2026-03-01 10:02:14.663] [error] Node 2 became leader at term 1.
+[2026-03-01 10:02:14.663] [info] Node 2 starting heartbeat thread for term 1.
+[2026-03-01 10:02:14.664] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:14.664] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:16.162] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:16.162] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:17.658] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:17.658] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:19.154] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:19.155] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:20.651] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:20.651] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:22.147] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:22.147] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:23.643] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:23.644] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:25.139] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:25.140] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:26.636] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:26.636] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:28.132] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:28.133] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:29.629] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:29.630] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:31.131] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:32.132] [error] Failed: Request Timeout 
 When append_entries on node2 : 127.0.0.1:8000
-[2026-02-28 20:13:54.867] [info] 连接成功: 127.0.0.1:8000
-[2026-02-28 20:13:54.867] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:55.841] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:56.815] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:57.789] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:58.769] [debug] Heartbeat to node 2 Reply term: 1 Success: true
-[2026-02-28 20:13:59.743] [debug] Heartbeat to node 2 Reply term: 1 Success: true
+[2026-03-01 10:02:34.628] [error] Failed: Request Timeout 
+When append_entries on node2 : 127.0.0.1:8001
+[2026-03-01 10:02:40.624] [info] 连接成功: 127.0.0.1:8001
+[2026-03-01 10:02:40.625] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:42.121] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:41.147] [debug] Heartbeat to node 1 Reply term: 1 Success: true
+[2026-03-01 10:02:42.647] [debug] Heartbeat to node 1 Reply term: 1 Success: true

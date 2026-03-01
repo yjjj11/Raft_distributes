@@ -1,4 +1,4 @@
-#include "raftnode.hpp"
+#include "../raftnode.hpp"
 #include <iostream>
 #include <vector>
 #include <string>

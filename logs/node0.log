@@ -1,38 +1,25 @@
-[2026-02-28 20:13:54.160] [debug] Election timeout: 2000ms
-[2026-02-28 20:13:54.160] [info] Cluster peers:
-[2026-02-28 20:13:54.160] [info] 127.0.0.1:8001
-[2026-02-28 20:13:54.160] [info] 127.0.0.1:8002
-[2026-02-28 20:13:54.160] [warning] --------------------------------total_nodes_count_: 3
+[2026-03-01 10:03:03.003] [debug] Election timeout: 2000ms
+[2026-03-01 10:03:03.003] [info] Cluster peers:
+[2026-03-01 10:03:03.003] [info] 127.0.0.1:8001
+[2026-03-01 10:03:03.003] [info] 127.0.0.1:8002
+[2026-03-01 10:03:03.003] [warning] --------------------------------total_nodes_count_: 1
 [ERROR] ZK handle is null, call start first!
 [ERROR] ZK handle is null, call start first!
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] ZK node already exists, skip create: [{}]
-[2026-02-28 20:13:54.169] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-02-28 20:13:54.169] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-02-28 20:13:54.171] [info] ------------------------------client runing ----------------------------
+[2026-03-01 10:03:03.011] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-03-01 10:03:03.012] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-03-01 10:03:03.013] [info] ------------------------------client runing ----------------------------
 [INFO] zookeeper_init success! connect to: {}
 [INFO] ZK session connected success!
 [INFO] Refresh service cache for path: {}, node count: {}
-[2026-02-28 20:13:54.867] [debug] Node 0 discovered higher term 1 in heartbeat, becoming follower.
-[2026-02-28 20:13:54.867] [error] Node 0 became follower at term 1
-[2026-02-28 20:13:54.867] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:55.841] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:56.815] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:57.789] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:58.769] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:13:59.173] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-02-28 20:13:59.174] [info] 连接成功: 127.0.0.1:8002
-[2026-02-28 20:13:59.174] [debug] Connected to peer: 127.0.0.1:8002
-[2026-02-28 20:13:59.174] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-02-28 20:13:59.743] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 2
-[2026-02-28 20:14:01.799] [error] Node 0 became candidate at term 2
-[2026-02-28 20:14:01.799] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-28 20:14:02.800] [error] Failed: Request Timeout 
-When vote_request on node0 : 127.0.0.1:8002
-[2026-02-28 20:14:02.800] [info] ----------------------total_nodes_count_: 2, vote_count: 1-------------------
-[2026-02-28 20:14:02.800] [error] Node 0 became follower at term 2
-[2026-02-28 20:14:08.943] [error] Node 0 became candidate at term 3
-[2026-02-28 20:14:08.943] [info] ------------------------------------Vote begain--------------------------------------
-[2026-02-28 20:14:08.944] [info] ----------------------total_nodes_count_: 2, vote_count: 1-------------------
-[2026-02-28 20:14:08.944] [error] Node 0 became follower at term 3
+[2026-03-01 10:03:03.017] [info] 连接成功: 127.0.0.1:8001
+[2026-03-01 10:03:03.017] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-01 10:03:03.244] [debug] Node 0 discovered higher term 2 in heartbeat, becoming follower.
+[2026-03-01 10:03:03.244] [error] Node 0 became follower at term 2
+[2026-03-01 10:03:03.244] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 1
+[2026-03-01 10:03:03.958] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 1
+[2026-03-01 10:03:04.676] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 1
+[2026-03-01 10:03:05.389] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 1
+[2026-03-01 10:03:06.103] [debug] Node 0: AppendEntries successful, added 0 entries.  from node 1

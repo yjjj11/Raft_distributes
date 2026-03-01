@@ -31,6 +31,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/)
 
 # 包含库的头文件目录
 include_directories(
+    ${CMAKE_SOURCE_DIR}
     ${RPC_INCLUDE_DIR}      # 库的头文件目录（从子目录继承）
     ${RPC_INCLUDE_DIR}/mrpc # 新增：适配client.hpp在mrpc子目录的情况
     ${ASIO_INCLUDE_DIR}     # Asio 头文件目录（从子目录继承）
@@ -45,10 +46,9 @@ endforeach()
 
 # 创建可执行文件
 add_executable(main
-     main.cpp
+     example/main.cpp
      raftnode.cpp
      ${MRPC_SRC_FILES} 
-     ./Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 )
 
 target_link_libraries(main 
