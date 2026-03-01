@@ -10,9 +10,10 @@ struct LogEntry {
     int32_t term = 0;          // 任期号，默认初始化0
     std::string key;           // 键
     std::string value;         // 值
+    std::string command_type;       // 命令（PUT/GET/DEL）
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LogEntry, term, key, value)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LogEntry, term, key, value, command_type)
 
 // 投票请求结构体（对应 VoteRequest 消息）
 struct VoteRequest {

@@ -13,6 +13,8 @@ void signal_handler(int signal) {
         }
         exit(0);
 }
+
+
 class KvStore {
 public:
     bool put(const std::string& key, const std::string& value) {
@@ -21,8 +23,23 @@ public:
         kv_store_[key] = value;
         return true;
     }
+
     std::string get(const std::string& key) {
-        return kv_store_[key];
+        auto it = kv_store_.find(key);
+        return it != kv_store_.end() ? it->second : "";
+    }
+
+    bool del(const std::string& key) {
+        spdlog::info("Applying DELETE: {}", key);
+        auto it = kv_store_.find(key);
+        if (it != kv_store_.end()) {
+            kv_store_.erase(it);
+            spdlog::info("DELETE: {} success", key);
+            return true; // 删除成功
+        }
+        // 如果键不存在，可以选择返回 false 或者 true（Raft 中通常认为操作本身是成功的，即使对象不存在）
+        // 这取决于您的语义。这里我们选择返回 true，表示删除操作（无论是否真的存在）都成功了。
+        return true; 
     }
 private:
     std::unordered_map<std::string, std::string> kv_store_;
@@ -37,9 +54,13 @@ int main(int argc, char* argv[]) {
     
     auto node = initialize_server(argc, argv);
     g_node = node.get();
-
+    
     node->set_apply_callback([](int32_t log_index, const LogEntry& entry) -> bool {
-        kv_store.put(entry.key, entry.value);
+        if (entry.command_type == "PUT") {
+            kv_store.put(entry.key, entry.value);
+        } else if (entry.command_type == "DEL") {
+            kv_store.del(entry.key);
+        }
         return true;
     });
 
@@ -79,7 +100,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "请输入值：";
                 std::cin.ignore(); // 忽略换行符
                 std::getline(std::cin, value); // 支持带空格的值
-                LogEntry entry{0,key,value};
+                LogEntry entry{0,key,value,"PUT"};
                 bool success = node->submit(entry);
                 if (success) {
                     std::cout << "✅ PUT成功：" << key << " = " << value << std::endl;
@@ -105,19 +126,20 @@ int main(int argc, char* argv[]) {
                 std::getline(std::cin, value); // 等待用户输入任意键继续
                 break;
             }
-            // case 3: { // DELETE操作
-            //     std::string key;
-            //     std::cout << "请输入要删除的键：";
-            //     std::cin >> key;
+            case 3: { // DELETE操作
+                std::string key;
+                std::cout << "请输入要删除的键：";
+                std::cin >> key;
+                LogEntry entry{0,key,"","DEL"};
 
-            //     bool success = node->kv_delete(key);
-            //     if (success) {
-            //         std::cout << "✅ DELETE成功：" << key << std::endl;
-            //     } else {
-            //         std::cout << "❌ DELETE失败（非Leader/键不存在/日志提交失败）" << std::endl;
-            //     }
-            //     break;
-            // }
+                bool success = node->submit(entry);
+                if (success) {
+                    std::cout << "✅ DELETE成功：" << key << std::endl;
+                } else {
+                    std::cout << "❌ DELETE失败（非Leader/键不存在/日志提交失败）" << std::endl;
+                }
+                break;
+            }
             default: {
                 std::cout << "❌ 无效的操作类型，请输入0-3！" << std::endl;
                 break;
