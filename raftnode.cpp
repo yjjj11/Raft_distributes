@@ -667,11 +667,15 @@ void RaftNode::run_election_timeout() {
 int RaftNode::find_leader(){
     for(int i=0;i<peer_connections_.size();i++){
         auto conn=peer_connections_[i];
-        if(conn) {
-            auto reply = conn->call<bool>("is_leader", i);
-            if(reply.error_code() == mrpc::ok && reply.value()){
-                return i;
-            }
+        if(!conn) {
+            std::unique_lock<std::mutex> lock(conns_mutex_);
+            peer_connections_[i] = client_.connect(peers_[i].first, peers_[i].second,1);//尝试重新连接
+            if(peer_connections_[i]) total_nodes_count_++;
+            else continue;   //还是连接不上就跳过
+        }
+        auto reply = conn->call<bool>("is_leader", i);
+        if(reply.error_code() == mrpc::ok && reply.value()){
+            return i;
         }
     }
     return -1;
