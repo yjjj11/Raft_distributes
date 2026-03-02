@@ -1,0 +1,6 @@
+/root/Raft/build/CMakeFiles/main.dir
+/root/Raft/build/CMakeFiles/distributed_lock.dir
+/root/Raft/build/CMakeFiles/edit_cache.dir
+/root/Raft/build/CMakeFiles/rebuild_cache.dir
+/root/Raft/build/Asio_mrpc/CMakeFiles/edit_cache.dir
+/root/Raft/build/Asio_mrpc/CMakeFiles/rebuild_cache.dir

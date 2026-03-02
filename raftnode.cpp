@@ -25,6 +25,9 @@ RaftNode::RaftNode(int node_id, const std::string& ip, int port,
     // 连接到其他节点
     start_server();
 
+    // 启动日志应用线程
+    apply_thread_ = std::thread(&RaftNode::run_apply_loop, this);
+
     // spdlog::info("Connected to peers---------------------------------:");
 }
 
@@ -44,6 +47,10 @@ void RaftNode::stop() {
     }
     if (heartbeat_thread_.joinable()) {
         heartbeat_thread_.join();
+    }
+    apply_cv_.notify_all();
+    if (apply_thread_.joinable()) {
+        apply_thread_.join();
     }
     client_.shutdown();
     // 关闭服务器
@@ -176,7 +183,7 @@ void RaftNode::start_client() {
     client_.run();
     
     for (const auto& peer : peers_) {
-        auto conn = client_.connect(peer.first, peer.second,5);
+        auto conn = client_.connect(peer.first, peer.second,1);
         if (conn) {
             peer_connections_.push_back(conn);
             total_nodes_count_++;
@@ -184,6 +191,19 @@ void RaftNode::start_client() {
         } else {
             spdlog::error("Failed to connect to peer: {}:{}", peer.first, peer.second);
             peer_connections_.push_back(nullptr);  // 保持索引对应
+        }
+    }
+    for (int i = 0; i < peer_connections_.size(); ++i) {
+        if (!peer_connections_[i]) {
+            auto conn = client_.connect(peers_[i].first, peers_[i].second,5);
+            if (conn) {
+                peer_connections_[i] = conn;
+                total_nodes_count_++;
+                spdlog::debug("Connected to peer: {}:{}", peers_[i].first, peers_[i].second);
+            } else {
+                spdlog::error("Failed to connect to peer: {}:{}", peers_[i].first, peers_[i].second);
+                peer_connections_[i] = nullptr;  // 保持索引对应
+            }
         }
     }
 
@@ -380,8 +400,8 @@ AppendReply RaftNode::handle_append_request(const AppendRequest& request) {
     if (request.leaderCommit > commit_index_) {
         int32_t last_new_log_index = request.prevLogIndex + request.entries.size();
         commit_index_.store(std::min(request.leaderCommit, last_new_log_index));
-        // 7. 尝试应用新提交的日志到状态机
-        apply_logs_to_state_machine(last_applied_.load() + 1, commit_index_.load());
+        // 7. 唤醒日志应用线程
+        apply_cv_.notify_one();
     }
     
     reply.success = true;
@@ -414,11 +434,15 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
     spdlog::debug("Node {}: Applying logs from index {} to {} to state machine.", node_id_, from_index, to_index);
     // 遍历所有待应用的日志条目
     for (int32_t i = from_index; i <= to_index; ++i) {
-        if (i < 0 || i >= static_cast<int32_t>(log_.size())) {
-            spdlog::warn("Node {}: Invalid log index {} when applying to state machine.", node_id_, i);
-            continue;
+        LogEntry entry;
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            if (i < 0 || i >= static_cast<int32_t>(log_.size())) {
+                spdlog::warn("Node {}: Invalid log index {} when applying to state machine.", node_id_, i);
+                continue;
+            }
+            entry = log_[i];
         }
-        const auto& entry = log_[i];
         
 
         spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} = {} 应用到状态机。", node_id_, i, entry.key, entry.value);
@@ -443,10 +467,30 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
             last_applied_.store(i);
             spdlog::debug("Node {}: Applied log index {} to state machine.", node_id_, i);
         } else {
-            spdlog::error("Node {}: Failed to apply log index {} to state machine.", node_id_, i);
-            break; // 业务执行失败，暂停应用（可根据需求调整策略）
+            spdlog::warn("Node {}: Applied log index {}, but business logic returned failure.", node_id_, i);
         }
     }
+}
+
+void RaftNode::run_apply_loop() {
+    spdlog::info("Node {} starting apply loop thread.", node_id_);
+    while (running_) {
+        std::unique_lock<std::mutex> lock(apply_mutex_);
+        apply_cv_.wait(lock, [this] {
+            return !running_ || commit_index_.load() > last_applied_.load();
+        });
+
+        if (!running_) break;
+
+        int32_t from = last_applied_.load() + 1;
+        int32_t to = commit_index_.load();
+        
+        lock.unlock(); // 允许在应用日志时有新的提交触发 notify
+        if (from <= to) {
+            apply_logs_to_state_machine(from, to);
+        }
+    }
+    spdlog::info("Node {} apply loop thread stopping.", node_id_);
 }
 
 
@@ -543,19 +587,19 @@ void RaftNode::send_heartbeats() {
                 for (int32_t n = log_.size() - 1; n > commit_index_.load(); --n) {
                     if (n < 0) continue; // 安全检查
                     // 检查当前日志索引 n 的任期是否与当前任期相同
-                    spdlog::info("Node {}: Checking log index {} with term {}.", node_id_, n, log_[n].term);
+                    // spdlog::info("Node {}: Checking log index {} with term {}.", node_id_, n, log_[n].term);
                     if (log_[n].term == current_term_) {
                         int count = 1; // Leader 自己算一个
-                        spdlog::info("Node {}: Counting votes for log index {}.", node_id_, n);
+                        // spdlog::info("Node {}: Counting votes for log index {}.", node_id_, n);
                         for (size_t i = 0; i < match_index_.size(); ++i) {
                             if (match_index_[i] >= n) {
                                 count++;
-                                spdlog::info("Node {}: Vote granted for log index {} by node {}.", node_id_, n, i);
+                                // spdlog::info("Node {}: Vote granted for log index {} by node {}.", node_id_, n, i);
                             }
                         }
-                        spdlog::info("Node {}: Total votes for log index {} is {}.", node_id_, n, count);
+                        // spdlog::info("Node {}: Total votes for log index {} is {}.", node_id_, n, count);
                         if (count > total_nodes_count_ / 2) {
-                            spdlog::info("Node {}: Log index {} is committed with {} votes.", node_id_, n, count);
+                            // spdlog::info("Node {}: Log index {} is committed with {} votes.", node_id_, n, count);
                             new_commit_index = n;
                             break; // 找到最大的 N
                         }
@@ -565,9 +609,9 @@ void RaftNode::send_heartbeats() {
                 if (new_commit_index != commit_index_.load()) {
                     // spdlog::debug("根据match_index_更新commit_index_为{}", new_commit_index);
                     commit_index_.store(new_commit_index);
-                    spdlog::debug("Node {}: Updated commit_index to {}.", node_id_, commit_index_.load());
-                    // 应用新提交的日志
-                    apply_logs_to_state_machine(last_applied_.load() + 1, commit_index_.load());
+                    // spdlog::debug("Node {}: Updated commit_index to {}.", node_id_, commit_index_.load());
+                    // 唤醒日志应用线程
+                    apply_cv_.notify_one();
                 }
             }
         }
@@ -666,6 +710,7 @@ void RaftNode::run_election_timeout() {
 // 在 raftnode.cpp 中实现 handle_append_request (仅心跳版本)
 
 int RaftNode::find_leader(){
+    std::unique_lock<std::mutex> lock(conns_mutex_);
     for(int i=0;i<peer_connections_.size();i++){
         auto conn=peer_connections_[i];
         if(!conn) {
@@ -674,9 +719,9 @@ int RaftNode::find_leader(){
             if(peer_connections_[i]) total_nodes_count_++;
             else continue;   //还是连接不上就跳过
         }
-        spdlog::debug("Node {}: Sending is_leader request to node {}.", node_id_, i);
+        // spdlog::debug("Node {}: Sending is_leader request to node {}.", node_id_, i);
         auto reply = conn->call<bool>("is_leader", i);
-        spdlog::debug("Node {}: Received is_leader reply from node {}: {}", node_id_, i, reply.value());
+        // spdlog::debug("Node {}: Received is_leader reply from node {}: {}", node_id_, i, reply.value());
         if(reply.error_code() == mrpc::ok && reply.value()){
             return i;
         }
@@ -714,12 +759,18 @@ bool RaftNode::submit(const LogEntry& entry) {
     // 2. 加锁写入日志（保证日志的原子性）
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        // entry.term = current_term_.load();
         auto new_entry = entry;
         new_entry.term = current_term_.load();
+        
+        // 核心修改：如果是 Leader，设置确定的逻辑时间戳（毫秒）
+        if (new_entry.timestamp == 0) {
+            new_entry.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()).count();
+        }
+        
         log_.push_back(new_entry);
-        spdlog::info("Node {}: Submitted log entry (index {}, term {})", 
-                     node_id_, log_.size()-1, current_term_.load());
+        spdlog::info("Node {}: Submitted log entry (index {}, term {}) type {}", 
+                     node_id_, log_.size()-1, current_term_.load(), new_entry.command_type);
     }
     return true;
 }

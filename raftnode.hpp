@@ -39,9 +39,9 @@ public:
         std::lock_guard<std::mutex> lock(mutex_);
         apply_callback_ = std::move(callback);
     }
+    int node_id_;
 private:
     // 节点基本信息
-    int node_id_;
     std::string ip_;
     int port_;
     StateMachineCallback apply_callback_;
@@ -71,10 +71,13 @@ private:
     std::thread server_thread_;
     std::thread election_thread_;
     std::thread heartbeat_thread_;
+    std::thread apply_thread_;
     
     // 互斥锁
     mutable std::mutex mutex_;
     mutable std::mutex conns_mutex_;
+    mutable std::mutex apply_mutex_;
+    std::condition_variable apply_cv_;
     // RPC服务器和客户端
     mrpc::server& server_;
     mrpc::client& client_;
@@ -85,10 +88,12 @@ private:
     // 内部辅助函数
     void run_election_timeout();
     void send_heartbeats();
+    void run_apply_loop();
     void setup_rpc_handlers() ;
     void start_server();
     
     // 日志一致性检查
+    void apply_logs_to_state_machine(int32_t from_index, int32_t to_index);
     bool check_if_log_is_ok(const AppendRequest& request);
     
     // 状态转换
@@ -112,8 +117,6 @@ private:
     
     // 安全检查
     bool is_log_up_to_date(int32_t last_log_term, int32_t last_log_index) const;
-    
-    void apply_logs_to_state_machine(int32_t from_index, int32_t to_index);
 
     int find_leader();
 };

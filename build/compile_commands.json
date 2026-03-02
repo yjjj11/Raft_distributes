@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/main.dir/example/main.cpp.o -c /root/Raft/example/main.cpp",
+  "file": "/root/Raft/example/main.cpp",
+  "output": "CMakeFiles/main.dir/example/main.cpp.o"
+},
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/main.dir/raftnode.cpp.o -c /root/Raft/raftnode.cpp",
+  "file": "/root/Raft/raftnode.cpp",
+  "output": "CMakeFiles/main.dir/raftnode.cpp.o"
+},
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/main.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp",
+  "file": "/root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp",
+  "output": "CMakeFiles/main.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
+},
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o -c /root/Raft/example/distributed_lock.cpp",
+  "file": "/root/Raft/example/distributed_lock.cpp",
+  "output": "CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o"
+},
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/distributed_lock.dir/raftnode.cpp.o -c /root/Raft/raftnode.cpp",
+  "file": "/root/Raft/raftnode.cpp",
+  "output": "CMakeFiles/distributed_lock.dir/raftnode.cpp.o"
+},
+{
+  "directory": "/root/Raft/build",
+  "command": "/usr/bin/c++ -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE -I/root/Raft -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include -w -o CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp",
+  "file": "/root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp",
+  "output": "CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
+}
+]

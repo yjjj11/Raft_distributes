@@ -10,10 +10,12 @@ struct LogEntry {
     int32_t term = 0;          // 任期号，默认初始化0
     std::string key;           // 键
     std::string value;         // 值
-    std::string command_type;       // 命令（PUT/GET/DEL）
+    std::string command_type;  // 命令（PUT/DEL/LOCK/UNLOCK）
+    int64_t timestamp = 0;     // Leader 产生该日志时的 Unix 时间戳（毫秒）
+    int64_t ttl = 0;           // 锁的过期时间（毫秒），0 表示永不过期
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LogEntry, term, key, value, command_type)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LogEntry, term, key, value, command_type, timestamp, ttl)
 
 // 投票请求结构体（对应 VoteRequest 消息）
 struct VoteRequest {

@@ -254,6 +254,7 @@ class connection : public std::enable_shared_from_this<connection> {
 
     template<typename RET = void, msg_type_fmt FMT = DEFAULT_MSG_FORMAT,   typename... Args>
     auto call(const std::string& rpc_name, Args&& ... args) {
+        // spdlog::warn("进入了call");
         return call<DEFAULT_TIMEOUT, RET, FMT>(rpc_name, std::forward<Args>(args)...);
     }
 
@@ -268,6 +269,7 @@ class connection : public std::enable_shared_from_this<connection> {
 
     template<size_t TIMEOUT, typename RET = void, msg_type_fmt FMT = DEFAULT_MSG_FORMAT, typename... Args>
     req_result<RET> call(const std::string& rpc_name, Args&&...args) {
+        // spdlog::warn("进入了call");
         auto [req_id, future] = async_call<FMT>(rpc_name, std::forward<Args>(args)...);
         // LOG_DEBUG("调用服务 {} 方法 {}", rpc_name, typeid(RET).name());
         auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
@@ -284,7 +286,9 @@ class connection : public std::enable_shared_from_this<connection> {
 
     template<msg_type_fmt FMT = DEFAULT_MSG_FORMAT, typename... Args>
     auto async_call(const std::string& rpc_name, Args&&...args) {
+        // spdlog::warn("进入了async_call");
         auto msg_id = router().query_msg_id(rpc_name);
+        // spdlog::warn("尝试调用query_msg_id");
         uint32_t msg_type = (1 << FMT) | (1 << MSG_IS_REQUEST) | (1 << MSG_IS_FUTURE);
         auto future_msg = std::make_shared<future_msg_info>();
         auto future = future_msg->promise.get_future();
