@@ -150,7 +150,8 @@ void RaftNode::setup_rpc_handlers() {
 }
 
 bool RaftNode::is_leader(int node_id) {
-    return state_.load() == LEADER;
+    spdlog::debug("Node {}: Checking if node {} is leader.", node_id_, node_id);
+    return (state_.load() == LEADER);
 }
 void RaftNode::start_server() {
     if (running_) return;
@@ -673,7 +674,9 @@ int RaftNode::find_leader(){
             if(peer_connections_[i]) total_nodes_count_++;
             else continue;   //还是连接不上就跳过
         }
+        spdlog::debug("Node {}: Sending is_leader request to node {}.", node_id_, i);
         auto reply = conn->call<bool>("is_leader", i);
+        spdlog::debug("Node {}: Received is_leader reply from node {}: {}", node_id_, i, reply.value());
         if(reply.error_code() == mrpc::ok && reply.value()){
             return i;
         }
@@ -686,7 +689,19 @@ bool RaftNode::submit(const LogEntry& entry) {
     if (state_.load() != LEADER) {
         spdlog::warn("Node {}: Not leader, cannot submit log entry.", node_id_);
         int leader_id = find_leader();
+        if(leader_id == -1){
+            spdlog::warn("Node {}: Failed to find leader.", node_id_);
+            return false;
+        }
         auto conn=peer_connections_[leader_id];
+        if(!conn) {
+            std::unique_lock<std::mutex> lock(conns_mutex_);
+            spdlog::warn("Node {}: trying to connect to leader {}.", node_id_, leader_id);
+            peer_connections_[leader_id] = client_.connect(peers_[leader_id].first, peers_[leader_id].second,1);//尝试重新连接
+            if(peer_connections_[leader_id]) total_nodes_count_++;
+            else return false;   //还是连接不上就返回失败
+        }
+        spdlog::debug("Node {}: Sending log entry {} = {} to leader {}", node_id_, entry.key, entry.value, leader_id);
         auto reply = conn->call<bool>("submit", entry);
         if (reply.error_code() == mrpc::ok) {
             spdlog::info("成功向leader {}提交日志条目 {} = {}", leader_id, entry.key, entry.value);
@@ -695,6 +710,7 @@ bool RaftNode::submit(const LogEntry& entry) {
         }
     }
 
+    spdlog::debug("进入正式push阶段了");
     // 2. 加锁写入日志（保证日志的原子性）
     {
         std::lock_guard<std::mutex> lock(mutex_);

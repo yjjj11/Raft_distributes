@@ -56,3 +56,16 @@ target_link_libraries(main
     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
     Threads::Threads    # 现在能找到这个目标了
 )
+
+# 创建分布式锁示例可执行文件
+add_executable(distributed_lock
+     example/distributed_lock.cpp
+     raftnode.cpp
+     ${MRPC_SRC_FILES} 
+)
+
+target_link_libraries(distributed_lock 
+    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+    Threads::Threads    # 现在能找到这个目标了
+)
