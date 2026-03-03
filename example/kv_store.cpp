@@ -17,32 +17,44 @@ void signal_handler(int signal) {
 
 class KvStore {
 public:
-    bool put(const std::string& key, const std::string& value) {
-        // std::cout << "Apply: " << key << " = " << value << std::endl;
-        spdlog::warn("----------------------------Apply: {} = {}---------------------------", key, value);
-        kv_store_[key] = value;
+    bool PUT(const std::string& key, const std::string& value) {
+        LogEntry entry{0,key,value,"PUT"};
+        auto req=g_node->submit(entry);
+        if(req == -1){
+            return false;
+        }
+        g_node->wait_for(req);
         return true;
     }
-
-    std::string get(const std::string& key) {
+    void put(const std::string& key, const std::string& value) {
+        spdlog::warn("----------------------------Apply: {} = {}---------------------------", key, value);
+        kv_store_[key] = value;
+    }
+    std::string GET(const std::string& key) {
         auto it = kv_store_.find(key);
         return it != kv_store_.end() ? it->second : "";
     }
 
-    bool del(const std::string& key) {
+    bool DELETE(const std::string& key) {
+        LogEntry entry{0,key,"Null","DEL"};
+        auto req=g_node->submit(entry);
+        if(req == -1){
+            return false;
+        }
+        g_node->wait_for(req);
+        return true; 
+    }
+    void del(const std::string& key) {
         spdlog::info("Applying DELETE: {}", key);
         auto it = kv_store_.find(key);
         if (it != kv_store_.end()) {
             kv_store_.erase(it);
             spdlog::info("DELETE: {} success", key);
-            return true; // 删除成功
         }
-        // 如果键不存在，可以选择返回 false 或者 true（Raft 中通常认为操作本身是成功的，即使对象不存在）
-        // 这取决于您的语义。这里我们选择返回 true，表示删除操作（无论是否真的存在）都成功了。
-        return true; 
     }
 private:
     std::unordered_map<std::string, std::string> kv_store_;
+    
 };
 KvStore kv_store;
 
@@ -55,12 +67,13 @@ int main(int argc, char* argv[]) {
     auto node = initialize_server(argc, argv);
     g_node = node.get();
     
-    node->set_apply_callback([](int32_t log_index, const LogEntry& entry) -> bool {
+    node->set_apply_callback([&](int32_t log_index, const LogEntry& entry) -> bool {
         if (entry.command_type == "PUT") {
             kv_store.put(entry.key, entry.value);
         } else if (entry.command_type == "DEL") {
             kv_store.del(entry.key);
         }
+        g_node->lock_store_[entry.req_id].set_value(true);
         return true;
     });
 
@@ -100,13 +113,13 @@ int main(int argc, char* argv[]) {
                 std::cout << "请输入值：";
                 std::cin.ignore(); // 忽略换行符
                 std::getline(std::cin, value); // 支持带空格的值
-                LogEntry entry{0,key,value,"PUT"};
-                bool success = node->submit(entry);
-                if (success) {
+                if(kv_store.PUT(key, value)){
                     std::cout << "✅ PUT成功：" << key << " = " << value << std::endl;
                 } else {
-                    std::cout << "❌ PUT失败（非Leader或日志提交失败）" << std::endl;
+                    std::cout << "❌ PUT失败（非Leader/日志提交失败）" << std::endl;
                 }
+                std::cout << "按任意键继续..." << std::endl;
+                std::cin.get();
                 break;
             }
             case 2: { // GET操作
@@ -115,29 +128,30 @@ int main(int argc, char* argv[]) {
                 std::cout << "请输入要查询的键：";
                 std::cin >> key;
  
-                auto value =kv_store.get(key);
+                auto value =kv_store.GET(key);
                 if (value.empty()) {
                     std::cout << "❌ 查询失败：键 " << key << " 不存在" << std::endl;
                 } else {
                     std::cout << "✅ 查询结果：" << key << " = " << value << std::endl;
                 }
                 std::cout << "按任意键继续..." << std::endl;
-                std::cin.ignore(); // 忽略换行符
-                std::getline(std::cin, value); // 等待用户输入任意键继续
+                std::cin.get();
+                std::cin.get();
                 break;
             }
             case 3: { // DELETE操作
                 std::string key;
                 std::cout << "请输入要删除的键：";
                 std::cin >> key;
-                LogEntry entry{0,key,"","DEL"};
-
-                bool success = node->submit(entry);
+                bool success = kv_store.DELETE(key);
                 if (success) {
                     std::cout << "✅ DELETE成功：" << key << std::endl;
                 } else {
                     std::cout << "❌ DELETE失败（非Leader/键不存在/日志提交失败）" << std::endl;
                 }
+                std::cout << "按任意键继续..." << std::endl;
+                std::cin.get();
+                std::cin.get();
                 break;
             }
             default: {

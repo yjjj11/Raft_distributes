@@ -151,7 +151,7 @@ void RaftNode::setup_rpc_handlers() {
                          return this->is_leader(node_id); 
                      });
     server_.reg_func("submit", 
-                     [this](const LogEntry& entry) -> bool { 
+                     [this](const LogEntry& entry) -> int64_t { 
                          return this->submit(entry); 
                      });
 }
@@ -730,14 +730,14 @@ int RaftNode::find_leader(){
     return -1;
 }
 
-bool RaftNode::submit(const LogEntry& entry) {
+int64_t RaftNode::submit(const LogEntry& entry) {
     // 1. 检查当前节点是否为 Leader
     if (state_.load() != LEADER) {
         spdlog::warn("Node {}: Not leader, cannot submit log entry.", node_id_);
         int leader_id = find_leader();
         if(leader_id == -1){
             spdlog::warn("Node {}: Failed to find leader.", node_id_);
-            return false;
+            return -1;
         }
         auto conn=peer_connections_[leader_id];
         if(!conn) {
@@ -745,24 +745,29 @@ bool RaftNode::submit(const LogEntry& entry) {
             spdlog::warn("Node {}: trying to connect to leader {}.", node_id_, leader_id);
             peer_connections_[leader_id] = client_.connect(peers_[leader_id].first, peers_[leader_id].second,1);//尝试重新连接
             if(peer_connections_[leader_id]) total_nodes_count_++;
-            else return false;   //还是连接不上就返回失败
+            else return -1;   //还是连接不上就返回失败
         }
+
         spdlog::debug("Node {}: Sending log entry {} = {} to leader {}", node_id_, entry.key, entry.value, leader_id);
-        auto reply = conn->call<bool>("submit", entry);
+        auto reply = conn->call<int64_t>("submit", entry);
         if (reply.error_code() == mrpc::ok) {
             spdlog::info("成功向leader {}提交日志条目 {} = {}", leader_id, entry.key, entry.value);
+            return reply.value();
         } else {
             spdlog::error("Node {}: Failed to submit log entry to leader {}: {}", node_id_, leader_id, reply.error_msg());
+            return -1;
         }
+
     }
 
     spdlog::debug("进入正式push阶段了");
     // 2. 加锁写入日志（保证日志的原子性）
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        auto new_entry = entry;
+        auto new_entry = std::move(entry);
         new_entry.term = current_term_.load();
-        
+        request_id_++;
+        new_entry.req_id = request_id_;
         // 核心修改：如果是 Leader，设置确定的逻辑时间戳（毫秒）
         if (new_entry.timestamp == 0) {
             new_entry.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -773,7 +778,7 @@ bool RaftNode::submit(const LogEntry& entry) {
         spdlog::info("Node {}: Submitted log entry (index {}, term {}) type {}", 
                      node_id_, log_.size()-1, current_term_.load(), new_entry.command_type);
     }
-    return true;
+    return request_id_;
 }
 
 void init_logger(int node_id) {
@@ -793,6 +798,13 @@ void init_logger(int node_id) {
 
     spdlog::set_default_logger(logger);
 }
+
+
+void RaftNode::wait_for(int64_t req_id){
+    lock_store_[req_id].get_future().wait();
+    lock_store_.erase(req_id);
+}
+
 
 std::shared_ptr<RaftNode> initialize_server(int argc, char* argv[]){
     if (argc < 4) {

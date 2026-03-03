@@ -1,0 +1,62 @@
+[2026-03-03 21:08:37.122] [debug] Election timeout: 2000ms
+[2026-03-03 21:08:37.122] [info] Cluster peers:
+[2026-03-03 21:08:37.122] [info] 127.0.0.1:8000
+[2026-03-03 21:08:37.122] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-03 21:08:37.129] [info] ------------------------------------Raft node 1 started on 127.0.0.1:8001------------------------------------
+[2026-03-03 21:08:37.129] [debug] Raft node 1 initialized on 127.0.0.1:8001
+[2026-03-03 21:08:37.129] [info] Node 1 starting apply loop thread.
+[2026-03-03 21:08:37.130] [info] ------------------------------client runing ----------------------------
+[2026-03-03 21:08:37.134] [info] 连接成功: 127.0.0.1:8000
+[2026-03-03 21:08:37.134] [debug] Connected to peer: 127.0.0.1:8000
+[2026-03-03 21:08:37.134] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-03 21:08:38.953] [debug] Node 1 received vote request: term=1, candidateId=0, lastLogIndex=-1, lastLogTerm=0
+[2026-03-03 21:08:38.954] [debug] Node 1 discovered higher term 1 in vote request, becoming follower.
+[2026-03-03 21:08:38.954] [error] Node 1 became FOLLOWER at term 1
+[2026-03-03 21:08:38.954] [debug] Node 1 granted vote to node 0 for term 1.
+[2026-03-03 21:08:40.137] [warning] Node 1: Not leader, cannot submit log entry.
+[2026-03-03 21:08:40.137] [debug] Node 1: Sending log entry distributed_resource_lock = 1 to leader 0
+[2026-03-03 21:08:40.137] [info] 成功向leader 0提交日志条目 distributed_resource_lock = 1
+[2026-03-03 21:08:40.160] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:41.365] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:41.365] [debug] Node 1: Applying logs from index 0 to 0 to state machine.
+[2026-03-03 21:08:41.365] [debug] Node 1: 正在准备将index=0的日志条目 distributed_resource_lock = 1 应用到状态机。
+[2026-03-03 21:08:41.366] [warning] [LockManager] 'distributed_resource_lock' LOCK SUCCESS by '1' (TTL: 10000ms)
+[2026-03-03 21:08:41.366] [debug] Node 1: Applied log index 0 to state machine.
+[2026-03-03 21:08:42.571] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:42.571] [debug] Node 1: Applying logs from index 1 to 1 to state machine.
+[2026-03-03 21:08:42.571] [debug] Node 1: 正在准备将index=1的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:42.571] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
+[2026-03-03 21:08:42.571] [debug] Node 1: Applied log index 1 to state machine.
+[2026-03-03 21:08:43.777] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:43.777] [debug] Node 1: Applying logs from index 2 to 2 to state machine.
+[2026-03-03 21:08:43.777] [debug] Node 1: 正在准备将index=2的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:43.777] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
+[2026-03-03 21:08:43.777] [debug] Node 1: Applied log index 2 to state machine.
+[2026-03-03 21:08:44.983] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:44.983] [debug] Node 1: Applying logs from index 3 to 3 to state machine.
+[2026-03-03 21:08:44.983] [debug] Node 1: 正在准备将index=3的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:44.983] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
+[2026-03-03 21:08:44.983] [debug] Node 1: Applied log index 3 to state machine.
+[2026-03-03 21:08:46.188] [debug] Node 1: AppendEntries successful, added 1 entries.  from node 0
+[2026-03-03 21:08:46.188] [debug] Node 1: Applying logs from index 4 to 4 to state machine.
+[2026-03-03 21:08:46.188] [debug] Node 1: 正在准备将index=4的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:46.188] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
+[2026-03-03 21:08:46.189] [debug] Node 1: Applied log index 4 to state machine.
+[2026-03-03 21:08:46.366] [warning] Node 1: Not leader, cannot submit log entry.
+[2026-03-03 21:08:46.366] [debug] Node 1: Sending log entry distributed_resource_lock = 1 to leader 0
+[2026-03-03 21:08:46.367] [info] 成功向leader 0提交日志条目 distributed_resource_lock = 1
+[2026-03-03 21:08:47.394] [debug] Node 1: AppendEntries successful, added 2 entries.  from node 0
+[2026-03-03 21:08:47.394] [debug] Node 1: Applying logs from index 5 to 5 to state machine.
+[2026-03-03 21:08:47.394] [debug] Node 1: 正在准备将index=5的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:47.394] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
+[2026-03-03 21:08:47.394] [debug] Node 1: Applied log index 5 to state machine.
+[2026-03-03 21:08:48.600] [debug] Node 1: Applying logs from index 6 to 7 to state machine.
+[2026-03-03 21:08:48.600] [debug] Node 1: 正在准备将index=6的日志条目 distributed_resource_lock = 1 应用到状态机。
+[2026-03-03 21:08:48.600] [warning] [LockManager] 'distributed_resource_lock' UNLOCK SUCCESS by '1'
+[2026-03-03 21:08:48.600] [debug] Node 1: Applied log index 6 to state machine.
+[2026-03-03 21:08:48.600] [debug] Node 1: 正在准备将index=7的日志条目 distributed_resource_lock = 0 应用到状态机。
+[2026-03-03 21:08:48.600] [warning] [LockManager] 'distributed_resource_lock' LOCK SUCCESS by '0' (TTL: 10000ms)
+[2026-03-03 21:08:48.600] [debug] Node 1: Applied log index 7 to state machine.
+[2026-03-03 21:08:50.600] [debug] Stopping Raft node 1...
+[2026-03-03 21:08:50.742] [info] Node 1 apply loop thread stopping.
+[2026-03-03 21:08:50.742] [debug] Raft node 1 stopped.

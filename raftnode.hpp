@@ -31,7 +31,7 @@ public:
     AppendReply handle_append_request(const AppendRequest& request);
     void handle_heartbeat_request(const AppendRequest& request,AppendReply& reply);
 
-    bool submit(const LogEntry& entry);
+    int64_t submit(const LogEntry& entry);
     using StateMachineCallback = std::function<bool(int32_t log_index, const LogEntry& entry)>;
 
     // 设置回调函数的接口
@@ -39,13 +39,16 @@ public:
         std::lock_guard<std::mutex> lock(mutex_);
         apply_callback_ = std::move(callback);
     }
+
+    void wait_for(int64_t req_id);
     int node_id_;
+    std::unordered_map<int64_t, std::promise<bool>> lock_store_;
 private:
     // 节点基本信息
     std::string ip_;
     int port_;
     StateMachineCallback apply_callback_;
-
+    int64_t request_id_{0};
     // 集群配置
     int election_elapsed_time_;
     std::vector<std::pair<std::string, int>> peers_;  // 存储其他节点的地址信息
