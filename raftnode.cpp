@@ -182,6 +182,7 @@ void RaftNode::start_server() {
 void RaftNode::start_client() {
     client_.run();
     
+    std::unique_lock<std::mutex> lock(conns_mutex_);
     for (const auto& peer : peers_) {
         auto conn = client_.connect(peer.first, peer.second,1);
         if (conn) {

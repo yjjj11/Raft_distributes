@@ -44,20 +44,43 @@ foreach(file ${MRPC_SRC_FILES})
     message(STATUS "  - ${file}")
 endforeach()
 
-# 创建可执行文件
-add_executable(main
-     example/main.cpp
+add_executable(node
+     example/node.cpp
      raftnode.cpp
      ${MRPC_SRC_FILES} 
 )
 
-target_link_libraries(main 
+target_link_libraries(node 
+    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+    Threads::Threads    # 现在能找到这个目标了
+)
+# 创建可执行文件
+add_executable(kv_store
+     example/kv_store.cpp
+     raftnode.cpp
+     ${MRPC_SRC_FILES} 
+)
+
+target_link_libraries(kv_store 
     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
     Threads::Threads    # 现在能找到这个目标了
 )
 
 # 创建分布式锁示例可执行文件
+add_executable(distributed_lock_active
+     example/distributed_lock_active.cpp
+     raftnode.cpp
+     ${MRPC_SRC_FILES} 
+)
+
+target_link_libraries(distributed_lock_active 
+    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+    Threads::Threads    # 现在能找到这个目标了
+)
+
 add_executable(distributed_lock
      example/distributed_lock.cpp
      raftnode.cpp

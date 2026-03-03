@@ -1,0 +1,26 @@
+[2026-03-03 11:12:27.162] [debug] Election timeout: 2000ms
+[2026-03-03 11:12:27.162] [info] Cluster peers:
+[2026-03-03 11:12:27.162] [info] 127.0.0.1:8001
+[2026-03-03 11:12:27.162] [info] 127.0.0.1:8000
+[2026-03-03 11:12:27.162] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-03 11:12:27.169] [info] ------------------------------------Raft node 2 started on 127.0.0.1:8002------------------------------------
+[2026-03-03 11:12:27.169] [debug] Raft node 2 initialized on 127.0.0.1:8002
+[2026-03-03 11:12:27.169] [info] Node 2 starting apply loop thread.
+[2026-03-03 11:12:27.170] [info] ------------------------------client runing ----------------------------
+[2026-03-03 11:12:27.175] [info] 连接成功: 127.0.0.1:8001
+[2026-03-03 11:12:27.175] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-03 11:12:27.175] [info] 连接成功: 127.0.0.1:8000
+[2026-03-03 11:12:27.176] [debug] Connected to peer: 127.0.0.1:8000
+[2026-03-03 11:12:27.176] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-03 11:12:29.370] [debug] Node 2 received vote request: term=1, candidateId=0, lastLogIndex=-1, lastLogTerm=0
+[2026-03-03 11:12:29.370] [debug] Node 2 discovered higher term 1 in vote request, becoming follower.
+[2026-03-03 11:12:29.370] [error] Node 2 became FOLLOWER at term 1
+[2026-03-03 11:12:29.370] [debug] Node 2 granted vote to node 0 for term 1.
+[2026-03-03 11:12:43.388] [error] Node 2 became CANDIDATE at term 2
+[2026-03-03 11:12:43.388] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-03 11:12:43.388] [debug] Success! Result: reply.term=2, voteGranted=true
+[2026-03-03 11:12:44.389] [error] Failed: Request Timeout 
+When vote_request on node2 : 127.0.0.1:8000
+[2026-03-03 11:12:44.389] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
+[2026-03-03 11:12:44.389] [error] Node 2 became LEADER at term 2.
+[2026-03-03 11:12:44.389] [info] Node 2 starting heartbeat thread for term 2.

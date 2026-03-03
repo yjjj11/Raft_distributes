@@ -54,16 +54,18 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Raft
+CMAKE_SOURCE_DIR = /home/yjj/Raft_distributes
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Raft/build
+CMAKE_BINARY_DIR = /home/yjj/Raft_distributes/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/main.dir/all
+all: CMakeFiles/node.dir/all
+all: CMakeFiles/kv_store.dir/all
+all: CMakeFiles/distributed_lock_active.dir/all
 all: CMakeFiles/distributed_lock.dir/all
 all: Asio_mrpc/all
 .PHONY : all
@@ -73,7 +75,9 @@ preinstall: Asio_mrpc/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/main.dir/clean
+clean: CMakeFiles/node.dir/clean
+clean: CMakeFiles/kv_store.dir/clean
+clean: CMakeFiles/distributed_lock_active.dir/clean
 clean: CMakeFiles/distributed_lock.dir/clean
 clean: Asio_mrpc/clean
 .PHONY : clean
@@ -94,30 +98,82 @@ Asio_mrpc/clean:
 .PHONY : Asio_mrpc/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/main.dir
+# Target rules for target CMakeFiles/node.dir
 
 # All Build rule for target.
-CMakeFiles/main.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/root/Raft/build/CMakeFiles --progress-num=5,6,7,8 "Built target main"
-.PHONY : CMakeFiles/main.dir/all
+CMakeFiles/node.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=13,14,15,16 "Built target node"
+.PHONY : CMakeFiles/node.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 0
-.PHONY : CMakeFiles/main.dir/rule
+CMakeFiles/node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
+.PHONY : CMakeFiles/node.dir/rule
 
 # Convenience name for target.
-main: CMakeFiles/main.dir/rule
-.PHONY : main
+node: CMakeFiles/node.dir/rule
+.PHONY : node
 
 # clean rule for target.
-CMakeFiles/main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
-.PHONY : CMakeFiles/main.dir/clean
+CMakeFiles/node.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/clean
+.PHONY : CMakeFiles/node.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/kv_store.dir
+
+# All Build rule for target.
+CMakeFiles/kv_store.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=9,10,11,12 "Built target kv_store"
+.PHONY : CMakeFiles/kv_store.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/kv_store.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/kv_store.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
+.PHONY : CMakeFiles/kv_store.dir/rule
+
+# Convenience name for target.
+kv_store: CMakeFiles/kv_store.dir/rule
+.PHONY : kv_store
+
+# clean rule for target.
+CMakeFiles/kv_store.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/clean
+.PHONY : CMakeFiles/kv_store.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/distributed_lock_active.dir
+
+# All Build rule for target.
+CMakeFiles/distributed_lock_active.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=5,6,7,8 "Built target distributed_lock_active"
+.PHONY : CMakeFiles/distributed_lock_active.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/distributed_lock_active.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/distributed_lock_active.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
+.PHONY : CMakeFiles/distributed_lock_active.dir/rule
+
+# Convenience name for target.
+distributed_lock_active: CMakeFiles/distributed_lock_active.dir/rule
+.PHONY : distributed_lock_active
+
+# clean rule for target.
+CMakeFiles/distributed_lock_active.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/clean
+.PHONY : CMakeFiles/distributed_lock_active.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/distributed_lock.dir
@@ -126,14 +182,14 @@ CMakeFiles/main.dir/clean:
 CMakeFiles/distributed_lock.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/root/Raft/build/CMakeFiles --progress-num=1,2,3,4 "Built target distributed_lock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=1,2,3,4 "Built target distributed_lock"
 .PHONY : CMakeFiles/distributed_lock.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/distributed_lock.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/distributed_lock.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
 .PHONY : CMakeFiles/distributed_lock.dir/rule
 
 # Convenience name for target.

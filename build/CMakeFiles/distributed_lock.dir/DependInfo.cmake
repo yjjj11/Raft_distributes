@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
-  "/root/Raft/example/distributed_lock.cpp" "CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o.d"
-  "/root/Raft/raftnode.cpp" "CMakeFiles/distributed_lock.dir/raftnode.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/raftnode.cpp.o.d"
+  "/home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
+  "/home/yjj/Raft_distributes/example/distributed_lock.cpp" "CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o.d"
+  "/home/yjj/Raft_distributes/raftnode.cpp" "CMakeFiles/distributed_lock.dir/raftnode.cpp.o" "gcc" "CMakeFiles/distributed_lock.dir/raftnode.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

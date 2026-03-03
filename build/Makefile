@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Raft
+CMAKE_SOURCE_DIR = /home/yjj/Raft_distributes
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Raft/build
+CMAKE_BINARY_DIR = /home/yjj/Raft_distributes/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles /root/Raft/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles /home/yjj/Raft_distributes/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,17 +117,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named node
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
-.PHONY : main
+node: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 node
+.PHONY : node
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+node/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/build
+.PHONY : node/fast
+
+#=============================================================================
+# Target rules for targets named kv_store
+
+# Build rule for target.
+kv_store: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kv_store
+.PHONY : kv_store
+
+# fast build rule for target.
+kv_store/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/build
+.PHONY : kv_store/fast
+
+#=============================================================================
+# Target rules for targets named distributed_lock_active
+
+# Build rule for target.
+distributed_lock_active: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 distributed_lock_active
+.PHONY : distributed_lock_active
+
+# fast build rule for target.
+distributed_lock_active/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/build
+.PHONY : distributed_lock_active/fast
 
 #=============================================================================
 # Target rules for targets named distributed_lock
@@ -147,7 +173,9 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.o: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 
 # target to build an object file
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 
@@ -156,7 +184,9 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.i: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 
 # target to preprocess a source file
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 
@@ -165,7 +195,9 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.s: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 
 # target to generate assembly for a file
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 
@@ -193,36 +225,86 @@ example/distributed_lock.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.s
 .PHONY : example/distributed_lock.cpp.s
 
-example/main.o: example/main.cpp.o
-.PHONY : example/main.o
+example/distributed_lock_active.o: example/distributed_lock_active.cpp.o
+.PHONY : example/distributed_lock_active.o
 
 # target to build an object file
-example/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/example/main.cpp.o
-.PHONY : example/main.cpp.o
+example/distributed_lock_active.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/example/distributed_lock_active.cpp.o
+.PHONY : example/distributed_lock_active.cpp.o
 
-example/main.i: example/main.cpp.i
-.PHONY : example/main.i
+example/distributed_lock_active.i: example/distributed_lock_active.cpp.i
+.PHONY : example/distributed_lock_active.i
 
 # target to preprocess a source file
-example/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/example/main.cpp.i
-.PHONY : example/main.cpp.i
+example/distributed_lock_active.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/example/distributed_lock_active.cpp.i
+.PHONY : example/distributed_lock_active.cpp.i
 
-example/main.s: example/main.cpp.s
-.PHONY : example/main.s
+example/distributed_lock_active.s: example/distributed_lock_active.cpp.s
+.PHONY : example/distributed_lock_active.s
 
 # target to generate assembly for a file
-example/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/example/main.cpp.s
-.PHONY : example/main.cpp.s
+example/distributed_lock_active.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/example/distributed_lock_active.cpp.s
+.PHONY : example/distributed_lock_active.cpp.s
+
+example/kv_store.o: example/kv_store.cpp.o
+.PHONY : example/kv_store.o
+
+# target to build an object file
+example/kv_store.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/example/kv_store.cpp.o
+.PHONY : example/kv_store.cpp.o
+
+example/kv_store.i: example/kv_store.cpp.i
+.PHONY : example/kv_store.i
+
+# target to preprocess a source file
+example/kv_store.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/example/kv_store.cpp.i
+.PHONY : example/kv_store.cpp.i
+
+example/kv_store.s: example/kv_store.cpp.s
+.PHONY : example/kv_store.s
+
+# target to generate assembly for a file
+example/kv_store.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/example/kv_store.cpp.s
+.PHONY : example/kv_store.cpp.s
+
+example/node.o: example/node.cpp.o
+.PHONY : example/node.o
+
+# target to build an object file
+example/node.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/example/node.cpp.o
+.PHONY : example/node.cpp.o
+
+example/node.i: example/node.cpp.i
+.PHONY : example/node.i
+
+# target to preprocess a source file
+example/node.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/example/node.cpp.i
+.PHONY : example/node.cpp.i
+
+example/node.s: example/node.cpp.s
+.PHONY : example/node.s
+
+# target to generate assembly for a file
+example/node.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/example/node.cpp.s
+.PHONY : example/node.cpp.s
 
 raftnode.o: raftnode.cpp.o
 .PHONY : raftnode.o
 
 # target to build an object file
 raftnode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/raftnode.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/raftnode.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.o
 .PHONY : raftnode.cpp.o
 
@@ -231,7 +313,9 @@ raftnode.i: raftnode.cpp.i
 
 # target to preprocess a source file
 raftnode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/raftnode.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/raftnode.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.i
 .PHONY : raftnode.cpp.i
 
@@ -240,7 +324,9 @@ raftnode.s: raftnode.cpp.s
 
 # target to generate assembly for a file
 raftnode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/raftnode.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock_active.dir/build.make CMakeFiles/distributed_lock_active.dir/raftnode.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.s
 .PHONY : raftnode.cpp.s
 
@@ -253,16 +339,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... distributed_lock"
-	@echo "... main"
+	@echo "... distributed_lock_active"
+	@echo "... kv_store"
+	@echo "... node"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.o"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.i"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.s"
 	@echo "... example/distributed_lock.o"
 	@echo "... example/distributed_lock.i"
 	@echo "... example/distributed_lock.s"
-	@echo "... example/main.o"
-	@echo "... example/main.i"
-	@echo "... example/main.s"
+	@echo "... example/distributed_lock_active.o"
+	@echo "... example/distributed_lock_active.i"
+	@echo "... example/distributed_lock_active.s"
+	@echo "... example/kv_store.o"
+	@echo "... example/kv_store.i"
+	@echo "... example/kv_store.s"
+	@echo "... example/node.o"
+	@echo "... example/node.i"
+	@echo "... example/node.s"
 	@echo "... raftnode.o"
 	@echo "... raftnode.i"
 	@echo "... raftnode.s"

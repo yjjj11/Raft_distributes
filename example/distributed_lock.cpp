@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <iostream>
 #include <map>
+#include <chrono>
 
 // 分布式锁信息结构体
 struct LockInfo {
@@ -29,12 +30,19 @@ public:
     bool is_locked(const std::string& lock_name) {
         auto it = locks_.find(lock_name);
         if (it == locks_.end()) return false;
-        // 检查是否过期（注意：这里使用系统当前时间仅供展示，严格一致性读需走 Raft 协议）
+        // 检查是否过期
         int64_t now = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()).count();
         return it->second.is_locked && (it->second.expire_at == 0 || it->second.expire_at > now);
     }
 
+    std::string get_lock_holder(const std::string& lock_name) {
+        auto it = locks_.find(lock_name);
+        if (it == locks_.end() || !it->second.is_locked) {
+            return "";
+        }
+        return it->second.owner;
+    }
 private:
     void try_lock(const std::string& lock_name, const std::string& owner, int64_t now, int64_t ttl) {
         auto& lock = locks_[lock_name];
@@ -63,8 +71,9 @@ private:
         auto it = locks_.find(lock_name);
         if (it == locks_.end() || !it->second.is_locked) {
             spdlog::warn("------------------------------------------------------------------");
-            spdlog::warn("[LockManager] Lock '{}' already are released");
+            spdlog::warn("[LockManager] Lock '{}' already released", lock_name);
             spdlog::warn("------------------------------------------------------------------");
+            return;
         }
 
         // 只有持有者才能释放锁（简单安全校验）
@@ -73,9 +82,12 @@ private:
             spdlog::warn("------------------------------------------------------------------");
             spdlog::warn("[LockManager] UNLOCK SUCCESS: '{}' released by '{}'", lock_name, owner);
             spdlog::warn("------------------------------------------------------------------");
+        } else {
+            spdlog::warn("------------------------------------------------------------------");
+            spdlog::warn("[LockManager] UNLOCK FAILED: '{}' is held by '{}', not '{}'", lock_name, it->second.owner, owner);
+            spdlog::warn("------------------------------------------------------------------");
         }
     }
-
     std::map<std::string, LockInfo> locks_;
 };
 
@@ -87,6 +99,103 @@ void signal_handler(int signal) {
     g_running = false;
     if (g_node) g_node->stop();
     exit(0);
+}
+
+bool wait_for_lock_application(const std::string& lock_name, const std::string& owner, int64_t timeout_ms) {
+    auto start = std::chrono::steady_clock::now();
+    while (true) {
+        if (g_lock_manager.is_locked(lock_name) && g_lock_manager.get_lock_holder(lock_name) == owner) {
+            return true;
+        }
+        
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start).count();
+        if (elapsed > timeout_ms) {
+            return false;
+        }
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+}
+
+bool wait_for_unlock_application(const std::string& lock_name, int64_t timeout_ms) {
+    auto start = std::chrono::steady_clock::now();
+    while (true) {
+        if (!g_lock_manager.is_locked(lock_name)) {
+            return true;
+        }
+        
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start).count();
+        if (elapsed > timeout_ms) {
+            return false;
+        }
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+}
+
+int keep_trying_lock(LogEntry& entry, int64_t timeout_ms) {
+    auto start_time = std::chrono::steady_clock::now();
+    std::cout << "\n--------------------正在尝试获取锁--------------------\n";
+    
+    while (true) {
+        // 检查是否超时
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start_time).count();
+        if (elapsed > timeout_ms) {
+            std::cout << "\n--------------------获取锁时间超时--------------------\n";
+            return -1;
+        }
+        
+        // 检查锁是否可用
+        if (!g_lock_manager.is_locked(entry.key)) {
+            // 锁可用，提交锁请求
+            std::cout<<"锁可用，提交锁请求"<<std::endl;
+            if (!g_node->submit(entry)) {
+                std::cout << "\n--------------------提交锁请求失败--------------------\n";
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                continue;
+            }
+            
+            // 等待锁被应用
+            if (wait_for_lock_application(entry.key, entry.value, 5000)) {
+                // 成功获取锁
+                std::cout << "\n--------------------成功获取锁,开始执行任务--------------------\n";
+                
+                // 执行耗时5秒的任务
+                std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+                
+                std::cout << "\n--------------------任务执行完成,准备释放锁--------------------\n";
+                
+                // 释放锁
+
+                entry.command_type = "UNLOCK";
+                entry.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::system_clock::now().time_since_epoch()).count();
+                
+                if (g_node->submit(entry)) {
+                    // 等待锁释放完成
+                    if (wait_for_unlock_application(entry.key, 5000)) {
+                        std::cout << "\n--------------------锁释放成功--------------------\n";
+                    } else {
+                        std::cout << "\n--------------------锁释放超时--------------------\n";
+                    }
+                } else {
+                    std::cout << "\n--------------------提交释放锁请求失败--------------------\n";
+                }
+                
+                return 0;
+            } else {
+                std::cout << "\n--------------------等待锁应用超时--------------------\n";
+                // 继续尝试
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+        } else {
+            // 锁被占用，等待一段时间后重试
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -102,64 +211,31 @@ int main(int argc, char* argv[]) {
     });
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
-    int node_id = atoi(argv[1]);
-    while (g_running) {
-        system("clear");
-        std::cout << "\n=====================================" << std::endl;
-        std::cout << "        Raft 分布式锁交互界面         " << std::endl;
-        std::cout << "=====================================" << std::endl;
-        std::cout << "  1. LOCK   - 获取分布式锁            " << std::endl;
-        std::cout << "  2. UNLOCK - 释放分布式锁            " << std::endl;
-        std::cout << "  3. STATUS - 查看锁状态              " << std::endl;
-        std::cout << "  0. EXIT   - 退出程序                " << std::endl;
-        std::cout << "=====================================\n" << std::endl;
+    system("clear");
+    LogEntry entry;
+    entry.command_type = "LOCK";
+    entry.key = "lock";
+    entry.value = argv[1];
+    entry.ttl = 15000; // 设置15秒过期时间，确保足够执行5秒任务
+    entry.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
 
-        std::cout << "请输入操作编号(0-3):";
-        int op;
-        if (!(std::cin >> op)) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-
-        if (op == 0) break;
-
-        std::string lock_name, client_id;
-        std::cout << "请输入锁名称: ";
-        std::cin >> lock_name;
-
-        if (op == 1) {
-            int64_t ttl;
-            std::cout << "请输入过期时间 (秒, 0表示永不过期): ";
-            std::cin >> ttl;
-
-            LogEntry entry;
-            entry.command_type = "LOCK";
-            entry.key = lock_name;
-            entry.value = std::to_string(node_id);
-            entry.ttl = ttl*1000;
-
-            if (node->submit(entry)) {
-                std::cout << ">>> LOCK 请求已提交至 Raft 集群，请观察日志确认应用结果。" << std::endl;
-            }
-        } else if (op == 2) {
-            LogEntry entry;
-            entry.command_type = "UNLOCK";
-            entry.key = lock_name;
-            entry.value = std::to_string(node_id);
-
-            if (node->submit(entry)) {
-                std::cout << ">>> UNLOCK 请求已提交至 Raft 集群。" << std::endl;
-            }
-        } else if (op == 3) {
-            bool locked = g_lock_manager.is_locked(lock_name);
-            std::cout << ">>> 锁 '" << lock_name << "' 当前状态: " << (locked ? "已锁定" : "未锁定/已过期") << std::endl;
-        }
-
-        std::cout << "\n按回车键继续...";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cin.get();
+    // // 设置20秒超时时间，足够获取锁和执行任务
+    int ret = keep_trying_lock(entry, 20000);
+    if (ret == -1) {
+        std::cout << "\n--------------------获取锁时间超时--------------------\n";
     }
-
+    // std::cout<<g_lock_manager.is_locked(entry.key)<<std::endl;
+    // 等待一段时间确保所有操作完成
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    
+    g_node->stop();
     return 0;
 }
+
+
+// 测试方法：
+// 1. 打开两个终端，分别输入
+//./bin/distributed_lock 1 127.0.0.1 8001 2 127.0.0.1:8000
+//./bin/distributed_lock 0 127.0.0.1 8000 2 127.0.0.1:8001
+// 2.同时启动2个节点，观察日志输出

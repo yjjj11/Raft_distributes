@@ -1,45 +1,58 @@
-[2026-03-02 21:04:02.055] [debug] Election timeout: 1000ms
-[2026-03-02 21:04:02.055] [info] Cluster peers:
-[2026-03-02 21:04:02.055] [info] 127.0.0.1:8001
-[2026-03-02 21:04:02.055] [warning] --------------------------------total_nodes_count_: 1
-[2026-03-02 21:04:02.067] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-03-02 21:04:02.067] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-03-02 21:04:02.067] [info] Node 0 starting apply loop thread.
-[2026-03-02 21:04:02.069] [info] ------------------------------client runing ----------------------------
-[2026-03-02 21:04:03.072] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-03-02 21:04:03.073] [info] 连接成功: 127.0.0.1:8001
-[2026-03-02 21:04:03.073] [debug] Connected to peer: 127.0.0.1:8001
-[2026-03-02 21:04:03.073] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-03-02 21:04:03.751] [debug] Node 0 received vote request: term=1, candidateId=1, lastLogIndex=-1, lastLogTerm=0
-[2026-03-02 21:04:03.752] [debug] Node 0 discovered higher term 1 in vote request, becoming follower.
-[2026-03-02 21:04:03.752] [error] Node 0 became FOLLOWER at term 1
-[2026-03-02 21:04:03.752] [debug] Node 0 granted vote to node 1 for term 1.
-[2026-03-02 21:04:04.874] [error] Node 0 became CANDIDATE at term 2
-[2026-03-02 21:04:04.874] [info] ------------------------------------Vote begain--------------------------------------
-[2026-03-02 21:04:04.875] [debug] Success! Result: reply.term=2, voteGranted=true
-[2026-03-02 21:04:04.875] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
-[2026-03-02 21:04:04.875] [error] Node 0 became LEADER at term 2.
-[2026-03-02 21:04:04.875] [info] Node 0 starting heartbeat thread for term 2.
-[2026-03-02 21:04:10.061] [debug] 进入正式push阶段了
-[2026-03-02 21:04:10.061] [info] Node 0: Submitted log entry (index 0, term 2) type LOCK
-[2026-03-02 21:04:10.609] [debug] 将发送新日志消息到follwer set 123 = 0 term 2
-[2026-03-02 21:04:10.610] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
-[2026-03-02 21:04:10.610] [debug] Node 0: 正在准备将index=0的日志条目 123 = 0 应用到状态机。
-[2026-03-02 21:04:10.610] [warning] ------------------------------------------------------------------
-[2026-03-02 21:04:10.610] [warning] [LockManager] LOCK SUCCESS: '123' acquired by '0'
-[2026-03-02 21:04:10.610] [warning] ------------------------------------------------------------------
-[2026-03-02 21:04:10.610] [debug] Node 0: Applied log index 0 to state machine.
-[2026-03-02 21:04:24.188] [debug] Node 0: Checking if node 0 is leader.
-[2026-03-02 21:04:24.188] [debug] 进入正式push阶段了
-[2026-03-02 21:04:24.188] [info] Node 0: Submitted log entry (index 1, term 2) type LOCK
-[2026-03-02 21:04:25.902] [debug] 将发送新日志消息到follwer set 123 = 1 term 2
-[2026-03-02 21:04:25.902] [debug] Node 0: Applying logs from index 1 to 1 to state machine.
-[2026-03-02 21:04:25.902] [debug] Node 0: 正在准备将index=1的日志条目 123 = 1 应用到状态机。
-[2026-03-02 21:04:25.903] [warning] ------------------------------------------------------------------
-[2026-03-02 21:04:25.903] [warning] [LockManager] Lock '123' already held by '0', expires at 0
-[2026-03-02 21:04:25.903] [warning] ------------------------------------------------------------------
-[2026-03-02 21:04:25.903] [debug] Node 0: Applied log index 1 to state machine.
-[2026-03-02 21:04:40.945] [debug] Stopping Raft node 0...
-[2026-03-02 21:04:41.194] [info] Node 0 heartbeat thread stopping.
-[2026-03-02 21:04:41.194] [info] Node 0 apply loop thread stopping.
-[2026-03-02 21:04:41.195] [debug] Raft node 0 stopped.
+[2026-03-03 11:34:16.162] [debug] Election timeout: 2000ms
+[2026-03-03 11:34:16.162] [info] Cluster peers:
+[2026-03-03 11:34:16.162] [info] 127.0.0.1:8001
+[2026-03-03 11:34:16.162] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-03 11:34:16.170] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-03-03 11:34:16.170] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-03-03 11:34:16.170] [info] Node 0 starting apply loop thread.
+[2026-03-03 11:34:16.171] [info] ------------------------------client runing ----------------------------
+[2026-03-03 11:34:17.176] [error] Failed to connect to peer: 127.0.0.1:8001
+[2026-03-03 11:34:17.176] [info] 连接成功: 127.0.0.1:8001
+[2026-03-03 11:34:17.176] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-03 11:34:17.176] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-03 11:34:18.426] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-03 11:34:18.427] [debug] Node 0 received vote request: term=1, candidateId=1, lastLogIndex=-1, lastLogTerm=0
+[2026-03-03 11:34:18.427] [debug] Node 0 discovered higher term 1 in vote request, becoming follower.
+[2026-03-03 11:34:18.427] [error] Node 0 became FOLLOWER at term 1
+[2026-03-03 11:34:18.427] [debug] Node 0 granted vote to node 1 for term 1.
+[2026-03-03 11:34:19.178] [warning] Node 0: Not leader, cannot submit log entry.
+[2026-03-03 11:34:19.178] [debug] Node 0: Sending log entry lock = 0 to leader 0
+[2026-03-03 11:34:19.179] [info] 成功向leader 0提交日志条目 lock = 0
+[2026-03-03 11:34:19.179] [debug] 进入正式push阶段了
+[2026-03-03 11:34:19.179] [info] Node 0: Submitted log entry (index 0, term 1) type LOCK
+[2026-03-03 11:34:20.347] [debug] Node 0: AppendEntries successful, added 1 entries.  from node 1
+[2026-03-03 11:34:22.266] [debug] Node 0: Applying logs from index 0 to 1 to state machine.
+[2026-03-03 11:34:22.266] [debug] Node 0: 正在准备将index=0的日志条目 lock = 0 应用到状态机。
+[2026-03-03 11:34:22.266] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:22.266] [warning] [LockManager] LOCK SUCCESS: 'lock' acquired by '0'
+[2026-03-03 11:34:22.266] [warning] [LockManager] TTL: 15000ms, ExpireAt: 1772508874178
+[2026-03-03 11:34:22.266] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:22.266] [debug] Node 0: Applied log index 0 to state machine.
+[2026-03-03 11:34:22.266] [debug] Node 0: 正在准备将index=1的日志条目 lock = 0 应用到状态机。
+[2026-03-03 11:34:22.266] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:22.266] [warning] [LockManager] Lock 'lock' already held by '0', expires at 1772508874178
+[2026-03-03 11:34:22.266] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:22.266] [debug] Node 0: Applied log index 1 to state machine.
+[2026-03-03 11:34:26.103] [debug] Node 0: AppendEntries successful, added 1 entries.  from node 1
+[2026-03-03 11:34:27.288] [warning] Node 0: Not leader, cannot submit log entry.
+[2026-03-03 11:34:27.288] [debug] Node 0: Sending log entry lock = 0 to leader 0
+[2026-03-03 11:34:27.289] [info] 成功向leader 0提交日志条目 lock = 0
+[2026-03-03 11:34:27.289] [debug] 进入正式push阶段了
+[2026-03-03 11:34:27.289] [info] Node 0: Submitted log entry (index 3, term 1) type UNLOCK
+[2026-03-03 11:34:28.021] [debug] Node 0: Applying logs from index 2 to 2 to state machine.
+[2026-03-03 11:34:28.021] [debug] Node 0: 正在准备将index=2的日志条目 lock = 1 应用到状态机。
+[2026-03-03 11:34:28.021] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:28.021] [warning] [LockManager] UNLOCK FAILED: 'lock' is held by '0', not '1'
+[2026-03-03 11:34:28.021] [warning] ------------------------------------------------------------------
+[2026-03-03 11:34:28.021] [debug] Node 0: Applied log index 2 to state machine.
+[2026-03-03 11:34:30.199] [error] Node 0 became CANDIDATE at term 2
+[2026-03-03 11:34:30.199] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-03 11:34:31.200] [error] Failed: Request Timeout 
+When vote_request on node0 : 127.0.0.1:8001
+[2026-03-03 11:34:31.200] [info] ----------------------total_nodes_count_: 1, vote_count: 1-------------------
+[2026-03-03 11:34:31.200] [error] Node 0 became LEADER at term 2.
+[2026-03-03 11:34:31.200] [info] Node 0 starting heartbeat thread for term 2.
+[2026-03-03 11:34:34.295] [debug] Stopping Raft node 0...
+[2026-03-03 11:34:35.667] [info] Node 0 heartbeat thread stopping.
+[2026-03-03 11:34:35.667] [info] Node 0 apply loop thread stopping.
+[2026-03-03 11:34:35.668] [debug] Raft node 0 stopped.

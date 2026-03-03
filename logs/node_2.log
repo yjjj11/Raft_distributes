@@ -1,0 +1,10 @@
+[ERROR] ZK handle is null, call start first!
+[ERROR] ZK handle is null, call start first!
+[ERROR] ZK handle is null, call start first!
+[ERROR] ZK handle is null, call start first!
+[INFO] zookeeper_init success! connect to: {}
+[INFO] ZK session connected success!
+[INFO] ZK node already exists, skip create: [{}]
+[INFO] zookeeper_init success! connect to: {}
+[INFO] ZK session connected success!
+[INFO] Refresh service cache for path: {}, node count: {}

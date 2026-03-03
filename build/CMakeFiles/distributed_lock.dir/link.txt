@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o CMakeFiles/distributed_lock.dir/raftnode.cpp.o CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /root/Raft/bin/distributed_lock  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 
+/usr/bin/c++ CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o CMakeFiles/distributed_lock.dir/raftnode.cpp.o CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /home/yjj/Raft_distributes/bin/distributed_lock  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 

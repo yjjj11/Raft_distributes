@@ -1,6 +1,8 @@
-/root/Raft/build/CMakeFiles/main.dir
-/root/Raft/build/CMakeFiles/distributed_lock.dir
-/root/Raft/build/CMakeFiles/edit_cache.dir
-/root/Raft/build/CMakeFiles/rebuild_cache.dir
-/root/Raft/build/Asio_mrpc/CMakeFiles/edit_cache.dir
-/root/Raft/build/Asio_mrpc/CMakeFiles/rebuild_cache.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/node.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/kv_store.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/distributed_lock_active.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/distributed_lock.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/edit_cache.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/rebuild_cache.dir
+/home/yjj/Raft_distributes/build/Asio_mrpc/CMakeFiles/edit_cache.dir
+/home/yjj/Raft_distributes/build/Asio_mrpc/CMakeFiles/rebuild_cache.dir
