@@ -19,10 +19,21 @@ public:
     // ========== 核心：修复后的函数执行逻辑 ==========
     template<typename... Args>
     static void invoke_func(const std::function<void(Args...)>& func, const std::string& buffer) {
-        // 不再尝试默认构造，而是直接声明，然后由 from_json 填充
-        std::tuple<std::remove_const_t<std::remove_reference_t<Args>>...> args;
         try {
             auto json = nlohmann::json::parse(buffer);
+            if (!json.is_array()) {
+                spdlog::error("[Invoke Error] Expected JSON array, got {}", json.type_name());
+                return;
+            }
+            
+            // 检查JSON数组大小是否与参数数量匹配
+            if (json.size() != sizeof...(Args)) {
+                spdlog::error("[Invoke Error] Argument count mismatch: expected {}, got {}", sizeof...(Args), json.size());
+                return;
+            }
+            
+            // 不再尝试默认构造，而是直接声明，然后由 from_json 填充
+            std::tuple<std::remove_const_t<std::remove_reference_t<Args>>...> args;
             nlohmann::from_json(json, args);
             std::apply(func, std::move(args));
         } catch (const std::exception& e) {

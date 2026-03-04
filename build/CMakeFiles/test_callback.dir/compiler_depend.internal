@@ -302,8 +302,8 @@ CMakeFiles/test_callback.dir/example/test_callback.cpp.o
  /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/spdlog.h
  /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h
  /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h
- /home/yjj/Raft_distributes/call_back.hpp
- /home/yjj/Raft_distributes/struct.hpp
+ /home/yjj/Raft_distributes/include/call_back.hpp
+ /home/yjj/Raft_distributes/include/struct.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h
@@ -1114,9 +1114,9 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o
  /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h
  /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h
  /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp
- /home/yjj/Raft_distributes/call_back.hpp
- /home/yjj/Raft_distributes/raftnode.hpp
- /home/yjj/Raft_distributes/struct.hpp
+ /home/yjj/Raft_distributes/include/call_back.hpp
+ /home/yjj/Raft_distributes/include/raftnode.hpp
+ /home/yjj/Raft_distributes/include/struct.hpp
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
  /usr/include/asm-generic/bitsperlong.h

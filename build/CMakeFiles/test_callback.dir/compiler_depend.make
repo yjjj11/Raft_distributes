@@ -300,8 +300,8 @@ CMakeFiles/test_callback.dir/example/test_callback.cpp.o: /home/yjj/Raft_distrib
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/spdlog.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h \
-  /home/yjj/Raft_distributes/call_back.hpp \
-  /home/yjj/Raft_distributes/struct.hpp \
+  /home/yjj/Raft_distributes/include/call_back.hpp \
+  /home/yjj/Raft_distributes/include/struct.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -1111,9 +1111,9 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp \
-  /home/yjj/Raft_distributes/call_back.hpp \
-  /home/yjj/Raft_distributes/raftnode.hpp \
-  /home/yjj/Raft_distributes/struct.hpp \
+  /home/yjj/Raft_distributes/include/call_back.hpp \
+  /home/yjj/Raft_distributes/include/raftnode.hpp \
+  /home/yjj/Raft_distributes/include/struct.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1668,6 +1668,8 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 
 /usr/include/arpa/inet.h:
 
+/home/yjj/Raft_distributes/include/raftnode.hpp:
+
 /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/sinks/stdout_sinks.h:
@@ -2100,8 +2102,6 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 
 /usr/include/c++/13/bits/charconv.h:
 
-/home/yjj/Raft_distributes/raftnode.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/impl/execution_context.ipp:
@@ -2239,8 +2239,6 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 /usr/include/wctype.h:
 
 /usr/include/pthread.h:
-
-/usr/include/linux/types.h:
 
 /usr/include/linux/stat.h:
 
@@ -2385,6 +2383,10 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 /usr/include/c++/13/array:
 
 /usr/include/errno.h:
+
+/usr/include/linux/types.h:
+
+/home/yjj/Raft_distributes/include/call_back.hpp:
 
 /usr/include/c++/13/bits/functional_hash.h:
 
@@ -2936,12 +2938,6 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h:
 
-/home/yjj/Raft_distributes/struct.hpp:
-
-/usr/include/c++/13/bits/functexcept.h:
-
-/home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/basic_socket.hpp:
-
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/streambuf.hpp:
 
 /usr/include/assert.h:
@@ -3033,8 +3029,6 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/execution/blocking.hpp:
 
 /usr/include/c++/13/bits/valarray_before.h:
-
-/home/yjj/Raft_distributes/call_back.hpp:
 
 /usr/include/c++/13/chrono:
 
@@ -3210,6 +3204,10 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/basic_seq_packet_socket.hpp:
 
+/usr/include/c++/13/bits/functexcept.h:
+
+/home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/basic_socket.hpp:
+
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/basic_socket_acceptor.hpp:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/detail/thread_info_base.hpp:
@@ -3273,6 +3271,8 @@ CMakeFiles/test_callback.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/detail/assert.hpp:
 
 /usr/include/locale.h:
+
+/home/yjj/Raft_distributes/include/struct.hpp:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/detail/base_from_completion_cond.hpp:
 

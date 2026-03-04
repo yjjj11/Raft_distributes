@@ -1,5 +1,5 @@
 #pragma once
-#include "raftnode.hpp"
+#include "../include/raftnode.hpp"
 #include <iostream>
 #include <random>
 

@@ -1,0 +1,15 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
+  "CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
+  "CMakeFiles/config_center.dir/example/config_center.cpp.o"
+  "CMakeFiles/config_center.dir/example/config_center.cpp.o.d"
+  "CMakeFiles/config_center.dir/raftnode.cpp.o"
+  "CMakeFiles/config_center.dir/raftnode.cpp.o.d"
+  "bin/config_center"
+  "bin/config_center.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/config_center.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
