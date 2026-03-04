@@ -446,7 +446,7 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         }
         
 
-        spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} = {} 应用到状态机。", node_id_, i, entry.key, entry.value);
+        spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} 应用到状态机。", node_id_, i, entry.command_type);
         // 核心：调用业务回调函数执行业务逻辑
         try {
             callback_reg.trigger_by_logentry(entry);
@@ -536,7 +536,7 @@ void RaftNode::send_heartbeats() {
                 }
             }
             if(!heartbeat_req.entries.empty()){
-                spdlog::debug("将发送新日志消息到follwer set {} = {} term {}", heartbeat_req.entries[0].key, heartbeat_req.entries[0].value, heartbeat_req.entries[0].term);
+                spdlog::debug("将发送新日志消息到follwer set {} = {} term {}", heartbeat_req.entries[0].command_type, heartbeat_req.entries[0].term);
             }
             // 发送心跳请求到每个 Follower
             AppendReply reply;
@@ -741,10 +741,10 @@ int64_t RaftNode::submit(const LogEntry& entry) {
             else request_id = -1;   //还是连接不上就返回失败
         }
 
-        spdlog::debug("Node {}: Sending log entry {} = {} to leader {}", node_id_, entry.key, entry.value, leader_id);
+        spdlog::debug("Node {}: Sending log entry {} to leader {}", node_id_, entry.command_type, leader_id);
         auto reply = conn->call<int64_t>("submit", entry);
         if (reply.error_code() == mrpc::ok) {
-            spdlog::info("成功向leader {}提交日志条目 {} = {}", leader_id, entry.key, entry.value);
+            spdlog::info("成功向leader {}提交日志条目 {}", leader_id, entry.command_type);
             request_id = reply.value();
         } else {
             spdlog::error("Node {}: Failed to submit log entry to leader {}: {}", node_id_, leader_id, reply.error_msg());
@@ -762,11 +762,6 @@ int64_t RaftNode::submit(const LogEntry& entry) {
             request_id_++;
             new_entry.req_id = request_id_;
             request_id = new_entry.req_id;
-            // 核心修改：如果是 Leader，设置确定的逻辑时间戳（毫秒）
-            if (new_entry.timestamp == 0) {
-                new_entry.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::system_clock::now().time_since_epoch()).count();
-            }
             
             log_.push_back(new_entry);
             spdlog::info("Node {}: Submitted log entry (index {}, term {}) type {}", 

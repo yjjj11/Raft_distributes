@@ -56,5 +56,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/node.dir/DependInfo.cmake"
   "CMakeFiles/kv_store.dir/DependInfo.cmake"
   "CMakeFiles/distributed_lock.dir/DependInfo.cmake"
+  "CMakeFiles/config_center.dir/DependInfo.cmake"
   "CMakeFiles/test_callback.dir/DependInfo.cmake"
   )

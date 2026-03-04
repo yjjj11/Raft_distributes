@@ -1,4 +1,4 @@
-#include "raftnode.hpp"
+#include "../include/raftnode.hpp"
 #include <signal.h>
 #include <iostream>
 // 全局标志，用于通知主线程退出

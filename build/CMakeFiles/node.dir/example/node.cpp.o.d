@@ -1,6 +1,6 @@
 CMakeFiles/node.dir/example/node.cpp.o: \
  /home/yjj/Raft_distributes/example/node.cpp /usr/include/stdc-predef.h \
- /home/yjj/Raft_distributes/raftnode.hpp \
+ /home/yjj/Raft_distributes/example/../include/raftnode.hpp \
  /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp \
  /usr/include/c++/13/filesystem \
  /usr/include/c++/13/bits/requires_hosted.h \
@@ -928,5 +928,6 @@ CMakeFiles/node.dir/example/node.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
  /usr/include/c++/13/optional \
  /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/server.hpp \
- /home/yjj/Raft_distributes/call_back.hpp /usr/include/c++/13/iostream \
- /home/yjj/Raft_distributes/struct.hpp
+ /home/yjj/Raft_distributes/example/../include/call_back.hpp \
+ /usr/include/c++/13/iostream \
+ /home/yjj/Raft_distributes/example/../include/struct.hpp

@@ -1,100 +1,36 @@
-[2026-03-04 12:26:28.268] [debug] Election timeout: 1000ms
-[2026-03-04 12:26:28.268] [info] Cluster peers:
-[2026-03-04 12:26:28.268] [info] 127.0.0.1:8001
-[2026-03-04 12:26:28.268] [warning] --------------------------------total_nodes_count_: 1
-[2026-03-04 12:26:28.275] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-03-04 12:26:28.275] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-03-04 12:26:28.275] [info] Node 0 starting apply loop thread.
-[2026-03-04 12:26:28.276] [info] ------------------------------client runing ----------------------------
-[2026-03-04 12:26:29.281] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-03-04 12:26:29.282] [info] 连接成功: 127.0.0.1:8001
-[2026-03-04 12:26:29.282] [debug] Connected to peer: 127.0.0.1:8001
-[2026-03-04 12:26:29.282] [debug] 注册成员函数回调 | 命令类型: LOCK
-[2026-03-04 12:26:29.282] [debug] 注册成员函数回调 | 命令类型: UNLOCK
-[2026-03-04 12:26:29.282] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-03-04 12:26:30.284] [error] Node 0 became CANDIDATE at term 1
-[2026-03-04 12:26:30.284] [info] ------------------------------------Vote begain--------------------------------------
-[2026-03-04 12:26:30.284] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-03-04 12:26:30.284] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
-[2026-03-04 12:26:30.284] [error] Node 0 became LEADER at term 1.
-[2026-03-04 12:26:30.284] [info] Node 0 starting heartbeat thread for term 1.
-[2026-03-04 12:26:30.180] [debug] Node 0: Checking if node 0 is leader.
-[2026-03-04 12:26:30.181] [debug] 进入正式push阶段了
-[2026-03-04 12:26:30.181] [info] Node 0: Submitted log entry (index 0, term 1) type LOCK
-[2026-03-04 12:26:30.605] [debug] 进入正式push阶段了
-[2026-03-04 12:26:30.605] [info] Node 0: Submitted log entry (index 1, term 1) type LOCK
-[2026-03-04 12:26:30.696] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:30.697] [debug] Node 0: Applying logs from index 0 to 1 to state machine.
-[2026-03-04 12:26:30.697] [debug] Node 0: 正在准备将index=0的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:30.697] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:30.697] [warning] [LockManager] 'distributed_resource_lock' LOCK SUCCESS by '1' (TTL: 10000ms)
-[2026-03-04 12:26:30.697] [debug] Node 0: 正在准备将index=1的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:30.697] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:30.697] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:31.197] [debug] 进入正式push阶段了
-[2026-03-04 12:26:31.198] [info] Node 0: Submitted log entry (index 2, term 1) type LOCK
-[2026-03-04 12:26:31.741] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:31.742] [debug] Node 0: Applying logs from index 2 to 2 to state machine.
-[2026-03-04 12:26:31.742] [debug] Node 0: 正在准备将index=2的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:31.742] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:31.742] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:32.242] [debug] 进入正式push阶段了
-[2026-03-04 12:26:32.242] [info] Node 0: Submitted log entry (index 3, term 1) type LOCK
-[2026-03-04 12:26:32.810] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:32.810] [debug] Node 0: Applying logs from index 3 to 3 to state machine.
-[2026-03-04 12:26:32.810] [debug] Node 0: 正在准备将index=3的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:32.810] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:32.810] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:33.310] [debug] 进入正式push阶段了
-[2026-03-04 12:26:33.311] [info] Node 0: Submitted log entry (index 4, term 1) type LOCK
-[2026-03-04 12:26:33.856] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:33.857] [debug] Node 0: Applying logs from index 4 to 4 to state machine.
-[2026-03-04 12:26:33.857] [debug] Node 0: 正在准备将index=4的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:33.857] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:33.857] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:34.357] [debug] 进入正式push阶段了
-[2026-03-04 12:26:34.357] [info] Node 0: Submitted log entry (index 5, term 1) type LOCK
-[2026-03-04 12:26:34.904] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:34.904] [debug] Node 0: Applying logs from index 5 to 5 to state machine.
-[2026-03-04 12:26:34.904] [debug] Node 0: 正在准备将index=5的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:34.904] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:34.904] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:35.404] [debug] 进入正式push阶段了
-[2026-03-04 12:26:35.404] [info] Node 0: Submitted log entry (index 6, term 1) type LOCK
-[2026-03-04 12:26:35.951] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:35.951] [debug] Node 0: Applying logs from index 6 to 6 to state machine.
-[2026-03-04 12:26:35.951] [debug] Node 0: 正在准备将index=6的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:35.951] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:35.951] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:36.451] [debug] 进入正式push阶段了
-[2026-03-04 12:26:36.452] [info] Node 0: Submitted log entry (index 7, term 1) type LOCK
-[2026-03-04 12:26:36.742] [debug] Node 0: Checking if node 0 is leader.
-[2026-03-04 12:26:36.742] [debug] 进入正式push阶段了
-[2026-03-04 12:26:36.743] [info] Node 0: Submitted log entry (index 8, term 1) type UNLOCK
-[2026-03-04 12:26:37.040] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:37.041] [debug] Node 0: Applying logs from index 7 to 8 to state machine.
-[2026-03-04 12:26:37.041] [debug] Node 0: 正在准备将index=7的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:37.041] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:37.041] [warning] [LockManager] 'distributed_resource_lock' LOCK FAILED: already held by '1'
-[2026-03-04 12:26:37.041] [debug] Node 0: 正在准备将index=8的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:37.041] [debug] [Trigger] 处理 LogEntry | 命令类型: UNLOCK
-[2026-03-04 12:26:37.041] [warning] [LockManager] 'distributed_resource_lock' UNLOCK SUCCESS by '1'
-[2026-03-04 12:26:37.542] [debug] 进入正式push阶段了
-[2026-03-04 12:26:37.542] [info] Node 0: Submitted log entry (index 9, term 1) type LOCK
-[2026-03-04 12:26:38.097] [debug] 将发送新日志消息到follwer set Null = Null term 1
-[2026-03-04 12:26:38.097] [debug] Node 0: Applying logs from index 9 to 9 to state machine.
-[2026-03-04 12:26:38.097] [debug] Node 0: 正在准备将index=9的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:38.097] [debug] [Trigger] 处理 LogEntry | 命令类型: LOCK
-[2026-03-04 12:26:38.097] [warning] [LockManager] 'distributed_resource_lock' LOCK SUCCESS by '0' (TTL: 10000ms)
-[2026-03-04 12:26:41.261] [error] Failed: Request Timeout 
+[2026-03-04 14:28:18.140] [debug] Election timeout: 1000ms
+[2026-03-04 14:28:18.140] [info] Cluster peers:
+[2026-03-04 14:28:18.140] [info] 127.0.0.1:8001
+[2026-03-04 14:28:18.140] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-04 14:28:18.146] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-03-04 14:28:18.146] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-03-04 14:28:18.146] [info] Node 0 starting apply loop thread.
+[2026-03-04 14:28:18.148] [info] ------------------------------client runing ----------------------------
+[2026-03-04 14:28:19.154] [error] Failed to connect to peer: 127.0.0.1:8001
+[2026-03-04 14:28:21.965] [debug] Node 0 received vote request: term=1, candidateId=1, lastLogIndex=-1, lastLogTerm=0
+[2026-03-04 14:28:21.965] [debug] Node 0 discovered higher term 1 in vote request, becoming follower.
+[2026-03-04 14:28:21.965] [error] Node 0 became FOLLOWER at term 1
+[2026-03-04 14:28:21.965] [debug] Node 0 granted vote to node 1 for term 1.
+[2026-03-04 14:28:24.154] [error] Failed to connect to peer: 127.0.0.1:8001
+[2026-03-04 14:28:24.154] [debug] 注册成员函数回调 | 命令类型: SET_CONFIG
+[2026-03-04 14:28:24.154] [debug] 注册成员函数回调 | 命令类型: DELETE_CONFIG
+[2026-03-04 14:28:24.154] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-04 14:28:24.154] [debug] 注册普通回调 | 命令类型: WATCH_SET_database
+[2026-03-04 14:28:24.155] [debug] 注册普通回调 | 命令类型: WATCH_DELETE_database
+[2026-03-04 14:28:27.356] [error] Node 0 became CANDIDATE at term 2
+[2026-03-04 14:28:27.356] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-04 14:28:27.357] [info] 连接成功: 127.0.0.1:8001
+[2026-03-04 14:28:27.357] [debug] Success! Result: reply.term=2, voteGranted=true
+[2026-03-04 14:28:27.357] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
+[2026-03-04 14:28:27.357] [error] Node 0 became LEADER at term 2.
+[2026-03-04 14:28:27.357] [info] Node 0 starting heartbeat thread for term 2.
+[2026-03-04 14:28:29.225] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-04 14:28:29.225] [debug] 进入正式push阶段了
+[2026-03-04 14:28:29.225] [info] Node 0: Submitted log entry (index 0, term 2) type SET_CONFIG
+[2026-03-04 14:28:30.093] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
+[2026-03-04 14:28:30.093] [debug] Node 0: 正在准备将index=0的日志条目 SET_CONFIG 应用到状态机。
+[2026-03-04 14:28:30.093] [debug] [Trigger] 处理 LogEntry | 命令类型: SET_CONFIG
+[2026-03-04 14:28:30.093] [warning] [ConfigCenter] SET: database = 123123213 (version: 1)
+[2026-03-04 14:28:35.195] [error] Failed: Request Timeout 
 When append_entries on node0 : 127.0.0.1:8001
-[2026-03-04 12:26:43.098] [debug] 进入正式push阶段了
-[2026-03-04 12:26:43.098] [info] Node 0: Submitted log entry (index 10, term 1) type UNLOCK
-[2026-03-04 12:26:43.311] [debug] Node 0: Applying logs from index 10 to 10 to state machine.
-[2026-03-04 12:26:43.311] [debug] Node 0: 正在准备将index=10的日志条目 Null = Null 应用到状态机。
-[2026-03-04 12:26:43.311] [debug] [Trigger] 处理 LogEntry | 命令类型: UNLOCK
-[2026-03-04 12:26:43.311] [warning] [LockManager] 'distributed_resource_lock' UNLOCK SUCCESS by '0'
-[2026-03-04 12:26:45.312] [debug] Stopping Raft node 0...
-[2026-03-04 12:26:46.421] [info] Node 0 heartbeat thread stopping.
-[2026-03-04 12:26:46.422] [info] Node 0 apply loop thread stopping.
-[2026-03-04 12:26:46.422] [debug] Raft node 0 stopped.
+[2026-03-04 14:29:39.526] [debug] Stopping Raft node 0...

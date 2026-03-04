@@ -32,6 +32,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/)
 # 包含库的头文件目录
 include_directories(
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/include
     ${RPC_INCLUDE_DIR}      # 库的头文件目录（从子目录继承）
     ${RPC_INCLUDE_DIR}/mrpc # 新增：适配client.hpp在mrpc子目录的情况
     ${ASIO_INCLUDE_DIR}     # Asio 头文件目录（从子目录继承）
@@ -55,7 +56,7 @@ target_link_libraries(node
     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
     Threads::Threads    # 现在能找到这个目标了
 )
-# # 创建可执行文件
+# # # 创建可执行文件
 add_executable(kv_store
      example/kv_store.cpp
      raftnode.cpp
@@ -80,17 +81,17 @@ target_link_libraries(distributed_lock
     Threads::Threads    # 现在能找到这个目标了
 )
 
-# add_executable(config_center
-#      example/config_center.cpp
-#      raftnode.cpp
-#      ${MRPC_SRC_FILES} 
-# )
+add_executable(config_center
+     example/config_center.cpp
+     raftnode.cpp
+     ${MRPC_SRC_FILES} 
+)
 
-# target_link_libraries(config_center 
-#     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-#     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-#     Threads::Threads    # 现在能找到这个目标了
-# )
+target_link_libraries(config_center 
+    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+    Threads::Threads    # 现在能找到这个目标了
+)
 
 add_executable(test_callback
      example/test_callback.cpp
@@ -103,3 +104,15 @@ target_link_libraries(test_callback
     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
     Threads::Threads    # 现在能找到这个目标了
 )
+
+# add_executable(task_scheduler
+#      example/task_scheduler.cpp
+#      raftnode.cpp
+#      ${MRPC_SRC_FILES} 
+# )
+
+# target_link_libraries(task_scheduler 
+#     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+#     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+#     Threads::Threads    # 现在能找到这个目标了
+# )

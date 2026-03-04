@@ -735,9 +735,9 @@ CMakeFiles/node.dir/example/node.cpp.o: /home/yjj/Raft_distributes/example/node.
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp \
-  /home/yjj/Raft_distributes/call_back.hpp \
-  /home/yjj/Raft_distributes/raftnode.hpp \
-  /home/yjj/Raft_distributes/struct.hpp \
+  /home/yjj/Raft_distributes/include/call_back.hpp \
+  /home/yjj/Raft_distributes/include/raftnode.hpp \
+  /home/yjj/Raft_distributes/include/struct.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1647,9 +1647,9 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/tweakme.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include/spdlog/version.h \
   /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp \
-  /home/yjj/Raft_distributes/call_back.hpp \
-  /home/yjj/Raft_distributes/raftnode.hpp \
-  /home/yjj/Raft_distributes/struct.hpp \
+  /home/yjj/Raft_distributes/include/call_back.hpp \
+  /home/yjj/Raft_distributes/include/raftnode.hpp \
+  /home/yjj/Raft_distributes/include/struct.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -2244,6 +2244,8 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
 
 /usr/include/c++/13/climits:
 
+/usr/include/c++/13/chrono:
+
 /usr/include/c++/13/cassert:
 
 /usr/include/c++/13/bits/valarray_array.h:
@@ -2288,11 +2290,7 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
 
 /usr/include/arpa/inet.h:
 
-/home/yjj/Raft_distributes/struct.hpp:
-
-/usr/include/c++/13/chrono:
-
-/home/yjj/Raft_distributes/call_back.hpp:
+/home/yjj/Raft_distributes/include/raftnode.hpp:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include/logger.hpp:
 
@@ -2626,8 +2624,6 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
 
 /usr/include/c++/13/bits/charconv.h:
 
-/home/yjj/Raft_distributes/raftnode.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/local/stream_protocol.hpp:
@@ -2785,6 +2781,8 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
 /usr/include/sched.h:
 
 /usr/include/pthread.h:
+
+/home/yjj/Raft_distributes/include/call_back.hpp:
 
 /usr/include/linux/types.h:
 
@@ -3573,6 +3571,8 @@ CMakeFiles/node.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp \
 /usr/include/c++/13/functional:
 
 /home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include/asio/detail/assert.hpp:
+
+/home/yjj/Raft_distributes/include/struct.hpp:
 
 /usr/include/locale.h:
 
