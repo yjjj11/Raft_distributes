@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/yjj/Raft_distributes/bin/config_center"
-  "/home/yjj/Raft_distributes/bin/config_center.pdb"
+  "/root/Raft/bin/config_center"
+  "/root/Raft/bin/config_center.pdb"
   "CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
   "CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
   "CMakeFiles/config_center.dir/example/config_center.cpp.o"

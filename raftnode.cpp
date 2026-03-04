@@ -433,36 +433,50 @@ bool RaftNode::check_if_log_is_ok(const AppendRequest& request){
 
 void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index) {
     spdlog::debug("Node {}: Applying logs from index {} to {} to state machine.", node_id_, from_index, to_index);
-    // 遍历所有待应用的日志条目
-    for (int32_t i = from_index; i <= to_index; ++i) {
-        LogEntry entry;
-        {
-            std::lock_guard<std::mutex> lock(mutex_);
+
+    // 1. 批量获取日志条目，减少锁的持有时间
+    std::vector<LogEntry> entries_to_apply;
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        for (int32_t i = from_index; i <= to_index; ++i) {
             if (i < 0 || i >= static_cast<int32_t>(log_.size())) {
                 spdlog::warn("Node {}: Invalid log index {} when applying to state machine.", node_id_, i);
                 continue;
             }
-            entry = log_[i];
+            entries_to_apply.push_back(log_[i]); // 拷贝日志条目
         }
-        
+    } // lock 作用域结束
 
-        spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} 应用到状态机。", node_id_, i, entry.command_type);
-        // 核心：调用业务回调函数执行业务逻辑
+    // 2. 在无锁状态下应用日志
+    for (size_t idx = 0; idx < entries_to_apply.size(); ++idx) {
+        const auto& entry = entries_to_apply[idx];
+        int32_t log_index = from_index + idx; // 计算出原始日志索引
+
+        spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} 应用到状态机。", node_id_, log_index, entry.command_type);
+        bool success = false;
         try {
-            callback_reg.trigger_by_logentry(entry);
+            success = callback_reg.trigger_by_logentry(entry);
+            if(!success){
+                spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, log_index, entry.command_type);
+                continue;
+            }
         } catch (const std::exception& e) {
-            spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, i, e.what());
+            spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, log_index, e.what());
             continue;
         }
+
+        // 3. 通知等待者 (同样在无锁状态下)
         auto it = lock_store_.find(entry.req_id);
         if (it != lock_store_.end()) {
-            it->second.set_value(true);
+            it->second.set_value(success);
         }
-        
-        // 更新 last_applied_，标记该日志已被应用
-        
     }
-    last_applied_.store(to_index);
+
+    // 4. 最后，一次性更新 last_applied_，再次加锁
+    {
+        std::lock_guard<std::mutex> lock(apply_mutex_); // 使用专门的 apply_mutex_
+        last_applied_.store(to_index);
+    }
 }
 
 void RaftNode::run_apply_loop() {
@@ -511,8 +525,8 @@ void RaftNode::send_heartbeats() {
             if(!peer_connections_[i]){
                 std::unique_lock<std::mutex> lock(conns_mutex_);
                 peer_connections_[i] = client_.connect(peers_[i].first, peers_[i].second,1);//尝试重新连接
-                next_index_[peer_connections_.size()] = 0;
-                match_index_[peer_connections_.size()] = -1;
+                next_index_[i] = 0;
+                match_index_[i] = -1;
                 if(peer_connections_[i]) total_nodes_count_++;
                 else continue;
             }
@@ -621,7 +635,7 @@ void RaftNode::run_election_timeout() {
     spdlog::info("------------------------------------Into run_election_timeout------------------------------------");
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(4000, 10000); // 1000-3000ms 随机选举超时
+    std::uniform_int_distribution<> dis(3000, 4000); // 1000-3000ms 随机选举超时
 
     while (running_) {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
@@ -769,10 +783,11 @@ int64_t RaftNode::submit(const LogEntry& entry) {
         }
     }
     
-    if(request_id != -1){
-        wait_for(request_id);
+    if(request_id == -1){
+        return request_id;
     }
-    return request_id;
+    return wait_for(request_id);
+    
 }
 
 void init_logger(int node_id) {
@@ -794,8 +809,26 @@ void init_logger(int node_id) {
 }
 
 
-void RaftNode::wait_for(int64_t req_id){
-    lock_store_[req_id].get_future().wait();
+bool RaftNode::wait_for(int64_t req_id) {
+    auto future = lock_store_[req_id].get_future();
+    
+    // 等待最多 1 秒
+    auto status = future.wait_for(std::chrono::seconds(5));
+
+    if (status == std::future_status::ready) {
+        // 日志已被应用，Future 已被设置
+        return future.get();
+        spdlog::debug("Node {}: Log entry with req_id {} has been applied to the state machine.", node_id_, req_id);
+    } else {
+        // 等待超时
+        spdlog::warn("Node {}: Timeout waiting for log entry with req_id {} to be applied. Request may have been lost or cluster is unavailable.", node_id_, req_id);
+        // 可选：在这里也可以选择移除超时的 promise，避免内存泄漏（见下方注释）
+    }
+    
+    // 无论成功或超时，都需要清理 map 中的条目
+    // 注意：如果 wait_for 超时，此时尚未调用 set_value，erase 会销毁未完成的 promise，
+    // 这会导致其 associated future 的行为未定义。但在我们的场景下，由于已经超时，
+    // 我们不再关心它的结果，所以这种清理是合理的。
     lock_store_.erase(req_id);
 }
 
@@ -842,6 +875,8 @@ std::shared_ptr<RaftNode> initialize_server(int argc, char* argv[]){
     spdlog::debug("Raft node {} initialized on {}:{}", node_id, ip, port);
     
     // 启动节点
-    node->start_client();    
+    node->start_client();   
+    
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     return node;
 }

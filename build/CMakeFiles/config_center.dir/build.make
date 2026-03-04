@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yjj/Raft_distributes
+CMAKE_SOURCE_DIR = /root/Raft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yjj/Raft_distributes/build
+CMAKE_BINARY_DIR = /root/Raft/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/config_center.dir/depend.make
@@ -70,46 +70,46 @@ include CMakeFiles/config_center.dir/progress.make
 include CMakeFiles/config_center.dir/flags.make
 
 CMakeFiles/config_center.dir/example/config_center.cpp.o: CMakeFiles/config_center.dir/flags.make
-CMakeFiles/config_center.dir/example/config_center.cpp.o: /home/yjj/Raft_distributes/example/config_center.cpp
+CMakeFiles/config_center.dir/example/config_center.cpp.o: /root/Raft/example/config_center.cpp
 CMakeFiles/config_center.dir/example/config_center.cpp.o: CMakeFiles/config_center.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/config_center.dir/example/config_center.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/example/config_center.cpp.o -MF CMakeFiles/config_center.dir/example/config_center.cpp.o.d -o CMakeFiles/config_center.dir/example/config_center.cpp.o -c /home/yjj/Raft_distributes/example/config_center.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/config_center.dir/example/config_center.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/example/config_center.cpp.o -MF CMakeFiles/config_center.dir/example/config_center.cpp.o.d -o CMakeFiles/config_center.dir/example/config_center.cpp.o -c /root/Raft/example/config_center.cpp
 
 CMakeFiles/config_center.dir/example/config_center.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/config_center.dir/example/config_center.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/example/config_center.cpp > CMakeFiles/config_center.dir/example/config_center.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/example/config_center.cpp > CMakeFiles/config_center.dir/example/config_center.cpp.i
 
 CMakeFiles/config_center.dir/example/config_center.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/config_center.dir/example/config_center.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/example/config_center.cpp -o CMakeFiles/config_center.dir/example/config_center.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/example/config_center.cpp -o CMakeFiles/config_center.dir/example/config_center.cpp.s
 
 CMakeFiles/config_center.dir/raftnode.cpp.o: CMakeFiles/config_center.dir/flags.make
-CMakeFiles/config_center.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp
+CMakeFiles/config_center.dir/raftnode.cpp.o: /root/Raft/raftnode.cpp
 CMakeFiles/config_center.dir/raftnode.cpp.o: CMakeFiles/config_center.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/config_center.dir/raftnode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/raftnode.cpp.o -MF CMakeFiles/config_center.dir/raftnode.cpp.o.d -o CMakeFiles/config_center.dir/raftnode.cpp.o -c /home/yjj/Raft_distributes/raftnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/config_center.dir/raftnode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/raftnode.cpp.o -MF CMakeFiles/config_center.dir/raftnode.cpp.o.d -o CMakeFiles/config_center.dir/raftnode.cpp.o -c /root/Raft/raftnode.cpp
 
 CMakeFiles/config_center.dir/raftnode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/config_center.dir/raftnode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/raftnode.cpp > CMakeFiles/config_center.dir/raftnode.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/raftnode.cpp > CMakeFiles/config_center.dir/raftnode.cpp.i
 
 CMakeFiles/config_center.dir/raftnode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/config_center.dir/raftnode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/raftnode.cpp -o CMakeFiles/config_center.dir/raftnode.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/raftnode.cpp -o CMakeFiles/config_center.dir/raftnode.cpp.s
 
 CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: CMakeFiles/config_center.dir/flags.make
-CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
+CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: CMakeFiles/config_center.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -MF CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d -o CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -MF CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d -o CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 
 CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp > CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp > CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 
 CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp -o CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp -o CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 
 # Object files for target config_center
 config_center_OBJECTS = \
@@ -120,17 +120,17 @@ config_center_OBJECTS = \
 # External object files for target config_center
 config_center_EXTERNAL_OBJECTS =
 
-/home/yjj/Raft_distributes/bin/config_center: CMakeFiles/config_center.dir/example/config_center.cpp.o
-/home/yjj/Raft_distributes/bin/config_center: CMakeFiles/config_center.dir/raftnode.cpp.o
-/home/yjj/Raft_distributes/bin/config_center: CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
-/home/yjj/Raft_distributes/bin/config_center: CMakeFiles/config_center.dir/build.make
-/home/yjj/Raft_distributes/bin/config_center: /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so
-/home/yjj/Raft_distributes/bin/config_center: CMakeFiles/config_center.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /home/yjj/Raft_distributes/bin/config_center"
+/root/Raft/bin/config_center: CMakeFiles/config_center.dir/example/config_center.cpp.o
+/root/Raft/bin/config_center: CMakeFiles/config_center.dir/raftnode.cpp.o
+/root/Raft/bin/config_center: CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
+/root/Raft/bin/config_center: CMakeFiles/config_center.dir/build.make
+/root/Raft/bin/config_center: /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so
+/root/Raft/bin/config_center: CMakeFiles/config_center.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /root/Raft/bin/config_center"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/config_center.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/config_center.dir/build: /home/yjj/Raft_distributes/bin/config_center
+CMakeFiles/config_center.dir/build: /root/Raft/bin/config_center
 .PHONY : CMakeFiles/config_center.dir/build
 
 CMakeFiles/config_center.dir/clean:
@@ -138,6 +138,6 @@ CMakeFiles/config_center.dir/clean:
 .PHONY : CMakeFiles/config_center.dir/clean
 
 CMakeFiles/config_center.dir/depend:
-	cd /home/yjj/Raft_distributes/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yjj/Raft_distributes /home/yjj/Raft_distributes /home/yjj/Raft_distributes/build /home/yjj/Raft_distributes/build /home/yjj/Raft_distributes/build/CMakeFiles/config_center.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /root/Raft/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Raft /root/Raft /root/Raft/build /root/Raft/build /root/Raft/build/CMakeFiles/config_center.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/config_center.dir/depend
 

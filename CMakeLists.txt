@@ -69,29 +69,29 @@ target_link_libraries(kv_store
     Threads::Threads    # 现在能找到这个目标了
 )
 
-add_executable(distributed_lock
-     example/distributed_lock.cpp
-     raftnode.cpp
-     ${MRPC_SRC_FILES} 
-)
+# add_executable(distributed_lock
+#      example/distributed_lock.cpp
+#      raftnode.cpp
+#      ${MRPC_SRC_FILES} 
+# )
 
-target_link_libraries(distributed_lock 
-    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-    Threads::Threads    # 现在能找到这个目标了
-)
+# target_link_libraries(distributed_lock 
+#     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+#     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+#     Threads::Threads    # 现在能找到这个目标了
+# )
 
-add_executable(config_center
-     example/config_center.cpp
-     raftnode.cpp
-     ${MRPC_SRC_FILES} 
-)
+# add_executable(config_center
+#      example/config_center.cpp
+#      raftnode.cpp
+#      ${MRPC_SRC_FILES} 
+# )
 
-target_link_libraries(config_center 
-    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-    Threads::Threads    # 现在能找到这个目标了
-)
+# target_link_libraries(config_center 
+#     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+#     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+#     Threads::Threads    # 现在能找到这个目标了
+# )
 
 add_executable(test_callback
      example/test_callback.cpp

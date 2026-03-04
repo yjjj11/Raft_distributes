@@ -50,7 +50,7 @@ public:
     }
     
 
-    void wait_for(int64_t req_id);
+    bool  wait_for(int64_t req_id);
     int node_id_;
     std::unordered_map<int64_t, std::promise<bool>> lock_store_;
     RegisterCallback callback_reg;

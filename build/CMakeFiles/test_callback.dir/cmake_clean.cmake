@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/yjj/Raft_distributes/bin/test_callback"
-  "/home/yjj/Raft_distributes/bin/test_callback.pdb"
+  "/root/Raft/bin/test_callback"
+  "/root/Raft/bin/test_callback.pdb"
   "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
   "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
   "CMakeFiles/test_callback.dir/example/test_callback.cpp.o"

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yjj/Raft_distributes
+CMAKE_SOURCE_DIR = /root/Raft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yjj/Raft_distributes/build
+CMAKE_BINARY_DIR = /root/Raft/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles /home/yjj/Raft_distributes/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles /root/Raft/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yjj/Raft_distributes/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/Raft/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,32 +143,6 @@ kv_store/fast:
 .PHONY : kv_store/fast
 
 #=============================================================================
-# Target rules for targets named distributed_lock
-
-# Build rule for target.
-distributed_lock: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 distributed_lock
-.PHONY : distributed_lock
-
-# fast build rule for target.
-distributed_lock/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/build
-.PHONY : distributed_lock/fast
-
-#=============================================================================
-# Target rules for targets named config_center
-
-# Build rule for target.
-config_center: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 config_center
-.PHONY : config_center
-
-# fast build rule for target.
-config_center/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/build
-.PHONY : config_center/fast
-
-#=============================================================================
 # Target rules for targets named test_callback
 
 # Build rule for target.
@@ -188,8 +162,6 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.o: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
 
@@ -200,8 +172,6 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.i: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 
@@ -212,58 +182,8 @@ Asio_mrpc/include/mrpc/ZookeeperUtil.s: Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 .PHONY : Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
-
-example/config_center.o: example/config_center.cpp.o
-.PHONY : example/config_center.o
-
-# target to build an object file
-example/config_center.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/example/config_center.cpp.o
-.PHONY : example/config_center.cpp.o
-
-example/config_center.i: example/config_center.cpp.i
-.PHONY : example/config_center.i
-
-# target to preprocess a source file
-example/config_center.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/example/config_center.cpp.i
-.PHONY : example/config_center.cpp.i
-
-example/config_center.s: example/config_center.cpp.s
-.PHONY : example/config_center.s
-
-# target to generate assembly for a file
-example/config_center.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/example/config_center.cpp.s
-.PHONY : example/config_center.cpp.s
-
-example/distributed_lock.o: example/distributed_lock.cpp.o
-.PHONY : example/distributed_lock.o
-
-# target to build an object file
-example/distributed_lock.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.o
-.PHONY : example/distributed_lock.cpp.o
-
-example/distributed_lock.i: example/distributed_lock.cpp.i
-.PHONY : example/distributed_lock.i
-
-# target to preprocess a source file
-example/distributed_lock.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.i
-.PHONY : example/distributed_lock.cpp.i
-
-example/distributed_lock.s: example/distributed_lock.cpp.s
-.PHONY : example/distributed_lock.s
-
-# target to generate assembly for a file
-example/distributed_lock.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/example/distributed_lock.cpp.s
-.PHONY : example/distributed_lock.cpp.s
 
 example/kv_store.o: example/kv_store.cpp.o
 .PHONY : example/kv_store.o
@@ -344,8 +264,6 @@ raftnode.o: raftnode.cpp.o
 raftnode.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/raftnode.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/raftnode.cpp.o
 .PHONY : raftnode.cpp.o
 
@@ -356,8 +274,6 @@ raftnode.i: raftnode.cpp.i
 raftnode.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/raftnode.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/raftnode.cpp.i
 .PHONY : raftnode.cpp.i
 
@@ -368,8 +284,6 @@ raftnode.s: raftnode.cpp.s
 raftnode.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/node.dir/build.make CMakeFiles/node.dir/raftnode.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kv_store.dir/build.make CMakeFiles/kv_store.dir/raftnode.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/distributed_lock.dir/build.make CMakeFiles/distributed_lock.dir/raftnode.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/config_center.dir/build.make CMakeFiles/config_center.dir/raftnode.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_callback.dir/build.make CMakeFiles/test_callback.dir/raftnode.cpp.s
 .PHONY : raftnode.cpp.s
 
@@ -381,20 +295,12 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... config_center"
-	@echo "... distributed_lock"
 	@echo "... kv_store"
 	@echo "... node"
 	@echo "... test_callback"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.o"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.i"
 	@echo "... Asio_mrpc/include/mrpc/ZookeeperUtil.s"
-	@echo "... example/config_center.o"
-	@echo "... example/config_center.i"
-	@echo "... example/config_center.s"
-	@echo "... example/distributed_lock.o"
-	@echo "... example/distributed_lock.i"
-	@echo "... example/distributed_lock.s"
 	@echo "... example/kv_store.o"
 	@echo "... example/kv_store.i"
 	@echo "... example/kv_store.s"

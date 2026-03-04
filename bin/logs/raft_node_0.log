@@ -1,36 +1,40 @@
-[2026-03-04 14:28:18.140] [debug] Election timeout: 1000ms
-[2026-03-04 14:28:18.140] [info] Cluster peers:
-[2026-03-04 14:28:18.140] [info] 127.0.0.1:8001
-[2026-03-04 14:28:18.140] [warning] --------------------------------total_nodes_count_: 1
-[2026-03-04 14:28:18.146] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-03-04 14:28:18.146] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-03-04 14:28:18.146] [info] Node 0 starting apply loop thread.
-[2026-03-04 14:28:18.148] [info] ------------------------------client runing ----------------------------
-[2026-03-04 14:28:19.154] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-03-04 14:28:21.965] [debug] Node 0 received vote request: term=1, candidateId=1, lastLogIndex=-1, lastLogTerm=0
-[2026-03-04 14:28:21.965] [debug] Node 0 discovered higher term 1 in vote request, becoming follower.
-[2026-03-04 14:28:21.965] [error] Node 0 became FOLLOWER at term 1
-[2026-03-04 14:28:21.965] [debug] Node 0 granted vote to node 1 for term 1.
-[2026-03-04 14:28:24.154] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-03-04 14:28:24.154] [debug] 注册成员函数回调 | 命令类型: SET_CONFIG
-[2026-03-04 14:28:24.154] [debug] 注册成员函数回调 | 命令类型: DELETE_CONFIG
-[2026-03-04 14:28:24.154] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-03-04 14:28:24.154] [debug] 注册普通回调 | 命令类型: WATCH_SET_database
-[2026-03-04 14:28:24.155] [debug] 注册普通回调 | 命令类型: WATCH_DELETE_database
-[2026-03-04 14:28:27.356] [error] Node 0 became CANDIDATE at term 2
-[2026-03-04 14:28:27.356] [info] ------------------------------------Vote begain--------------------------------------
-[2026-03-04 14:28:27.357] [info] 连接成功: 127.0.0.1:8001
-[2026-03-04 14:28:27.357] [debug] Success! Result: reply.term=2, voteGranted=true
-[2026-03-04 14:28:27.357] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
-[2026-03-04 14:28:27.357] [error] Node 0 became LEADER at term 2.
-[2026-03-04 14:28:27.357] [info] Node 0 starting heartbeat thread for term 2.
-[2026-03-04 14:28:29.225] [debug] Node 0: Checking if node 0 is leader.
-[2026-03-04 14:28:29.225] [debug] 进入正式push阶段了
-[2026-03-04 14:28:29.225] [info] Node 0: Submitted log entry (index 0, term 2) type SET_CONFIG
-[2026-03-04 14:28:30.093] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
-[2026-03-04 14:28:30.093] [debug] Node 0: 正在准备将index=0的日志条目 SET_CONFIG 应用到状态机。
-[2026-03-04 14:28:30.093] [debug] [Trigger] 处理 LogEntry | 命令类型: SET_CONFIG
-[2026-03-04 14:28:30.093] [warning] [ConfigCenter] SET: database = 123123213 (version: 1)
-[2026-03-04 14:28:35.195] [error] Failed: Request Timeout 
+[2026-03-04 21:02:59.403] [debug] Election timeout: 1000ms
+[2026-03-04 21:02:59.403] [info] Cluster peers:
+[2026-03-04 21:02:59.403] [info] 127.0.0.1:8001
+[2026-03-04 21:02:59.403] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-04 21:02:59.414] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-03-04 21:02:59.414] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-03-04 21:02:59.414] [info] Node 0 starting apply loop thread.
+[2026-03-04 21:02:59.416] [info] ------------------------------client runing ----------------------------
+[2026-03-04 21:03:00.421] [error] Failed to connect to peer: 127.0.0.1:8001
+[2026-03-04 21:03:00.422] [info] 连接成功: 127.0.0.1:8001
+[2026-03-04 21:03:00.422] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-04 21:03:00.422] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-04 21:03:01.437] [error] Node 0 became CANDIDATE at term 1
+[2026-03-04 21:03:01.437] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-04 21:03:01.438] [debug] Success! Result: reply.term=1, voteGranted=true
+[2026-03-04 21:03:01.438] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
+[2026-03-04 21:03:01.438] [error] Node 0 became LEADER at term 1.
+[2026-03-04 21:03:01.438] [info] Node 0 starting heartbeat thread for term 1.
+[2026-03-04 21:03:02.422] [debug] 注册成员函数回调 | 命令类型: Put
+[2026-03-04 21:03:02.422] [debug] 注册成员函数回调 | 命令类型: Del
+[2026-03-04 21:03:08.277] [debug] 进入正式push阶段了
+[2026-03-04 21:03:08.278] [info] Node 0: Submitted log entry (index 0, term 1) type Put
+[2026-03-04 21:03:08.613] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
+[2026-03-04 21:03:08.613] [debug] Node 0: 正在准备将index=0的日志条目 Put 应用到状态机。
+[2026-03-04 21:03:08.613] [debug] [Trigger] 处理 LogEntry | 命令类型: Put
+[2026-03-04 21:03:08.613] [info] Applying PUT: 123 = 12
+[2026-03-04 21:03:08.614] [debug] Node 0: Log entry with req_id 1 has been applied to the state machine.
+[2026-03-04 21:03:15.711] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-04 21:03:15.713] [debug] 进入正式push阶段了
+[2026-03-04 21:03:15.713] [info] Node 0: Submitted log entry (index 1, term 1) type Get
+[2026-03-04 21:03:15.785] [debug] Node 0: Applying logs from index 1 to 1 to state machine.
+[2026-03-04 21:03:15.785] [debug] Node 0: 正在准备将index=1的日志条目 Get 应用到状态机。
+[2026-03-04 21:03:15.785] [error] [Error] LogEntry命令类型未注册: Get
+[2026-03-04 21:03:15.785] [debug] Node 0: Log entry with req_id 2 has been applied to the state machine.
+[2026-03-04 21:03:18.936] [debug] Stopping Raft node 0...
+[2026-03-04 21:03:17.126] [error] Failed: Request Timeout 
 When append_entries on node0 : 127.0.0.1:8001
-[2026-03-04 14:29:39.526] [debug] Stopping Raft node 0...
+[2026-03-04 21:03:17.842] [info] Node 0 heartbeat thread stopping.
+[2026-03-04 21:03:17.842] [info] Node 0 apply loop thread stopping.
+[2026-03-04 21:03:17.843] [debug] Raft node 0 stopped.

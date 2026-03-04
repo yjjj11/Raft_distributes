@@ -7,8 +7,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/yjj/Raft_distributes/Asio_mrpc/CMakeLists.txt"
-  "/home/yjj/Raft_distributes/CMakeLists.txt"
+  "/root/Raft/Asio_mrpc/CMakeLists.txt"
+  "/root/Raft/CMakeLists.txt"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
@@ -55,7 +55,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/node.dir/DependInfo.cmake"
   "CMakeFiles/kv_store.dir/DependInfo.cmake"
-  "CMakeFiles/distributed_lock.dir/DependInfo.cmake"
-  "CMakeFiles/config_center.dir/DependInfo.cmake"
   "CMakeFiles/test_callback.dir/DependInfo.cmake"
   )

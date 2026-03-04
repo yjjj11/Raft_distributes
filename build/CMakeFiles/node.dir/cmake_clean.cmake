@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/yjj/Raft_distributes/bin/node"
-  "/home/yjj/Raft_distributes/bin/node.pdb"
+  "/root/Raft/bin/node"
+  "/root/Raft/bin/node.pdb"
   "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
   "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
   "CMakeFiles/node.dir/example/node.cpp.o"

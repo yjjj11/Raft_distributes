@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
-  "/home/yjj/Raft_distributes/example/node.cpp" "CMakeFiles/node.dir/example/node.cpp.o" "gcc" "CMakeFiles/node.dir/example/node.cpp.o.d"
-  "/home/yjj/Raft_distributes/raftnode.cpp" "CMakeFiles/node.dir/raftnode.cpp.o" "gcc" "CMakeFiles/node.dir/raftnode.cpp.o.d"
+  "/root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
+  "/root/Raft/example/node.cpp" "CMakeFiles/node.dir/example/node.cpp.o" "gcc" "CMakeFiles/node.dir/example/node.cpp.o.d"
+  "/root/Raft/raftnode.cpp" "CMakeFiles/node.dir/raftnode.cpp.o" "gcc" "CMakeFiles/node.dir/raftnode.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

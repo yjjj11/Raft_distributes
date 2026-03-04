@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
-  "/home/yjj/Raft_distributes/example/test_callback.cpp" "CMakeFiles/test_callback.dir/example/test_callback.cpp.o" "gcc" "CMakeFiles/test_callback.dir/example/test_callback.cpp.o.d"
-  "/home/yjj/Raft_distributes/raftnode.cpp" "CMakeFiles/test_callback.dir/raftnode.cpp.o" "gcc" "CMakeFiles/test_callback.dir/raftnode.cpp.o.d"
+  "/root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp" "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o" "gcc" "CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d"
+  "/root/Raft/example/test_callback.cpp" "CMakeFiles/test_callback.dir/example/test_callback.cpp.o" "gcc" "CMakeFiles/test_callback.dir/example/test_callback.cpp.o.d"
+  "/root/Raft/raftnode.cpp" "CMakeFiles/test_callback.dir/raftnode.cpp.o" "gcc" "CMakeFiles/test_callback.dir/raftnode.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

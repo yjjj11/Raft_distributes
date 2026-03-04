@@ -13,7 +13,7 @@
 class RegisterCallback
 {
 public:
-    using invoke_type = std::function<void (const std::string& buffer)>;
+    using invoke_type = std::function<bool (const std::string& buffer)>;
     std::unordered_map<std::string, invoke_type> invokes_;
 
     // ========== 核心：修复后的函数执行逻辑 ==========
@@ -66,13 +66,14 @@ public:
     }
 
     // ========== 触发回调 ==========
-    void trigger_by_logentry(const LogEntry& entry) {
+    bool trigger_by_logentry(const LogEntry& entry) {
         auto it = invokes_.find(entry.command_type);
         if (it != invokes_.end()) {
             spdlog::debug("[Trigger] 处理 LogEntry | 命令类型: {}", entry.command_type);
-            it->second(entry.buffer);
+            return it->second(entry.buffer);
         } else {
             spdlog::error("[Error] LogEntry命令类型未注册: {}", entry.command_type);
+            return true;
         }
     }
 };
