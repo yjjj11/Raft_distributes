@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "call_back.hpp"
-
+#include <raftnode.hpp>
 struct ConfigItem {
     std::string value;
     int64_t version;
@@ -12,19 +12,41 @@ struct ConfigItem {
 
 class ConfigCenter {
 public:
+    ConfigCenter(std::shared_ptr<RaftNode> node) : node_(node) {
+        node->callback_reg.reg_callback("SET_CONFIG", this, &ConfigCenter::apply_set);
+        node->callback_reg.reg_callback("DELETE_CONFIG", this, &ConfigCenter::apply_delete);
+    }
     RegisterCallback watcher_reg;
 
     std::string GET(const std::string& key) {
+        auto entry= node_->pack_logentry("barrier");
+        node_->wait_for(node_->submit(entry));
         auto it = configs_.find(key);
         return it != configs_.end() ? it->second.value : "";
     }
 
     int64_t GET_VERSION(const std::string& key) {
+        auto entry= node_->pack_logentry("barrier");
+        node_->wait_for(node_->submit(entry));
         auto it = configs_.find(key);
         return it != configs_.end() ? it->second.version : -1;
     }
 
+
+    void Set(const std::string& key, const std::string& value, int64_t timestamp) {
+        auto entry= node_->pack_logentry("SET_CONFIG", key, value, timestamp);
+        node_->wait_for(node_->submit(entry));
+    }
+
+
+    void Delete(const std::string& key, int64_t timestamp) {
+        auto entry= node_->pack_logentry("DELETE_CONFIG", key, timestamp);
+        node_->wait_for(node_->submit(entry));
+    }
+
     void LIST() {
+        auto entry= node_->pack_logentry("barrier");
+        node_->wait_for(node_->submit(entry));
         if (configs_.empty()) {
             std::cout << "配置中心为空" << std::endl;
             return;
@@ -59,7 +81,7 @@ public:
         watcher_reg.reg_callback("WATCH_DELETE_" + key, instance, mem_func);
     }
 
-    void apply_set(const std::string& key, const std::string& value, int64_t timestamp) {
+    bool apply_set(const std::string& key, const std::string& value, int64_t timestamp) {
         auto& item = configs_[key];
         item.value = value;
         item.version++;
@@ -71,10 +93,12 @@ public:
         if (it != watcher_reg.invokes_.end()) {
             nlohmann::json args_json = nlohmann::json::array({key, value});
             it->second(args_json.dump());
+            watcher_reg.invokes_.erase(it);
         }
+        return true;
     }
 
-    void apply_delete(const std::string& key) {
+    bool apply_delete(const std::string& key) {
         auto it = configs_.find(key);
         if (it != configs_.end()) {
             spdlog::warn("[ConfigCenter] DELETE: {} (was version: {})", key, it->second.version);
@@ -84,10 +108,13 @@ public:
             if (watcher_it != watcher_reg.invokes_.end()) {
                 nlohmann::json args_json = nlohmann::json::array({key});
                 watcher_it->second(args_json.dump());
+                watcher_reg.invokes_.erase(watcher_it);
             }
         }
+        return true;
     }
 
 private:
     std::map<std::string, ConfigItem> configs_;
+    std::shared_ptr<RaftNode> node_;
 };

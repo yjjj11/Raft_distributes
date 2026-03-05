@@ -164,8 +164,8 @@ private:
 
 class KvService {
 public:
-    KvService(std::shared_ptr<RaftNode> raft_node, KvStore& store) 
-        : raft_node_(raft_node), kv_store_(store) {
+    KvService(std::shared_ptr<RaftNode> raft_node) 
+        : raft_node_(raft_node) {
             raft_node_->callback_reg.reg_callback("Put", &kv_store_, &KvStore::apply_put);
             raft_node_->callback_reg.reg_callback("Del", &kv_store_, &KvStore::apply_del);
             raft_node_->callback_reg.reg_callback("Cas", &kv_store_, &KvStore::apply_cas);
@@ -312,6 +312,6 @@ public:
     }
 
 private:
-    KvStore& kv_store_;
+    KvStore kv_store_;
     std::shared_ptr<RaftNode> raft_node_;
 };

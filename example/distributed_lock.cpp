@@ -22,10 +22,7 @@ int main(int argc, char* argv[]) {
     
     auto node = initialize_server(argc, argv);
     g_node = node.get();
-    // 1. 创建状态机实例
-    KvStore kv_store_impl; 
-    // 3. 创建服务层实例
-    KvService service(node, kv_store_impl);
+    KvService service(node);
     std::string key, value;
     int choice = 0;
 

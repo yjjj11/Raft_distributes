@@ -6,9 +6,6 @@
 std::atomic<bool> g_running{true};
 RaftNode* g_node = nullptr;
 
-
-ConfigCenter g_config_center;
-
 void signal_handler(int) {
     g_running = false;
     if (g_node) g_node->stop();
@@ -21,15 +18,18 @@ int main(int argc, char* argv[]) {
 
     auto node = initialize_server(argc, argv);
     g_node = node.get();
-    node->callback_reg.reg_callback("SET_CONFIG", &g_config_center, &ConfigCenter::apply_set);
-    node->callback_reg.reg_callback("DELETE_CONFIG", &g_config_center, &ConfigCenter::apply_delete);
+
+    ConfigCenter config(node);
     
-    g_config_center.WATCH_SET("database", [](const std::string& key, const std::string& value) {
+    
+    config.WATCH_SET("database", [](const std::string& key, const std::string& value) -> bool   {
         std::cout << "数据库地址已更新: " << value << std::endl;
+        return true;
     });
 
-    g_config_center.WATCH_DELETE("database", [](const std::string& key) {
+    config.WATCH_DELETE("database", [](const std::string& key) -> bool {
         std::cout << "数据库地址已删除: " << key << std::endl;
+        return true;
     });
     
     
@@ -40,9 +40,8 @@ int main(int argc, char* argv[]) {
     std::cout << "请输入新的数据库地址: ";
     std::cin >> new_db_address;
     auto now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    auto entry = node->pack_logentry("SET_CONFIG", "database", new_db_address, now);
-    node->submit(entry);
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    g_node->stop();
-    return 0;
+    config.Set("database", new_db_address, now);
+
+
+    while(1);
 }
