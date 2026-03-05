@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/kv_store.dir/example/kv_store.cpp.o CMakeFiles/kv_store.dir/raftnode.cpp.o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /root/Raft/bin/kv_store  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 
+/usr/bin/c++ CMakeFiles/kv_store.dir/example/kv_store.cpp.o CMakeFiles/kv_store.dir/raftnode.cpp.o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /home/yjj/Raft_distributes/bin/kv_store  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 

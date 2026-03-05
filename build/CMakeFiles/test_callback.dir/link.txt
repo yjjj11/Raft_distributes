@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/test_callback.dir/example/test_callback.cpp.o CMakeFiles/test_callback.dir/raftnode.cpp.o CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /root/Raft/bin/test_callback  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 
+/usr/bin/c++ CMakeFiles/test_callback.dir/example/test_callback.cpp.o CMakeFiles/test_callback.dir/raftnode.cpp.o CMakeFiles/test_callback.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /home/yjj/Raft_distributes/bin/test_callback  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 

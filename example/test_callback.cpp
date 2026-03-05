@@ -1,4 +1,4 @@
-#include "../include/call_back.hpp"
+#include "call_back.hpp"
 #include <iostream>
 
 template<typename... Args>
@@ -10,9 +10,10 @@ LogEntry pack_logentry(const std::string& command_type, Args&&... args) {
     entry.buffer = args_json.dump();  // 序列化到 buffer
     return entry;
 }
-void set(const std::string& key, const std::string& value) {
+bool set(const std::string& key, const std::string& value) {
     // 模拟业务逻辑：存储 key-value
     std::cout << "[Set Function] 执行 set 操作 | key: " << key << ", value: " << value << std::endl;
+    return true;
 }
 int main() {
     // 1. 创建注册器实例

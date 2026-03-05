@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Raft
+CMAKE_SOURCE_DIR = /home/yjj/Raft_distributes
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Raft/build
+CMAKE_BINARY_DIR = /home/yjj/Raft_distributes/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/kv_store.dir/depend.make
@@ -70,46 +70,46 @@ include CMakeFiles/kv_store.dir/progress.make
 include CMakeFiles/kv_store.dir/flags.make
 
 CMakeFiles/kv_store.dir/example/kv_store.cpp.o: CMakeFiles/kv_store.dir/flags.make
-CMakeFiles/kv_store.dir/example/kv_store.cpp.o: /root/Raft/example/kv_store.cpp
+CMakeFiles/kv_store.dir/example/kv_store.cpp.o: /home/yjj/Raft_distributes/example/kv_store.cpp
 CMakeFiles/kv_store.dir/example/kv_store.cpp.o: CMakeFiles/kv_store.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/kv_store.dir/example/kv_store.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/example/kv_store.cpp.o -MF CMakeFiles/kv_store.dir/example/kv_store.cpp.o.d -o CMakeFiles/kv_store.dir/example/kv_store.cpp.o -c /root/Raft/example/kv_store.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/kv_store.dir/example/kv_store.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/example/kv_store.cpp.o -MF CMakeFiles/kv_store.dir/example/kv_store.cpp.o.d -o CMakeFiles/kv_store.dir/example/kv_store.cpp.o -c /home/yjj/Raft_distributes/example/kv_store.cpp
 
 CMakeFiles/kv_store.dir/example/kv_store.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/kv_store.dir/example/kv_store.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/example/kv_store.cpp > CMakeFiles/kv_store.dir/example/kv_store.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/example/kv_store.cpp > CMakeFiles/kv_store.dir/example/kv_store.cpp.i
 
 CMakeFiles/kv_store.dir/example/kv_store.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/kv_store.dir/example/kv_store.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/example/kv_store.cpp -o CMakeFiles/kv_store.dir/example/kv_store.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/example/kv_store.cpp -o CMakeFiles/kv_store.dir/example/kv_store.cpp.s
 
 CMakeFiles/kv_store.dir/raftnode.cpp.o: CMakeFiles/kv_store.dir/flags.make
-CMakeFiles/kv_store.dir/raftnode.cpp.o: /root/Raft/raftnode.cpp
+CMakeFiles/kv_store.dir/raftnode.cpp.o: /home/yjj/Raft_distributes/raftnode.cpp
 CMakeFiles/kv_store.dir/raftnode.cpp.o: CMakeFiles/kv_store.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/kv_store.dir/raftnode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/raftnode.cpp.o -MF CMakeFiles/kv_store.dir/raftnode.cpp.o.d -o CMakeFiles/kv_store.dir/raftnode.cpp.o -c /root/Raft/raftnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/kv_store.dir/raftnode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/raftnode.cpp.o -MF CMakeFiles/kv_store.dir/raftnode.cpp.o.d -o CMakeFiles/kv_store.dir/raftnode.cpp.o -c /home/yjj/Raft_distributes/raftnode.cpp
 
 CMakeFiles/kv_store.dir/raftnode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/kv_store.dir/raftnode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/raftnode.cpp > CMakeFiles/kv_store.dir/raftnode.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/raftnode.cpp > CMakeFiles/kv_store.dir/raftnode.cpp.i
 
 CMakeFiles/kv_store.dir/raftnode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/kv_store.dir/raftnode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/raftnode.cpp -o CMakeFiles/kv_store.dir/raftnode.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/raftnode.cpp -o CMakeFiles/kv_store.dir/raftnode.cpp.s
 
 CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: CMakeFiles/kv_store.dir/flags.make
-CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
+CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o: CMakeFiles/kv_store.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -MF CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d -o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -MF CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o.d -o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -c /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp
 
 CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp > CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp > CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.i
 
 CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Raft/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp -o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yjj/Raft_distributes/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp -o CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.s
 
 # Object files for target kv_store
 kv_store_OBJECTS = \
@@ -120,17 +120,17 @@ kv_store_OBJECTS = \
 # External object files for target kv_store
 kv_store_EXTERNAL_OBJECTS =
 
-/root/Raft/bin/kv_store: CMakeFiles/kv_store.dir/example/kv_store.cpp.o
-/root/Raft/bin/kv_store: CMakeFiles/kv_store.dir/raftnode.cpp.o
-/root/Raft/bin/kv_store: CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
-/root/Raft/bin/kv_store: CMakeFiles/kv_store.dir/build.make
-/root/Raft/bin/kv_store: /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so
-/root/Raft/bin/kv_store: CMakeFiles/kv_store.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/root/Raft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /root/Raft/bin/kv_store"
+/home/yjj/Raft_distributes/bin/kv_store: CMakeFiles/kv_store.dir/example/kv_store.cpp.o
+/home/yjj/Raft_distributes/bin/kv_store: CMakeFiles/kv_store.dir/raftnode.cpp.o
+/home/yjj/Raft_distributes/bin/kv_store: CMakeFiles/kv_store.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o
+/home/yjj/Raft_distributes/bin/kv_store: CMakeFiles/kv_store.dir/build.make
+/home/yjj/Raft_distributes/bin/kv_store: /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so
+/home/yjj/Raft_distributes/bin/kv_store: CMakeFiles/kv_store.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/yjj/Raft_distributes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /home/yjj/Raft_distributes/bin/kv_store"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kv_store.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/kv_store.dir/build: /root/Raft/bin/kv_store
+CMakeFiles/kv_store.dir/build: /home/yjj/Raft_distributes/bin/kv_store
 .PHONY : CMakeFiles/kv_store.dir/build
 
 CMakeFiles/kv_store.dir/clean:
@@ -138,6 +138,6 @@ CMakeFiles/kv_store.dir/clean:
 .PHONY : CMakeFiles/kv_store.dir/clean
 
 CMakeFiles/kv_store.dir/depend:
-	cd /root/Raft/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Raft /root/Raft /root/Raft/build /root/Raft/build /root/Raft/build/CMakeFiles/kv_store.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/yjj/Raft_distributes/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yjj/Raft_distributes /home/yjj/Raft_distributes /home/yjj/Raft_distributes/build /home/yjj/Raft_distributes/build /home/yjj/Raft_distributes/build/CMakeFiles/kv_store.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/kv_store.dir/depend
 

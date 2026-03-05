@@ -12,6 +12,9 @@ struct ValueWithExpiry {
     std::string value;
     std::chrono::steady_clock::time_point expiry_time;
     
+    ValueWithExpiry() : expiry_time(std::chrono::steady_clock::time_point::max()) {
+        value="";
+    }
     // 构造函数，如果没有指定过期时间，则默认不过期
     ValueWithExpiry(const std::string& val, std::chrono::steady_clock::time_point expiry = std::chrono::steady_clock::time_point::max())
         : value(val), expiry_time(expiry) {}
@@ -87,6 +90,10 @@ public:
         }
     }
 
+
+    bool test_false(){
+        return false;
+    }
     // 5. 提供一个安全的只读查询方法
     // 这个方法不应直接暴露给用户，而是供上层 Service 调用
     std::optional<std::string> unsafe_get(const std::string& key) const { // 返回 optional 以区分 "key不存在" 和 "value为空字符串"
@@ -114,58 +121,64 @@ private:
 class KvService {
 public:
     KvService(std::shared_ptr<RaftNode> raft_node, KvStore& store) 
-        : raft_node_(raft_node), kv_store_(store) {}
+        : raft_node_(raft_node), kv_store_(store) {
+            raft_node_->callback_reg.reg_callback("Put", &kv_store_, &KvStore::apply_put);
+            raft_node_->callback_reg.reg_callback("Del", &kv_store_, &KvStore::apply_del);
+            raft_node_->callback_reg.reg_callback("Cas", &kv_store_, &KvStore::apply_cas);
+            raft_node_->callback_reg.reg_callback("PutWithTTL", &kv_store_, &KvStore::apply_put_with_ttl);
+            raft_node_->callback_reg.reg_callback("TestFalse", &kv_store_, &KvStore::test_false);
+        }
 
     // 安全的写入操作
-    bool Put(const std::string& key, const std::string& value) {
+    int64_t Put(const std::string& key, const std::string& value) {
         auto entry = raft_node_->pack_logentry("Put", key, value);
         auto result = raft_node_->submit(entry);
-        return result != -1; 
+        if(result==-1){
+            std::cout<<"Put 提交失败"<<std::endl;
+        }
+        return result; 
     }
 
     // 新增：安全的带超时写入操作
-    bool PutWithTTL(const std::string& key, const std::string& value, long long ttl_ms) {
+    int64_t PutWithTTL(const std::string& key, const std::string& value, long long ttl_ms) {
         auto entry = raft_node_->pack_logentry("PutWithTTL", key, value, ttl_ms);
         auto result = raft_node_->submit(entry);
-        return result != -1;
+        if(result==-1){
+            std::cout<<"PutWithTTL 提交失败"<<std::endl;
+        }
+        return result;
     }
 
     // 安全的删除操作
-    bool Del(const std::string& key) {
+    int64_t Del(const std::string& key) {
         auto entry = raft_node_->pack_logentry("Del", key);
         auto result = raft_node_->submit(entry);
-        return result != -1;
+        if(result==-1){
+            std::cout<<"Del 提交失败"<<std::endl;
+        }
+        return result;
     }
 
     // 新增：安全的 CAS 操作
     // compare_and_swap: 如果 key 的当前值等于 expected_value，则将其更新为 new_value。
     // 返回值：true 表示操作成功，false 表示当前值与期望值不符，操作失败。
-    bool Cas(const std::string& key, const std::string& expected_value, const std::string& new_value) {
+    int64_t Cas(const std::string& key, const std::string& expected_value, const std::string& new_value) {
         auto entry = raft_node_->pack_logentry("Cas", key, expected_value, new_value);
         auto result = raft_node_->submit(entry);
-        // submit 返回 -1 表示提交失败（如找不到 Leader）
-        // 如果提交成功，我们需要知道 CAS 在状态机层面是否成功。
-        // 这里有一个问题：submit 是 void 类型，无法直接返回 CAS 的布尔结果。
-        // 解决方案：需要修改 Raft 的设计，让 submit 能够返回命令执行的结果。
-        // 为了演示，我们假设如果提交成功，则 Raft 状态机会执行 CAS 并通过某种方式（例如，一个带结果的 future）
-        // 通知我们最终结果。但现在，我们只能返回提交是否成功。
-        // 一个临时的解决方法是，让 RaftNode 的 wait_for 接收一个能返回结果的 future。
-        // 但为了保持简单，我们暂时返回提交是否成功。
-        // 更好的做法是修改 RaftNode 的 submit 和 wait_for 逻辑，使其能传递命令的执行结果。
-        return result != -1; 
-        // --- 重要说明 ---
-        // 上面的返回值是不准确的！它只表示日志是否成功提交，不代表 CAS 操作本身的成功与否。
-        // 要获取 CAS 的真实结果，需要对 RaftNode 进行改造，使其能将命令的执行结果（如 true/false）返回给调用者。
-        // 例如，可以让 LogEntry 包含一个 future，状态机执行完后设置这个 future 的值。
+        if(result==-1){
+            std::cout<<"Cas 提交失败"<<std::endl;
+        }
+        return result;
     }
 
     // 安全的读取操作 (这里采用"转发给 Leader"的简化模型)
     std::string Get(const std::string& key) {
         // Raft 读取优化：可以实现 ReadIndex 或 Lease-based Read 以降低延迟。
         // 现在的实现是通过提交一个日志来保证线性一致性读。
-        auto entry = raft_node_->pack_logentry("Get", key);
+        auto entry = raft_node_->pack_logentry("barrier");
         auto result = raft_node_->submit(entry);
         if (result == -1) {
+            std::cout<<"Get 提交失败"<<std::endl;
             return ""; // 操作失败
         }
         auto opt_value = kv_store_.unsafe_get(key);
@@ -181,14 +194,30 @@ public:
 
     // --- 新增：检查键是否存在且未过期 ---
     bool Exists(const std::string& key) {
-        auto entry = raft_node_->pack_logentry("Exists", key);
+        auto entry = raft_node_->pack_logentry("barrier", key);
         auto result = raft_node_->submit(entry);
         if (result == -1) {
+            std::cout<<"Exists 提交失败"<<std::endl;
             return false; // 操作失败
         }
         return kv_store_.unsafe_get(key).has_value();
     }
 
+    // 新增：测试方法，返回 false
+    bool TestFalse() {
+        auto entry = raft_node_->pack_logentry("barrier");
+        auto result = raft_node_->submit(entry);
+        if (result == -1) {
+            std::cout<<"TestFalse 提交失败"<<std::endl;
+            return false; // 操作失败
+        }
+        std::cout<<"执行结果："<<result<<std::endl;
+        return result;
+    }
+
+    bool get_reply_by_id(int64_t req_id){
+        return raft_node_->wait_for(req_id);
+    }
 private:
     KvStore& kv_store_;
     std::shared_ptr<RaftNode> raft_node_;

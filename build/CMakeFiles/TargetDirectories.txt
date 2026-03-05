@@ -1,7 +1,7 @@
-/root/Raft/build/CMakeFiles/node.dir
-/root/Raft/build/CMakeFiles/kv_store.dir
-/root/Raft/build/CMakeFiles/test_callback.dir
-/root/Raft/build/CMakeFiles/edit_cache.dir
-/root/Raft/build/CMakeFiles/rebuild_cache.dir
-/root/Raft/build/Asio_mrpc/CMakeFiles/edit_cache.dir
-/root/Raft/build/Asio_mrpc/CMakeFiles/rebuild_cache.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/node.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/kv_store.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/test_callback.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/edit_cache.dir
+/home/yjj/Raft_distributes/build/CMakeFiles/rebuild_cache.dir
+/home/yjj/Raft_distributes/build/Asio_mrpc/CMakeFiles/edit_cache.dir
+/home/yjj/Raft_distributes/build/Asio_mrpc/CMakeFiles/rebuild_cache.dir

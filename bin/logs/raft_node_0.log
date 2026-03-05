@@ -1,40 +1,124 @@
-[2026-03-04 21:02:59.403] [debug] Election timeout: 1000ms
-[2026-03-04 21:02:59.403] [info] Cluster peers:
-[2026-03-04 21:02:59.403] [info] 127.0.0.1:8001
-[2026-03-04 21:02:59.403] [warning] --------------------------------total_nodes_count_: 1
-[2026-03-04 21:02:59.414] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
-[2026-03-04 21:02:59.414] [debug] Raft node 0 initialized on 127.0.0.1:8000
-[2026-03-04 21:02:59.414] [info] Node 0 starting apply loop thread.
-[2026-03-04 21:02:59.416] [info] ------------------------------client runing ----------------------------
-[2026-03-04 21:03:00.421] [error] Failed to connect to peer: 127.0.0.1:8001
-[2026-03-04 21:03:00.422] [info] 连接成功: 127.0.0.1:8001
-[2026-03-04 21:03:00.422] [debug] Connected to peer: 127.0.0.1:8001
-[2026-03-04 21:03:00.422] [info] ------------------------------------Into run_election_timeout------------------------------------
-[2026-03-04 21:03:01.437] [error] Node 0 became CANDIDATE at term 1
-[2026-03-04 21:03:01.437] [info] ------------------------------------Vote begain--------------------------------------
-[2026-03-04 21:03:01.438] [debug] Success! Result: reply.term=1, voteGranted=true
-[2026-03-04 21:03:01.438] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
-[2026-03-04 21:03:01.438] [error] Node 0 became LEADER at term 1.
-[2026-03-04 21:03:01.438] [info] Node 0 starting heartbeat thread for term 1.
-[2026-03-04 21:03:02.422] [debug] 注册成员函数回调 | 命令类型: Put
-[2026-03-04 21:03:02.422] [debug] 注册成员函数回调 | 命令类型: Del
-[2026-03-04 21:03:08.277] [debug] 进入正式push阶段了
-[2026-03-04 21:03:08.278] [info] Node 0: Submitted log entry (index 0, term 1) type Put
-[2026-03-04 21:03:08.613] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
-[2026-03-04 21:03:08.613] [debug] Node 0: 正在准备将index=0的日志条目 Put 应用到状态机。
-[2026-03-04 21:03:08.613] [debug] [Trigger] 处理 LogEntry | 命令类型: Put
-[2026-03-04 21:03:08.613] [info] Applying PUT: 123 = 12
-[2026-03-04 21:03:08.614] [debug] Node 0: Log entry with req_id 1 has been applied to the state machine.
-[2026-03-04 21:03:15.711] [debug] Node 0: Checking if node 0 is leader.
-[2026-03-04 21:03:15.713] [debug] 进入正式push阶段了
-[2026-03-04 21:03:15.713] [info] Node 0: Submitted log entry (index 1, term 1) type Get
-[2026-03-04 21:03:15.785] [debug] Node 0: Applying logs from index 1 to 1 to state machine.
-[2026-03-04 21:03:15.785] [debug] Node 0: 正在准备将index=1的日志条目 Get 应用到状态机。
-[2026-03-04 21:03:15.785] [error] [Error] LogEntry命令类型未注册: Get
-[2026-03-04 21:03:15.785] [debug] Node 0: Log entry with req_id 2 has been applied to the state machine.
-[2026-03-04 21:03:18.936] [debug] Stopping Raft node 0...
-[2026-03-04 21:03:17.126] [error] Failed: Request Timeout 
+[2026-03-05 10:51:16.646] [debug] Election timeout: 1000ms
+[2026-03-05 10:51:16.646] [info] Cluster peers:
+[2026-03-05 10:51:16.646] [info] 127.0.0.1:8001
+[2026-03-05 10:51:16.646] [warning] --------------------------------total_nodes_count_: 1
+[2026-03-05 10:51:16.652] [info] ------------------------------------Raft node 0 started on 127.0.0.1:8000------------------------------------
+[2026-03-05 10:51:16.652] [debug] Raft node 0 initialized on 127.0.0.1:8000
+[2026-03-05 10:51:16.652] [info] Node 0 starting apply loop thread.
+[2026-03-05 10:51:16.653] [info] ------------------------------client runing ----------------------------
+[2026-03-05 10:51:16.656] [info] 连接成功: 127.0.0.1:8001
+[2026-03-05 10:51:16.656] [debug] Connected to peer: 127.0.0.1:8001
+[2026-03-05 10:51:16.657] [info] ------------------------------------Into run_election_timeout------------------------------------
+[2026-03-05 10:51:17.858] [error] Node 0 became CANDIDATE at term 1
+[2026-03-05 10:51:17.858] [info] ------------------------------------Vote begain--------------------------------------
+[2026-03-05 10:51:17.858] [debug] Success! Result: reply.term=1, voteGranted=true
+[2026-03-05 10:51:17.858] [info] ----------------------total_nodes_count_: 2, vote_count: 2-------------------
+[2026-03-05 10:51:17.858] [error] Node 0 became LEADER at term 1.
+[2026-03-05 10:51:17.858] [info] Node 0 starting heartbeat thread for term 1.
+[2026-03-05 10:51:18.657] [debug] 注册成员函数回调 | 命令类型: Put
+[2026-03-05 10:51:18.657] [debug] 注册成员函数回调 | 命令类型: Del
+[2026-03-05 10:51:18.657] [debug] 注册成员函数回调 | 命令类型: Cas
+[2026-03-05 10:51:18.657] [debug] 注册成员函数回调 | 命令类型: PutWithTTL
+[2026-03-05 10:51:18.657] [debug] 注册成员函数回调 | 命令类型: TestFalse
+[2026-03-05 10:51:29.109] [debug] 进入正式push阶段了
+[2026-03-05 10:51:29.109] [info] Node 0: Submitted log entry (index 0, term 1) type Put
+[2026-03-05 10:51:29.116] [debug] Node 0: Applying logs from index 0 to 0 to state machine.
+[2026-03-05 10:51:29.117] [debug] Node 0: 正在准备将index=0的日志条目 Put 应用到状态机。
+[2026-03-05 10:51:29.117] [debug] [Trigger] 处理 LogEntry | 命令类型: Put
+[2026-03-05 10:51:29.117] [info] Applying PUT: 123 = 123
+[2026-03-05 10:51:31.712] [debug] 进入正式push阶段了
+[2026-03-05 10:51:31.712] [info] Node 0: Submitted log entry (index 1, term 1) type barrier
+[2026-03-05 10:51:32.118] [debug] Node 0: Applying logs from index 1 to 1 to state machine.
+[2026-03-05 10:51:32.118] [debug] Node 0: 正在准备将index=1的日志条目 barrier 应用到状态机。
+[2026-03-05 10:51:32.118] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:51:32.119] [debug] Node 0: Log entry with req_id 2 applied: true
+[2026-03-05 10:51:35.636] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:51:35.636] [debug] 进入正式push阶段了
+[2026-03-05 10:51:35.636] [info] Node 0: Submitted log entry (index 2, term 1) type barrier
+[2026-03-05 10:51:35.871] [debug] Node 0: Applying logs from index 2 to 2 to state machine.
+[2026-03-05 10:51:35.871] [debug] Node 0: 正在准备将index=2的日志条目 barrier 应用到状态机。
+[2026-03-05 10:51:35.871] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:51:35.871] [debug] Node 0: Log entry with req_id 3 applied: true
+[2026-03-05 10:51:43.724] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:51:43.724] [debug] 进入正式push阶段了
+[2026-03-05 10:51:43.724] [info] Node 0: Submitted log entry (index 3, term 1) type Put
+[2026-03-05 10:51:44.126] [debug] Node 0: Applying logs from index 3 to 3 to state machine.
+[2026-03-05 10:51:44.126] [debug] Node 0: 正在准备将index=3的日志条目 Put 应用到状态机。
+[2026-03-05 10:51:44.126] [debug] [Trigger] 处理 LogEntry | 命令类型: Put
+[2026-03-05 10:51:44.126] [info] Applying PUT: 23 = 23
+[2026-03-05 10:51:45.514] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:51:45.514] [debug] 进入正式push阶段了
+[2026-03-05 10:51:45.514] [info] Node 0: Submitted log entry (index 4, term 1) type barrier
+[2026-03-05 10:51:45.627] [debug] Node 0: Applying logs from index 4 to 4 to state machine.
+[2026-03-05 10:51:45.627] [debug] Node 0: 正在准备将index=4的日志条目 barrier 应用到状态机。
+[2026-03-05 10:51:45.627] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:51:45.627] [debug] Node 0: Log entry with req_id 5 applied: true
+[2026-03-05 10:51:53.007] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:51:53.007] [debug] 进入正式push阶段了
+[2026-03-05 10:51:53.007] [info] Node 0: Submitted log entry (index 5, term 1) type Del
+[2026-03-05 10:51:53.132] [debug] Node 0: Applying logs from index 5 to 5 to state machine.
+[2026-03-05 10:51:53.132] [debug] Node 0: 正在准备将index=5的日志条目 Del 应用到状态机。
+[2026-03-05 10:51:53.132] [debug] [Trigger] 处理 LogEntry | 命令类型: Del
+[2026-03-05 10:51:53.132] [info] Applying DELETE: 123
+[2026-03-05 10:51:54.803] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:51:54.803] [debug] 进入正式push阶段了
+[2026-03-05 10:51:54.803] [info] Node 0: Submitted log entry (index 6, term 1) type barrier
+[2026-03-05 10:51:55.384] [debug] Node 0: Applying logs from index 6 to 6 to state machine.
+[2026-03-05 10:51:55.384] [debug] Node 0: 正在准备将index=6的日志条目 barrier 应用到状态机。
+[2026-03-05 10:51:55.384] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:51:55.384] [debug] Node 0: Log entry with req_id 7 applied: true
+[2026-03-05 10:52:01.300] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:01.300] [debug] 进入正式push阶段了
+[2026-03-05 10:52:01.300] [info] Node 0: Submitted log entry (index 7, term 1) type Del
+[2026-03-05 10:52:01.388] [debug] Node 0: Applying logs from index 7 to 7 to state machine.
+[2026-03-05 10:52:01.388] [debug] Node 0: 正在准备将index=7的日志条目 Del 应用到状态机。
+[2026-03-05 10:52:01.388] [debug] [Trigger] 处理 LogEntry | 命令类型: Del
+[2026-03-05 10:52:01.388] [info] Applying DELETE: 3
+[2026-03-05 10:52:04.681] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:04.681] [debug] 进入正式push阶段了
+[2026-03-05 10:52:04.681] [info] Node 0: Submitted log entry (index 8, term 1) type barrier
+[2026-03-05 10:52:05.140] [debug] Node 0: Applying logs from index 8 to 8 to state machine.
+[2026-03-05 10:52:05.140] [debug] Node 0: 正在准备将index=8的日志条目 barrier 应用到状态机。
+[2026-03-05 10:52:05.140] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:52:05.140] [debug] Node 0: Log entry with req_id 9 applied: true
+[2026-03-05 10:52:07.845] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:07.845] [debug] 进入正式push阶段了
+[2026-03-05 10:52:07.845] [info] Node 0: Submitted log entry (index 9, term 1) type Put
+[2026-03-05 10:52:08.142] [debug] Node 0: Applying logs from index 9 to 9 to state machine.
+[2026-03-05 10:52:08.142] [debug] Node 0: 正在准备将index=9的日志条目 Put 应用到状态机。
+[2026-03-05 10:52:08.142] [debug] [Trigger] 处理 LogEntry | 命令类型: Put
+[2026-03-05 10:52:08.142] [info] Applying PUT: 123 = 123
+[2026-03-05 10:52:09.805] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:09.805] [debug] 进入正式push阶段了
+[2026-03-05 10:52:09.805] [info] Node 0: Submitted log entry (index 10, term 1) type Del
+[2026-03-05 10:52:10.393] [debug] Node 0: Applying logs from index 10 to 10 to state machine.
+[2026-03-05 10:52:10.394] [debug] Node 0: 正在准备将index=10的日志条目 Del 应用到状态机。
+[2026-03-05 10:52:10.394] [debug] [Trigger] 处理 LogEntry | 命令类型: Del
+[2026-03-05 10:52:10.394] [info] Applying DELETE: 123
+[2026-03-05 10:52:11.510] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:11.511] [debug] 进入正式push阶段了
+[2026-03-05 10:52:11.511] [info] Node 0: Submitted log entry (index 11, term 1) type barrier
+[2026-03-05 10:52:11.895] [debug] Node 0: Applying logs from index 11 to 11 to state machine.
+[2026-03-05 10:52:11.895] [debug] Node 0: 正在准备将index=11的日志条目 barrier 应用到状态机。
+[2026-03-05 10:52:11.895] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:52:11.895] [debug] Node 0: Log entry with req_id 12 applied: true
+[2026-03-05 10:52:19.329] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:19.329] [debug] 进入正式push阶段了
+[2026-03-05 10:52:19.329] [info] Node 0: Submitted log entry (index 12, term 1) type Cas
+[2026-03-05 10:52:19.399] [debug] Node 0: Applying logs from index 12 to 12 to state machine.
+[2026-03-05 10:52:19.399] [debug] Node 0: 正在准备将index=12的日志条目 Cas 应用到状态机。
+[2026-03-05 10:52:19.399] [debug] [Trigger] 处理 LogEntry | 命令类型: Cas
+[2026-03-05 10:52:19.399] [info] Applying CAS: Key '23' matches expected value. Updating to '123'.
+[2026-03-05 10:52:21.329] [debug] Node 0: Checking if node 0 is leader.
+[2026-03-05 10:52:21.329] [debug] 进入正式push阶段了
+[2026-03-05 10:52:21.329] [info] Node 0: Submitted log entry (index 13, term 1) type barrier
+[2026-03-05 10:52:21.651] [debug] Node 0: Applying logs from index 13 to 13 to state machine.
+[2026-03-05 10:52:21.651] [debug] Node 0: 正在准备将index=13的日志条目 barrier 应用到状态机。
+[2026-03-05 10:52:21.651] [error] [Error] LogEntry命令类型未注册: barrier
+[2026-03-05 10:52:21.651] [debug] Node 0: Log entry with req_id 14 applied: true
+[2026-03-05 10:52:24.107] [debug] Stopping Raft node 0...
+[2026-03-05 10:52:24.903] [error] Failed: Request Timeout 
 When append_entries on node0 : 127.0.0.1:8001
-[2026-03-04 21:03:17.842] [info] Node 0 heartbeat thread stopping.
-[2026-03-04 21:03:17.842] [info] Node 0 apply loop thread stopping.
-[2026-03-04 21:03:17.843] [debug] Raft node 0 stopped.
+[2026-03-05 10:52:25.653] [info] Node 0 heartbeat thread stopping.
+[2026-03-05 10:52:25.653] [info] Node 0 apply loop thread stopping.
+[2026-03-05 10:52:25.654] [debug] Raft node 0 stopped.

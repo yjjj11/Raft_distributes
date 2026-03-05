@@ -196,7 +196,7 @@ void RaftNode::start_client() {
     }
     for (int i = 0; i < peer_connections_.size(); ++i) {
         if (!peer_connections_[i]) {
-            auto conn = client_.connect(peers_[i].first, peers_[i].second,5);
+            auto conn = client_.connect(peers_[i].first, peers_[i].second,1);
             if (conn) {
                 peer_connections_[i] = conn;
                 total_nodes_count_++;
@@ -456,10 +456,6 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         bool success = false;
         try {
             success = callback_reg.trigger_by_logentry(entry);
-            if(!success){
-                spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, log_index, entry.command_type);
-                continue;
-            }
         } catch (const std::exception& e) {
             spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, log_index, e.what());
             continue;
@@ -468,7 +464,7 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         // 3. 通知等待者 (同样在无锁状态下)
         auto it = lock_store_.find(entry.req_id);
         if (it != lock_store_.end()) {
-            it->second.set_value(success);
+            it->second->set_value(success);
         }
     }
 
@@ -760,6 +756,8 @@ int64_t RaftNode::submit(const LogEntry& entry) {
         if (reply.error_code() == mrpc::ok) {
             spdlog::info("成功向leader {}提交日志条目 {}", leader_id, entry.command_type);
             request_id = reply.value();
+            return request_id;
+
         } else {
             spdlog::error("Node {}: Failed to submit log entry to leader {}: {}", node_id_, leader_id, reply.error_msg());
             request_id = -1;
@@ -776,7 +774,7 @@ int64_t RaftNode::submit(const LogEntry& entry) {
             request_id_++;
             new_entry.req_id = request_id_;
             request_id = new_entry.req_id;
-            
+            lock_store_.emplace(request_id, std::make_shared<std::promise<bool>>());
             log_.push_back(new_entry);
             spdlog::info("Node {}: Submitted log entry (index {}, term {}) type {}", 
                         node_id_, log_.size()-1, current_term_.load(), new_entry.command_type);
@@ -786,8 +784,10 @@ int64_t RaftNode::submit(const LogEntry& entry) {
     if(request_id == -1){
         return request_id;
     }
-    return wait_for(request_id);
-    
+    if(entry.command_type=="barrier"){
+        return wait_for(request_id);
+    }
+    return request_id;
 }
 
 void init_logger(int node_id) {
@@ -810,26 +810,24 @@ void init_logger(int node_id) {
 
 
 bool RaftNode::wait_for(int64_t req_id) {
-    auto future = lock_store_[req_id].get_future();
-    
-    // 等待最多 1 秒
+    auto it = lock_store_.find(req_id);
+    if (it == lock_store_.end()) {
+        spdlog::error("req_id {} not found in lock_store_", req_id);
+        return false;
+    }
+
+    auto future = it->second->get_future();
     auto status = future.wait_for(std::chrono::seconds(5));
 
     if (status == std::future_status::ready) {
-        // 日志已被应用，Future 已被设置
-        return future.get();
-        spdlog::debug("Node {}: Log entry with req_id {} has been applied to the state machine.", node_id_, req_id);
+        bool result = future.get();
+        spdlog::debug("Node {}: Log entry with req_id {} applied: {}", node_id_, req_id, result);
     } else {
-        // 等待超时
-        spdlog::warn("Node {}: Timeout waiting for log entry with req_id {} to be applied. Request may have been lost or cluster is unavailable.", node_id_, req_id);
-        // 可选：在这里也可以选择移除超时的 promise，避免内存泄漏（见下方注释）
+        spdlog::warn("Node {}: Timeout waiting for req_id {}", node_id_, req_id);
     }
-    
-    // 无论成功或超时，都需要清理 map 中的条目
-    // 注意：如果 wait_for 超时，此时尚未调用 set_value，erase 会销毁未完成的 promise，
-    // 这会导致其 associated future 的行为未定义。但在我们的场景下，由于已经超时，
-    // 我们不再关心它的结果，所以这种清理是合理的。
-    lock_store_.erase(req_id);
+
+    lock_store_.erase(it);
+    return status == std::future_status::ready;
 }
 
 

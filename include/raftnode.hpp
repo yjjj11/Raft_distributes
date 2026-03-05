@@ -32,6 +32,7 @@ public:
     void handle_heartbeat_request(const AppendRequest& request,AppendReply& reply);
 
     int64_t submit(const LogEntry& entry);
+    bool get_request_id_reply(int64_t req_id);
     using StateMachineCallback = std::function<bool(int32_t log_index, const LogEntry& entry)>;
 
     // 设置回调函数的接口
@@ -40,7 +41,7 @@ public:
         apply_callback_ = std::move(callback);
     }
     template<typename... Args>
-    LogEntry pack_logentry(const std::string& command_type, Args&&... args) {
+    LogEntry pack_logentry(const std::string& command_type , Args&&... args) {
         LogEntry entry;
         entry.command_type = command_type;
         // 核心：将任意参数打包为 JSON 数组
@@ -52,7 +53,7 @@ public:
 
     bool  wait_for(int64_t req_id);
     int node_id_;
-    std::unordered_map<int64_t, std::promise<bool>> lock_store_;
+    std::unordered_map<int64_t, std::shared_ptr<std::promise<bool>>> lock_store_;
     RegisterCallback callback_reg;
 private:
     // 节点基本信息

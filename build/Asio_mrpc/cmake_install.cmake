@@ -1,4 +1,4 @@
-# Install script for directory: /root/Raft/Asio_mrpc
+# Install script for directory: /home/yjj/Raft_distributes/Asio_mrpc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

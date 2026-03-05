@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/config_center.dir/example/config_center.cpp.o CMakeFiles/config_center.dir/raftnode.cpp.o CMakeFiles/config_center.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /root/Raft/bin/config_center  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 

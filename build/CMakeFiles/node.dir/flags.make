@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DASIO_STANDALONE -DRPC_USE_LOG -D_LOG_CONSOLE
 
-CXX_INCLUDES = -I/root/Raft -I/root/Raft/include -I/root/Raft/Asio_mrpc/include -I/root/Raft/Asio_mrpc/include/mrpc -I/root/Raft/Asio_mrpc/third/asio-1.18.1/include -I/root/Raft/Asio_mrpc/third/spdlog/include -I/root/Raft/Asio_mrpc/third/wlog/include -I/root/Raft/Asio_mrpc/third/nlohmann/include
+CXX_INCLUDES = -I/home/yjj/Raft_distributes -I/home/yjj/Raft_distributes/include -I/home/yjj/Raft_distributes/Asio_mrpc/include -I/home/yjj/Raft_distributes/Asio_mrpc/include/mrpc -I/home/yjj/Raft_distributes/Asio_mrpc/third/asio-1.18.1/include -I/home/yjj/Raft_distributes/Asio_mrpc/third/spdlog/include -I/home/yjj/Raft_distributes/Asio_mrpc/third/wlog/include -I/home/yjj/Raft_distributes/Asio_mrpc/third/nlohmann/include
 
 CXX_FLAGS = -w
 

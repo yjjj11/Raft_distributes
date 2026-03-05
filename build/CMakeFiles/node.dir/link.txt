@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/node.dir/example/node.cpp.o CMakeFiles/node.dir/raftnode.cpp.o CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /root/Raft/bin/node  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 
+/usr/bin/c++ CMakeFiles/node.dir/example/node.cpp.o CMakeFiles/node.dir/raftnode.cpp.o CMakeFiles/node.dir/Asio_mrpc/include/mrpc/ZookeeperUtil.cpp.o -o /home/yjj/Raft_distributes/bin/node  /usr/lib/x86_64-linux-gnu/libzookeeper_mt.so 
