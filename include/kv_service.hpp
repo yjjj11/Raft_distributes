@@ -42,32 +42,12 @@ public:
         spdlog::info("Applying PUT: {} = {}", key, value);
         // 无限期存储，设置一个极大过期时间
         kv_store_[key] = ValueWithExpiry(value);
-        return put_watch(key, value);
-    }
 
-    // 新增的独立put watch函数
-    bool put_watch(const std::string& key, const std::string& value) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_added事件
-            auto it = watcher_reg.invokes_.find("task_added");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else if (key.substr(0, 12) == "task_status:") {
-            // 触发task_updated事件（用于任务状态更新）
-            auto it = watcher_reg.invokes_.find("task_updated");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的put操作，触发通用的put事件
-            auto it = watcher_reg.invokes_.find("put");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
+        auto it = watcher_reg.invokes_.find("put" );
+        if (it != watcher_reg.invokes_.end()) {
+            nlohmann::json args_json = nlohmann::json::array({key, value});
+            it->second(args_json.dump());
+            // watcher_reg.invokes_.erase(it);
         }
         return true;
     }
@@ -76,16 +56,14 @@ public:
         spdlog::info("Applying ADD_TASK: {} = {}", key, value);
         // 无限期存储，设置一个极大过期时间
         // kv_store_[key] = ValueWithExpiry(value);
-        return add_task_watch(key, value);
-    }
 
-    // 新增的独立add_task watch函数
-    bool add_task_watch(const std::string& key, const std::string& value) {
+
+
         auto it = watcher_reg.invokes_.find("add_" + key);
         if (it != watcher_reg.invokes_.end()) {
             nlohmann::json args_json = nlohmann::json::array({key, value});
             it->second(args_json.dump());
-            // watcher_reg.invokes_.erase(it);
+            watcher_reg.invokes_.erase(it);
         }
         return true;
     }
@@ -96,33 +74,6 @@ public:
         auto expiry_time = now + std::chrono::milliseconds(ttl_ms);
         spdlog::info("Applying PUT_WITH_TTL: {} = {}, expires in {} ms", key, value, ttl_ms);
         kv_store_[key] = ValueWithExpiry(value, expiry_time);
-        return put_with_ttl_watch(key, value, ttl_ms);
-    }
-
-    // 新增的独立put_with_ttl watch函数
-    bool put_with_ttl_watch(const std::string& key, const std::string& value, long long ttl_ms) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_added事件
-            auto it = watcher_reg.invokes_.find("task_added");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else if (key.substr(0, 12) == "task_status:") {
-            // 触发task_updated事件（用于任务状态更新）
-            auto it = watcher_reg.invokes_.find("task_updated");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的put操作，触发通用的put事件
-            auto it = watcher_reg.invokes_.find("put");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        }
         return true;
     }
 
@@ -130,26 +81,6 @@ public:
     bool apply_del(const std::string& key) {
         spdlog::info("Applying DELETE: {}", key);
         kv_store_.erase(key);
-        return del_watch(key);
-    }
-
-    // 新增的独立del watch函数
-    bool del_watch(const std::string& key) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_removed事件
-            auto it = watcher_reg.invokes_.find("task_removed");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的delete操作，触发通用的del事件
-            auto it = watcher_reg.invokes_.find("del");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key});
-                it->second(args_json.dump());
-            }
-        }
         return true;
     }
 
@@ -160,65 +91,36 @@ public:
         // 如果键不存在，且期望值是空字符串，则视为匹配
         if (it == kv_store_.end()) {
             if (expected_value.empty()) {
-                spdlog::info("Applying CAS: Key '{}' does not exist, expected empty. Setting to '{}' (from node{})", key, new_value, node_id_);
+                spdlog::info("Applying CAS: Key '{}' does not exist, expected empty. Setting to '{}' (from node{})", key, new_value,node_id_);
                 kv_store_[key] = ValueWithExpiry(new_value);
-                return cas_watch(key, expected_value, new_value, true);
+                return true;
             }
-            spdlog::info("Applying CAS: Key '{}' does not exist, expected '{}', CAS failed (from node{})", key, expected_value, node_id_);
-            return cas_watch(key, expected_value, new_value, false);
+            spdlog::info("Applying CAS: Key '{}' does not exist, expected '{}', CAS failed (from node{})", key, expected_value,node_id_);
+            return false;
         }
         
         // 检查键是否已过期
         if (it->second.is_expired()) {
-            spdlog::info("Applying CAS: Key '{}' is expired, treating as non-existent (from node{})", key, node_id_);
+            spdlog::info("Applying CAS: Key '{}' is expired, treating as non-existent (from node{})", key,node_id_);
             kv_store_.erase(it);
             // 过期后的行为：如果期望值是空，可以设置新值
             if (expected_value.empty()) {
-                spdlog::info("Applying CAS: After expiry, setting '{}' to '{}' (from node{})", key, new_value, node_id_);
+                spdlog::info("Applying CAS: After expiry, setting '{}' to '{}' (from node{})", key, new_value,node_id_);
                 kv_store_[key] = ValueWithExpiry(new_value);
-                return cas_watch(key, expected_value, new_value, true);
+                return true;
             }
-            return cas_watch(key, expected_value, new_value, false);
+            return false;
         }
 
         // 比较当前值
         if (it->second.value == expected_value) {
-            spdlog::info("Applying CAS: Key '{}' matches expected value. Updating to '{}' (from node{})", key, new_value, node_id_);
+            spdlog::info("Applying CAS: Key '{}' matches expected value. Updating to '{}' (from node{})", key, new_value,node_id_);
             it->second.value = new_value; // 更新值，保持原有过期时间
-            return cas_watch(key, expected_value, new_value, true);
+            return true;
         } else {
-            spdlog::info("Applying CAS: Key '{}' value '{}' does not match expected '{}', CAS failed (from node{})", key, it->second.value, expected_value, node_id_);
-            return cas_watch(key, expected_value, new_value, false);
+            spdlog::info("Applying CAS: Key '{}' value '{}' does not match expected '{}', CAS failed (from node{})", key, it->second.value, expected_value,node_id_);
+            return false;
         }
-    }
-
-    // 新增的独立cas watch函数
-    bool cas_watch(const std::string& key, const std::string& expected_value, const std::string& new_value, bool success) {
-        if (success) {
-            if (key.substr(0, 5) == "task:") {
-                // 触发task_updated事件
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else if (key.substr(0, 12) == "task_status:") {
-                // 触发task_updated事件（用于任务状态更新）
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else {
-                // 对于一般的cas操作，触发通用的cas事件
-                auto it = watcher_reg.invokes_.find("cas");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, expected_value, new_value});
-                    it->second(args_json.dump());
-                }
-            }
-        }
-        return success;
     }
 
     bool apply_cas_with_ttl(const std::string& key, const std::string& expected_value, 
@@ -228,70 +130,40 @@ public:
         if (it == kv_store_.end()) {
             if (expected_value.empty()) {
                 spdlog::info("Applying CAS_TTL: Key '{}' does not exist, set to '{}' (TTL: {}ms  from node{})", 
-                            key, new_value, ttl_ms, node_id_);
+                            key, new_value, ttl_ms,node_id_);
                 auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
                 kv_store_[key] = ValueWithExpiry(new_value, expiry);
-                return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+                return true;
             }
             spdlog::info("Applying CAS_TTL: Key '{}' does not exist, expected '{}', failed (from node{})", 
-                        key, expected_value, node_id_);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+                        key, expected_value,node_id_);
+            return false;
         }
 
         // 键已过期 → 视为不存在
         if (it->second.is_expired()) {
-            spdlog::info("Applying CAS_TTL: Key '{}' expired, treat as non-existent (from node{})", key, node_id_);
+            spdlog::info("Applying CAS_TTL: Key '{}' expired, treat as non-existent (from node{})", key,node_id_);
             kv_store_.erase(it);
             if (expected_value.empty()) {
                 auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
                 kv_store_[key] = ValueWithExpiry(new_value, expiry);
-                return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+                return true;
             }
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+            return false;
         }
 
         // 期望值匹配 → 原子更新值+重置TTL
         if (it->second.value == expected_value) {
             spdlog::info("Applying CAS_TTL: Key '{}' match expected, update to '{}' (TTL: {}ms  from node{})", 
-                        key, new_value, ttl_ms, node_id_);
+                        key, new_value, ttl_ms,node_id_);
             auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
             it->second = ValueWithExpiry(new_value, expiry);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+            return true;
         } else {
             spdlog::info("Applying CAS_TTL: Key '{}' value '{}' != expected '{}', failed (from node{})", 
-                        key, it->second.value, expected_value, node_id_);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+                        key, it->second.value, expected_value,node_id_);
+            return false;
         }
-    }
-
-    // 新增的独立cas_with_ttl watch函数
-    bool cas_with_ttl_watch(const std::string& key, const std::string& expected_value, 
-                        const std::string& new_value, long long ttl_ms, bool success) {
-        if (success) {
-            if (key.substr(0, 5) == "task:") {
-                // 触发task_updated事件
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else if (key.substr(0, 12) == "task_status:") {
-                // 触发task_updated事件（用于任务状态更新）
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else {
-                // 对于一般的cas操作，触发通用的cas事件
-                auto it = watcher_reg.invokes_.find("cas");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, expected_value, new_value});
-                    it->second(args_json.dump());
-                }
-            }
-        }
-        return success;
     }
 
     bool test_false(){
