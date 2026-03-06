@@ -154,7 +154,7 @@ class callback_t : public std::enable_shared_from_this<callback_t> {
  */
 class connection : public std::enable_shared_from_this<connection> {
   public:
-    static const constexpr time_t DEFAULT_TIMEOUT = 1000; //milliseconds
+    static const constexpr time_t DEFAULT_TIMEOUT = 5000; //milliseconds
 
 #ifdef _MSG_FORMAT
 	static const constexpr msg_type_fmt DEFAULT_MSG_FORMAT = _MSG_FORMAT;

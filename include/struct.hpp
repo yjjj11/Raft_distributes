@@ -68,32 +68,20 @@ NLOHMANN_JSON_SERIALIZE_ENUM(State, {
 })
 
 enum class TaskStatus {
-    Pending,
-    Executing,
-    Completed,
-    Failed
+    Pending = 0,
+    Executing = 1,
+    Completed = 2,
+    Failed = 3
 };
 
-// 为 TaskStatus 提供 to/from json 的转换函数
 namespace nlohmann {
-    template <>
+    template<>
     struct adl_serializer<TaskStatus> {
-        static void to_json(json& j, const TaskStatus& status) {
-            switch(status) {
-                case TaskStatus::Pending: j = "pending"; break;
-                case TaskStatus::Executing: j = "executing"; break;
-                case TaskStatus::Completed: j = "completed"; break;
-                case TaskStatus::Failed: j = "failed"; break;
-            }
+        static void to_json(json& j, const TaskStatus& s) {
+            j = static_cast<int>(s);
         }
-
-        static void from_json(const json& j, TaskStatus& status) {
-            std::string s = j;
-            if (s == "pending") status = TaskStatus::Pending;
-            else if (s == "executing") status = TaskStatus::Executing;
-            else if (s == "completed") status = TaskStatus::Completed;
-            else if (s == "failed") status = TaskStatus::Failed;
-            else throw std::runtime_error("invalid task status string: " + s);
+        static void from_json(const json& j, TaskStatus& s) {
+            s = static_cast<TaskStatus>(j.get<int>());
         }
     };
 }
@@ -101,6 +89,7 @@ namespace nlohmann {
 using TaskId = std::string;
 using TaskPayload = std::string;
 using ExecuteTimeMs = int64_t; // Unix timestamp in milliseconds
+using ExecutorId = std::string;
 // 任务结构体
 struct ScheduledTask {
     TaskId id;
@@ -111,3 +100,16 @@ struct ScheduledTask {
 
 // 使用宏自动定义序列化/反序列化逻辑
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ScheduledTask, id, execute_at, payload, status);
+
+
+// 任务状态信息结构
+struct TaskStatusInfo {
+    TaskStatus status;
+    int64_t created_at;
+    int64_t updated_at;
+    int64_t started_at = 0;
+    int64_t completed_at = 0;
+    std::string error_message = "";
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TaskStatusInfo, status, created_at, updated_at, started_at, completed_at, error_message);

@@ -33,13 +33,8 @@ public:
 
     int64_t submit(const LogEntry& entry);
     bool get_request_id_reply(int64_t req_id);
-    using StateMachineCallback = std::function<bool(int32_t log_index, const LogEntry& entry)>;
 
-    // 设置回调函数的接口
-    void set_apply_callback(StateMachineCallback callback) {
-        std::lock_guard<std::mutex> lock(mutex_);
-        apply_callback_ = std::move(callback);
-    }
+    bool is_leader(int node_id);
     template<typename... Args>
     LogEntry pack_logentry(const std::string& command_type , Args&&... args) {
         LogEntry entry;
@@ -55,11 +50,13 @@ public:
     int node_id_;
     std::unordered_map<int64_t, std::shared_ptr<std::promise<bool>>> lock_store_;
     RegisterCallback callback_reg;
+
+    mrpc::server& server_;
+    mrpc::client& client_;
 private:
     // 节点基本信息
     std::string ip_;
     int port_;
-    StateMachineCallback apply_callback_;
     int64_t request_id_{0};
     // 集群配置
     int election_elapsed_time_;
@@ -93,9 +90,7 @@ private:
     mutable std::mutex conns_mutex_;
     mutable std::mutex apply_mutex_;
     std::condition_variable apply_cv_;
-    // RPC服务器和客户端
-    mrpc::server& server_;
-    mrpc::client& client_;
+
 
     // 定时器相关
     std::chrono::steady_clock::time_point last_heartbeat_time_;
@@ -116,7 +111,6 @@ private:
     void become_follower_withlock(int32_t new_term);
     void become_candidate();
     void become_leader();
-    bool is_leader(int node_id);
         
     // RPC调用辅助函数
     bool send_vote_request(const VoteRequest& request, size_t peer_idx, VoteReply& reply);

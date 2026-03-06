@@ -432,8 +432,6 @@ bool RaftNode::check_if_log_is_ok(const AppendRequest& request){
 }
 
 void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index) {
-    // spdlog::debug("Node {}: Applying logs from index {} to {} to state machine.", node_id_, from_index, to_index);
-
     // 1. 批量获取日志条目，减少锁的持有时间
     std::vector<LogEntry> entries_to_apply;
     {
@@ -447,31 +445,58 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         }
     } // lock 作用域结束
 
-    // 2. 在无锁状态下应用日志
-    for (size_t idx = 0; idx < entries_to_apply.size(); ++idx) {
-        const auto& entry = entries_to_apply[idx];
-        int32_t log_index = from_index + idx; // 计算出原始日志索引
+    // 2. 记录本次成功应用的最大全局索引（初始为当前已应用值）
+    int32_t new_last_applied = last_applied_.load();
+    bool has_error = false;
 
-        // spdlog::debug("Node {}: 正在准备将index={}的日志条目 {} 应用到状态机。", node_id_, log_index, entry.command_type);
+    // 3. 在无锁状态下应用日志
+    for (size_t idx = 0; idx < entries_to_apply.size() && !has_error; ++idx) {
+        const auto& entry = entries_to_apply[idx];
+        int32_t log_index = from_index + idx; // 日志的全局真实索引
         bool success = false;
+        bool cant_be_applied = false;
+
         try {
-            success = callback_reg.trigger_by_logentry(entry);
+            auto it = callback_reg.invokes_.find(entry.command_type);
+            if (it != callback_reg.invokes_.end()) {
+                // 业务逻辑返回值（success）仅代表业务结果，不影响日志应用推进
+                success = it->second(entry.buffer);
+            } else {
+                // barrier是特殊命令，无需回调，直接标记为可应用
+                if (entry.command_type != "barrier") {
+                    spdlog::error("[Error] LogEntry命令类型未注册: {}", entry.command_type);
+                    cant_be_applied = true;
+                } else {
+                    success = true; // barrier强制标记为成功
+                }
+            }
         } catch (const std::exception& e) {
             spdlog::error("Node {}: Callback failed for log index {}: {}", node_id_, log_index, e.what());
-            continue;
+            cant_be_applied = true;
         }
 
-        // 3. 通知等待者 (同样在无锁状态下)
-        auto it = lock_store_.find(entry.req_id);
-        if (it != lock_store_.end()) {
-            it->second->set_value(success);
+        // 核心逻辑：如果是「无法应用」（回调未注册/异常），立即停止推进
+        if (cant_be_applied) {
+            has_error = true;
+            break;
         }
+
+        // 4. 通知等待者（必须加锁保护lock_store_）
+        auto lock_it = lock_store_.find(entry.req_id);
+        if (lock_it != lock_store_.end()) {
+            lock_it->second->set_value(success);
+            lock_store_.erase(lock_it); // 通知后清理，避免内存泄漏
+        }
+
+        // 5. 更新本次成功应用的最大索引（全局索引）
+        new_last_applied = log_index;
     }
 
-    // 4. 最后，一次性更新 last_applied_，再次加锁
-    {
-        std::lock_guard<std::mutex> lock(apply_mutex_); // 使用专门的 apply_mutex_
-        last_applied_.store(to_index);
+    // 6. 统一更新last_applied_（仅更新一次，加锁保证原子性）
+    if (new_last_applied > last_applied_.load()) {
+        std::lock_guard<std::mutex> lock(apply_mutex_);
+        last_applied_.store(new_last_applied);
+        // spdlog::debug("Node {}: last_applied 更新为 {}", node_id_, new_last_applied);
     }
 }
 
@@ -479,15 +504,21 @@ void RaftNode::run_apply_loop() {
     spdlog::info("Node {} starting apply loop thread.", node_id_);
     while (running_) {
         std::unique_lock<std::mutex> lock(apply_mutex_);
+         spdlog::debug("apply_loop: commit_index={}, last_applied={}", 
+                     commit_index_.load(), last_applied_.load()); // 新增
         apply_cv_.wait(lock, [this] {
-            return !running_ || commit_index_.load() > last_applied_.load();
+            bool cond = !running_ || commit_index_.load() > last_applied_.load();
+            if (cond) {
+                spdlog::debug("apply_loop: wait condition met, cond={}", cond); // 新增
+            }
+            return cond;
         });
 
         if (!running_) break;
 
         int32_t from = last_applied_.load() + 1;
         int32_t to = commit_index_.load();
-        
+        spdlog::info("apply_loop: applying logs from {} to {}", from, to); // 新增
         lock.unlock(); // 允许在应用日志时有新的提交触发 notify
         if (from <= to) {
             apply_logs_to_state_machine(from, to);
@@ -780,12 +811,6 @@ int64_t RaftNode::submit(const LogEntry& entry) {
         }
     }
     
-    if(request_id == -1){
-        return request_id;
-    }
-    if(entry.command_type=="barrier"){
-        return wait_for(request_id);
-    }
     return request_id;
 }
 

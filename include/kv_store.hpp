@@ -1,12 +1,6 @@
 #pragma once
-#include <string>
-#include <unordered_map>
-#include <chrono>
-#include <optional>
-#include <mutex>
-#include <logger.hpp>
 #include <raftnode.hpp>
-
+#include "multy_cal_back.hpp"
 // 定义一个结构体来存储值和过期时间
 struct ValueWithExpiry {
     std::string value;
@@ -29,7 +23,7 @@ struct ValueWithExpiry {
 class KvService {
 public:
     KvService(std::shared_ptr<RaftNode> raft_node) 
-        : raft_node_(raft_node) {
+        : raft_node_(raft_node),node_id_(raft_node->node_id_) {
             raft_node_->callback_reg.reg_callback("Put", this, &KvService::apply_put);
             raft_node_->callback_reg.reg_callback("Del", this, &KvService::apply_del);
             raft_node_->callback_reg.reg_callback("Cas", this, &KvService::apply_cas);
@@ -42,52 +36,7 @@ public:
         spdlog::info("Applying PUT: {} = {}", key, value);
         // 无限期存储，设置一个极大过期时间
         kv_store_[key] = ValueWithExpiry(value);
-        return put_watch(key, value);
-    }
-
-    // 新增的独立put watch函数
-    bool put_watch(const std::string& key, const std::string& value) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_added事件
-            auto it = watcher_reg.invokes_.find("task_added");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else if (key.substr(0, 12) == "task_status:") {
-            // 触发task_updated事件（用于任务状态更新）
-            auto it = watcher_reg.invokes_.find("task_updated");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的put操作，触发通用的put事件
-            auto it = watcher_reg.invokes_.find("put");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        }
-        return true;
-    }
-
-    bool apply_add_task_(const std::string& key, const std::string& value) {
-        spdlog::info("Applying ADD_TASK: {} = {}", key, value);
-        // 无限期存储，设置一个极大过期时间
-        // kv_store_[key] = ValueWithExpiry(value);
-        return add_task_watch(key, value);
-    }
-
-    // 新增的独立add_task watch函数
-    bool add_task_watch(const std::string& key, const std::string& value) {
-        auto it = watcher_reg.invokes_.find("add_" + key);
-        if (it != watcher_reg.invokes_.end()) {
-            nlohmann::json args_json = nlohmann::json::array({key, value});
-            it->second(args_json.dump());
-            // watcher_reg.invokes_.erase(it);
-        }
-        return true;
+        return watcher_reg.call_watch("put", key, value);
     }
 
     // 2. 应用带超时的 Put 操作
@@ -96,61 +45,14 @@ public:
         auto expiry_time = now + std::chrono::milliseconds(ttl_ms);
         spdlog::info("Applying PUT_WITH_TTL: {} = {}, expires in {} ms", key, value, ttl_ms);
         kv_store_[key] = ValueWithExpiry(value, expiry_time);
-        return put_with_ttl_watch(key, value, ttl_ms);
-    }
-
-    // 新增的独立put_with_ttl watch函数
-    bool put_with_ttl_watch(const std::string& key, const std::string& value, long long ttl_ms) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_added事件
-            auto it = watcher_reg.invokes_.find("task_added");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else if (key.substr(0, 12) == "task_status:") {
-            // 触发task_updated事件（用于任务状态更新）
-            auto it = watcher_reg.invokes_.find("task_updated");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的put操作，触发通用的put事件
-            auto it = watcher_reg.invokes_.find("put");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key, value});
-                it->second(args_json.dump());
-            }
-        }
-        return true;
+        return watcher_reg.call_watch("PutWithTTL", key, value, ttl_ms);
     }
 
     // 3. 应用 Del 操作
     bool apply_del(const std::string& key) {
         spdlog::info("Applying DELETE: {}", key);
         kv_store_.erase(key);
-        return del_watch(key);
-    }
-
-    // 新增的独立del watch函数
-    bool del_watch(const std::string& key) {
-        if (key.substr(0, 5) == "task:") {
-            // 触发task_removed事件
-            auto it = watcher_reg.invokes_.find("task_removed");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key});
-                it->second(args_json.dump());
-            }
-        } else {
-            // 对于一般的delete操作，触发通用的del事件
-            auto it = watcher_reg.invokes_.find("del");
-            if (it != watcher_reg.invokes_.end()) {
-                nlohmann::json args_json = nlohmann::json::array({key});
-                it->second(args_json.dump());
-            }
-        }
-        return true;
+        return watcher_reg.call_watch("Del", key);
     }
 
     // 4. 应用 CAS 操作
@@ -162,10 +64,10 @@ public:
             if (expected_value.empty()) {
                 spdlog::info("Applying CAS: Key '{}' does not exist, expected empty. Setting to '{}' (from node{})", key, new_value, node_id_);
                 kv_store_[key] = ValueWithExpiry(new_value);
-                return cas_watch(key, expected_value, new_value, true);
+                return watcher_reg.call_watch("Cas", key, expected_value, new_value, true);
             }
             spdlog::info("Applying CAS: Key '{}' does not exist, expected '{}', CAS failed (from node{})", key, expected_value, node_id_);
-            return cas_watch(key, expected_value, new_value, false);
+            return watcher_reg.call_watch("Cas", key, expected_value, new_value, false);
         }
         
         // 检查键是否已过期
@@ -176,49 +78,20 @@ public:
             if (expected_value.empty()) {
                 spdlog::info("Applying CAS: After expiry, setting '{}' to '{}' (from node{})", key, new_value, node_id_);
                 kv_store_[key] = ValueWithExpiry(new_value);
-                return cas_watch(key, expected_value, new_value, true);
+                return watcher_reg.call_watch("Cas", key, expected_value, new_value, true);
             }
-            return cas_watch(key, expected_value, new_value, false);
+            return watcher_reg.call_watch("Cas", key, expected_value, new_value, false);
         }
 
         // 比较当前值
         if (it->second.value == expected_value) {
             spdlog::info("Applying CAS: Key '{}' matches expected value. Updating to '{}' (from node{})", key, new_value, node_id_);
             it->second.value = new_value; // 更新值，保持原有过期时间
-            return cas_watch(key, expected_value, new_value, true);
+            return watcher_reg.call_watch("Cas", key, expected_value, new_value, true);
         } else {
             spdlog::info("Applying CAS: Key '{}' value '{}' does not match expected '{}', CAS failed (from node{})", key, it->second.value, expected_value, node_id_);
-            return cas_watch(key, expected_value, new_value, false);
+            return watcher_reg.call_watch("Cas", key, expected_value, new_value, false);
         }
-    }
-
-    // 新增的独立cas watch函数
-    bool cas_watch(const std::string& key, const std::string& expected_value, const std::string& new_value, bool success) {
-        if (success) {
-            if (key.substr(0, 5) == "task:") {
-                // 触发task_updated事件
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else if (key.substr(0, 12) == "task_status:") {
-                // 触发task_updated事件（用于任务状态更新）
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else {
-                // 对于一般的cas操作，触发通用的cas事件
-                auto it = watcher_reg.invokes_.find("cas");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, expected_value, new_value});
-                    it->second(args_json.dump());
-                }
-            }
-        }
-        return success;
     }
 
     bool apply_cas_with_ttl(const std::string& key, const std::string& expected_value, 
@@ -231,11 +104,11 @@ public:
                             key, new_value, ttl_ms, node_id_);
                 auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
                 kv_store_[key] = ValueWithExpiry(new_value, expiry);
-                return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+                return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, true);
             }
             spdlog::info("Applying CAS_TTL: Key '{}' does not exist, expected '{}', failed (from node{})", 
                         key, expected_value, node_id_);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+            return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, false);
         }
 
         // 键已过期 → 视为不存在
@@ -245,9 +118,9 @@ public:
             if (expected_value.empty()) {
                 auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
                 kv_store_[key] = ValueWithExpiry(new_value, expiry);
-                return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+                return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, true);
             }
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+            return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, false);
         }
 
         // 期望值匹配 → 原子更新值+重置TTL
@@ -256,42 +129,12 @@ public:
                         key, new_value, ttl_ms, node_id_);
             auto expiry = std::chrono::steady_clock::now() + std::chrono::milliseconds(ttl_ms);
             it->second = ValueWithExpiry(new_value, expiry);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, true);
+            return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, true);
         } else {
             spdlog::info("Applying CAS_TTL: Key '{}' value '{}' != expected '{}', failed (from node{})", 
                         key, it->second.value, expected_value, node_id_);
-            return cas_with_ttl_watch(key, expected_value, new_value, ttl_ms, false);
+            return watcher_reg.call_watch("CasWithTTL", key, expected_value, new_value, ttl_ms, false);
         }
-    }
-
-    // 新增的独立cas_with_ttl watch函数
-    bool cas_with_ttl_watch(const std::string& key, const std::string& expected_value, 
-                        const std::string& new_value, long long ttl_ms, bool success) {
-        if (success) {
-            if (key.substr(0, 5) == "task:") {
-                // 触发task_updated事件
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else if (key.substr(0, 12) == "task_status:") {
-                // 触发task_updated事件（用于任务状态更新）
-                auto it = watcher_reg.invokes_.find("task_updated");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, new_value});
-                    it->second(args_json.dump());
-                }
-            } else {
-                // 对于一般的cas操作，触发通用的cas事件
-                auto it = watcher_reg.invokes_.find("cas");
-                if (it != watcher_reg.invokes_.end()) {
-                    nlohmann::json args_json = nlohmann::json::array({key, expected_value, new_value});
-                    it->second(args_json.dump());
-                }
-            }
-        }
-        return success;
     }
 
     bool test_false(){
@@ -382,6 +225,7 @@ public:
             std::cout<<"Get 提交失败"<<std::endl;
             return ""; // 操作失败
         }
+        raft_node_->wait_for(result);
         auto opt_value = unsafe_get(key);
         return opt_value ? *opt_value : "";
     }
@@ -394,6 +238,7 @@ public:
             std::cout<<"Exists 提交失败"<<std::endl;
             return false; // 操作失败
         }
+        raft_node_->wait_for(result);
         return unsafe_get(key).has_value();
     }
 
@@ -405,6 +250,7 @@ public:
             std::cout<<"TestFalse 提交失败"<<std::endl;
             return false; // 操作失败
         }
+        raft_node_->wait_for(result);
         std::cout<<"执行结果："<<result<<std::endl;
         return result;
     }
@@ -455,14 +301,14 @@ private:
 public:
 
     template<typename Function>
-    void WATCH(std::string command_type,Function&& f) {
-        watcher_reg.reg_callback(command_type, std::forward<Function>(f));
+    void WATCH(std::string command_type, std::string callback_name, Function&& f) {
+        watcher_reg.reg_callback(command_type, callback_name, std::forward<Function>(f));
     }
 
     template<typename ClassType, typename ReturnType, typename... Args>
-    void WATCH(std::string command_type, ClassType* instance, ReturnType (ClassType::*mem_func)(Args...)) {
-        watcher_reg.reg_callback(command_type, instance, mem_func);
+    void WATCH(std::string command_type, std::string callback_name, ClassType* instance, ReturnType (ClassType::*mem_func)(Args...)) {
+        watcher_reg.reg_callback(command_type, callback_name, instance, mem_func);
     }
 
-    RegisterCallback watcher_reg;
+     Multy_RegisterCallback watcher_reg;
 };
