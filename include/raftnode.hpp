@@ -89,7 +89,11 @@ private:
     mutable std::mutex mutex_;
     mutable std::mutex conns_mutex_;
     mutable std::mutex apply_mutex_;
+    mutable std::mutex read_wait_mutex_;
     std::condition_variable apply_cv_;
+
+    // 读等待存储：req_id -> commit_index
+    std::unordered_map<int64_t, int32_t> read_wait_store_;
 
 
     // 定时器相关

@@ -457,17 +457,17 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         bool cant_be_applied = false;
 
         try {
-            auto it = callback_reg.invokes_.find(entry.command_type);
-            if (it != callback_reg.invokes_.end()) {
-                // 业务逻辑返回值（success）仅代表业务结果，不影响日志应用推进
-                success = it->second(entry.buffer);
+            if (entry.command_type == "barrier") {
+                success = true;
+                // barrier已在submit中加入read_wait_store_
             } else {
-                // barrier是特殊命令，无需回调，直接标记为可应用
-                if (entry.command_type != "barrier") {
+                auto it = callback_reg.invokes_.find(entry.command_type);
+                if (it != callback_reg.invokes_.end()) {
+                    // 业务逻辑返回值（success）仅代表业务结果，不影响日志应用推进
+                    success = it->second(entry.buffer);
+                } else {
                     spdlog::error("[Error] LogEntry命令类型未注册: {}", entry.command_type);
                     cant_be_applied = true;
-                } else {
-                    success = true; // barrier强制标记为成功
                 }
             }
         } catch (const std::exception& e) {
@@ -490,6 +490,7 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
 
         // 5. 更新本次成功应用的最大索引（全局索引）
         new_last_applied = log_index;
+
     }
 
     // 6. 统一更新last_applied_（仅更新一次，加锁保证原子性）
@@ -497,6 +498,23 @@ void RaftNode::apply_logs_to_state_machine(int32_t from_index, int32_t to_index)
         std::lock_guard<std::mutex> lock(apply_mutex_);
         last_applied_.store(new_last_applied);
         // spdlog::debug("Node {}: last_applied 更新为 {}", node_id_, new_last_applied);
+    }
+
+    // 检查读等待
+    {
+        std::lock_guard<std::mutex> lock(read_wait_mutex_);
+        for (auto it = read_wait_store_.begin(); it != read_wait_store_.end(); ) {
+            if (last_applied_.load() >= it->second) {
+                auto lock_it = lock_store_.find(it->first);
+                if (lock_it != lock_store_.end()) {
+                    lock_it->second->set_value(true);
+                    lock_store_.erase(lock_it);
+                }
+                it = read_wait_store_.erase(it);
+            } else {
+                ++it;
+            }
+        }
     }
 }
 
@@ -532,7 +550,7 @@ void RaftNode::send_heartbeats() {
     spdlog::info("Node {} starting heartbeat thread for term {}.", node_id_, current_term_.load());
 
     // 计算心跳间隔，例如选举超时时间的 1/5
-    auto heartbeat_interval = std::chrono::milliseconds( election_elapsed_time_ / 5);
+    auto heartbeat_interval = std::chrono::milliseconds( 180ms);
     bool is_follower = false;
     while (running_ && state_.load() == LEADER) {
         // 构建心跳请求 (空的日志条目 AppendEntries RPC)
@@ -804,8 +822,14 @@ int64_t RaftNode::submit(const LogEntry& entry) {
             request_id_++;
             new_entry.req_id = request_id_;
             request_id = new_entry.req_id;
+            // 对于barrier，提前加入read_wait_store_
+            if (new_entry.command_type == "barrier") {
+                std::lock_guard<std::mutex> lock(read_wait_mutex_);
+                read_wait_store_[request_id] = commit_index_.load();
+            }else{
+                log_.push_back(new_entry);
+            }
             lock_store_.emplace(request_id, std::make_shared<std::promise<bool>>());
-            log_.push_back(new_entry);
             // spdlog::info("Node {}: Submitted log entry (index {}, term {}) type {}", 
                         // node_id_, log_.size()-1, current_term_.load(), new_entry.command_type);
         }

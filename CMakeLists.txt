@@ -111,17 +111,17 @@ target_link_libraries(test_callback
     Threads::Threads    # 现在能找到这个目标了
 )
 
-add_executable(task_scheduler
-     example/task_scheduler.cpp
-     raftnode.cpp
-     ${MRPC_SRC_FILES} 
-)
+# add_executable(task_scheduler
+#      example/task_scheduler.cpp
+#      raftnode.cpp
+#      ${MRPC_SRC_FILES} 
+# )
 
-target_link_libraries(task_scheduler 
-    PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
-    ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
-    Threads::Threads    # 现在能找到这个目标了
-)
+# target_link_libraries(task_scheduler 
+#     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
+#     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
+#     Threads::Threads    # 现在能找到这个目标了
+# )
 
 
 add_executable(task_scheduler_server
@@ -147,6 +147,31 @@ target_link_libraries(task_sys_client
     PRIVATE  # 推荐添加PRIVATE，明确依赖作用域
     ${ZK_LIB}           # ZooKeeper 库（从子目录继承）
     Threads::Threads    # 现在能找到这个目标了
+)
+
+# KV Store Server
+add_executable(kv_server
+     example/kv_server.cpp
+     raftnode.cpp
+     ${MRPC_SRC_FILES} 
+)
+
+target_link_libraries(kv_server 
+    PRIVATE
+    ${ZK_LIB}
+    Threads::Threads
+)
+
+# KV Store Test Client
+add_executable(kv_test_client
+     example/kv_test_client.cpp
+     ${MRPC_SRC_FILES} 
+)
+
+target_link_libraries(kv_test_client 
+    PRIVATE
+    ${ZK_LIB}
+    Threads::Threads
 )
 
 add_executable(task_executor
