@@ -139,11 +139,44 @@ graph TB
 
 #### 3. 故障恢复时回调未注册问题
 - **问题**：当我实现kv存储实例并测试故障恢复时，我发现节点恢复时日志中出现大量对应操作未注册的报错信息。我意识到这是因为raft的选举线程和日志应用线程要比kv的回调注册更早初始化，导致节点间已经开始日志应用了但是kv回调还没注册好，那么节点重新上线之后虽然日志已经同步了，但是因为应用时未执行任何对应操作，状态实际上为空。
-- **解决方法**：在raft的日志应用线程中不应用last_applied到最新复制的日志index，因为后续每一次异步日志应用线程被唤醒时都会从last——applyed开始应用。
+- **解决方法**：
+- 1.在raft的日志应用线程中不应用last_applied到最新复制的日志index，因为后续每一次异步日志应用线程被唤醒时都会从last——applyed开始应用。
+- 2.加入了快照机制，能够在重启时从快照恢复，而不是一个一个的日志应用，既然不需要应用，那就不会产生故障恢复时回调未注册问题。
 
 
+## 三，你有进行哪些改进和优化？
+### 1. 持久化：用sstring和boost
+```cpp
+std::stringstream ss;
+boost::archive::text_oarchive oa(ss);
+oa << persist_info;
+return ss.str();
+```
 
-### 三，请在下方列出可能提问的问题以及合适的回答
+### 2.快照
+问题：由于日志会不断增长在那个导致内存爆炸，实现了快照机制。
+实现：
+#### leader运行时发送快照
+1.在raft日志index超过阈值后开始准备生成快照。快照内容为kv状态机的unordered_map以及lastSnapShotIncludeIndex和lastSnapShotIncludeTerm;
+```cpp
+std::stringstream ss;
+boost::archive::text_oarchive oa(ss);
+oa << SnapShot;
+return ss.str();
+```
+2.需要进行当前日志的截断，更新logs_,并且需要为将来的logentrys生成逻辑下标而非logs_中的下标，将生成的快照存储在磁盘中
+3.当在心跳线程中检测到某个节点的nextindex小于自身的lastSnapShotIncludeIndex时，向对方发送快照而不是新增的日志
+4.follower收到后对别自己的和leader的快照索引和任期，通过后下载快照，更新kv的unordered_map并截断日志，同时把lastSnapShotIncludeIndex和lastSnapShotIncludeTerm也复制过来。
+#### 故障重启时快照恢复
+1.如果重启时本地已经有了快照那么就从本地文件直接读取快照，如果本地没有快照文件，那么就从leader那同步快照，因为下线后leader对你的nextindex已经变为0，会远远小于leader的快照index，触发快照发送。
+2.解决了重启时为了应用日志但是应用函数还没有注册的问题
+
+
+### 3.日志加速匹配
+问题: 当prev日志不匹配的时候，正常来说leader会递减nextindex并发送rpc，这样大大地耗费时间
+优化：在follwer端检测到日志不匹配后，就从prevlogindex开始一直递减滚动到lastSnapShotIncludeIndex，当发现任期匹配后直接返回leader端nextindex要跳转到地index，减少了rpc的调用次数
+
+### 四，请在下方列出可能提问的问题以及合适的回答
 
 #### 1. Raft算法的核心是什么？这个实现有什么特点？
 Raft是一种分布式一致性算法，用于解决分布式系统中的数据一致性问题。其核心是Leader选举、日志复制和安全性保证。这个实现的特点：
